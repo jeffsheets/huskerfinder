@@ -398,7 +398,7 @@ a:hover {
 
   .container {
     flex-direction: column;
-    height: calc(100vh - 220px);
+    height: calc(100vh - 200px);
   }
 
   #results {
@@ -417,7 +417,8 @@ a:hover {
 
   #map {
     flex: 1;
-    min-height: 300px;
+    min-height: 250px;
+    max-height: calc(100vh - 400px);
   }
 
   .controls-panel {
