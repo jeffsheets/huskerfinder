@@ -2,18 +2,395 @@
 <html>
 <head>
   <title>Husker Radio Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .header {
+      background: #d00000;
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+
+    #display {
+      background: white;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.9rem;
+      color: #666;
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      height: calc(100vh - 140px);
+    }
+
+    #results {
+      width: 350px;
+      background: white;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .controls-panel {
+      padding: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+      background: #fafafa;
+    }
+
+    .find-button {
+      width: 100%;
+      background: #d00000;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .find-button:hover {
+      background: #b00000;
+    }
+
+    .find-button:active {
+      background: #900000;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    .filter-group label {
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .filter-group input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      cursor: pointer;
+    }
+
+    #map {
+      flex: 1;
+      height: 100%;
+    }
+
+    #station-list {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .station-item {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: #f9f9f9;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .station-item:hover {
+      background: #f0f0f0;
+      border-color: #d00000;
+    }
+
+    .station-item.nearest {
+      background: #fff3f3;
+      border-color: #d00000;
+      border-width: 2px;
+    }
+
+    .station-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .station-freq {
+      font-weight: bold;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .station-call {
+      color: #d00000;
+      font-weight: 600;
+    }
+
+    .station-location {
+      color: #666;
+    }
+
+    .station-distance {
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .distance-short {
+      display: none;
+    }
+
+    .station-sports {
+      margin-top: 0.25rem;
+    }
+
+    .station-sport {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      background: #e0e0e0;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      margin-right: 0.25rem;
+    }
+
+    .station-sport.football {
+      background: #d00000;
+      color: white;
+    }
+
+    .station-sport.volleyball {
+      background: #333;
+      color: white;
+    }
+
+    .sport-short {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: calc(100vh - 140px);
+      }
+
+      #results {
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        flex-shrink: 0;
+      }
+
+      #station-list {
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      #map {
+        flex: 1;
+        min-height: 300px;
+      }
+
+      .controls-panel {
+        padding: 0.75rem;
+      }
+
+      .find-button {
+        padding: 0.6rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .filter-group {
+        flex-wrap: wrap;
+      }
+
+      .station-item {
+        padding: 0.5rem;
+        margin-bottom: 0.3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .station-info {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .station-freq {
+        font-size: 0.95rem;
+        font-weight: bold;
+        white-space: nowrap;
+        min-width: 60px;
+      }
+
+      .station-call {
+        white-space: nowrap;
+      }
+
+      .station-location {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+      }
+
+      .station-distance {
+        font-size: 0.85rem;
+        white-space: nowrap;
+      }
+
+      .distance-long {
+        display: none;
+      }
+
+      .distance-short {
+        display: inline;
+      }
+
+      .station-sports {
+        margin-top: 0;
+        display: flex;
+        gap: 0.25rem;
+      }
+
+      .station-sport {
+        padding: 0.15rem 0.3rem;
+        font-size: 0.7rem;
+      }
+
+      .sport-long {
+        display: none;
+      }
+
+      .sport-short {
+        display: inline;
+      }
+    }
+
+    .footer {
+      background: #f8f8f8;
+      border-top: 1px solid #e0e0e0;
+      padding: 1rem;
+      text-align: center;
+      color: #666;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .footer a {
+      color: #d00000;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-divider {
+      margin: 0 0.5rem;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Husker Radio Finder</h1>
-<button onclick="lookupByLocation()">Lookup</button>
-<div id="display">
-</div>
-<div id="results">
+<div class="header">
+  <h1>🏈🏐 Nebraska Husker Radio Finder</h1>
 </div>
 
-</body>
+<div id="display">🔍 Finding your location...</div>
+
+<div class="container">
+  <div id="results">
+    <div class="controls-panel">
+      <button class="find-button" onclick="lookupByLocation()">
+        📍 Find Nearest Stations
+      </button>
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="showFootball" checked onchange="updateFilters()">
+          <span>🏈 Football</span>
+        </label>
+        <label>
+          <input type="checkbox" id="showVolleyball" checked onchange="updateFilters()">
+          <span>🏐 Volleyball</span>
+        </label>
+      </div>
+    </div>
+    <div id="station-list">
+      <div style="color: #999; text-align: center; padding: 2rem;">
+        Loading nearest stations...
+      </div>
+    </div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<div class="footer">
+  Made with ❤️ by <a href="https://sheetsj.com" target="_blank">Jeff Sheets</a> - husker grad and fan - GBR!
+  <span class="footer-divider">|</span>
+  <a href="about.html">About this tool</a>
+  <span class="footer-divider">|</span>
+  Thanks to <a href="https://huskers.com/listen" target="_blank">huskers.com</a> for reference
+  <span class="footer-divider">|</span>
+  If stations are not working, try <a href="https://huskers.com/listen" target="_blank">streaming live</a>
+</div>
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+
 <script src="js/geolib.js" lang="js"></script>
 <script src="js/stations.js" lang="js"></script>
 <script src="js/lib.js" lang="js"></script>
+<script src="js/map.js" lang="js"></script>
+</body>
 </html>

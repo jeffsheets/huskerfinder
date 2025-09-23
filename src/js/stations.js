@@ -8,7 +8,18 @@ const stations = [
     "Format": "AM",
     "Frequency": 1400,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Ainsworth",
+    "State": "NE",
+    latitude: 42.542734,
+    longitude: -99.852364,
+    "CallSign": "KBRB",
+    "Format": "FM",
+    "Frequency": 106.3,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Alliance",
@@ -19,7 +30,29 @@ const stations = [
     "Format": "AM",
     "Frequency": 1400,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Alliance",
+    "State": "NE",
+    latitude: 42.09302,
+    longitude: -102.8702,
+    "CallSign": "KCOW",
+    "Format": "FM",
+    "Frequency": 92.5,
+    "Sport": "Football",
+    "Year": 2025
+  },
+  {
+    "City": "Aurora",
+    "State": "NE",
+    latitude: 40.867,
+    longitude: -98.004,
+    "CallSign": "KRGY",
+    "Format": "FM",
+    "Frequency": 97.3,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Beatrice",
@@ -30,7 +63,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1450,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Broken Bow",
@@ -41,7 +74,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 95.3,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Chadron",
@@ -52,7 +85,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 610,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Columbus",
@@ -63,29 +96,18 @@ const stations = [
     "Format": "AM",
     "Frequency": 900,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Columbus",
     "State": "NE",
     latitude: 41.542962,
     longitude: -97.376314,
-    "CallSign": "KLIR",
+    "CallSign": "KKOT",
     "Format": "FM",
-    "Frequency": 101.1,
+    "Frequency": 93.5,
     "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Cozad",
-    "State": "NE",
-    latitude: 40.895003,
-    longitude: -99.967448,
-    "CallSign": "KAMI",
-    "Format": "AM",
-    "Frequency": 1580,
-    "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Fairbury",
@@ -96,18 +118,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1310,
     "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Fairbury",
-    "State": "NE",
-    latitude: 40.175641,
-    longitude: -97.171023,
-    "CallSign": "KUTT",
-    "Format": "FM",
-    "Frequency": 99.5,
-    "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Falls City",
@@ -118,7 +129,18 @@ const stations = [
     "Format": "AM",
     "Frequency": 1230,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Fremont",
+    "State": "NE",
+    latitude: 41.487786,
+    longitude: -96.501672,
+    "CallSign": "KHUB",
+    "Format": "AM",
+    "Frequency": 1340,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -129,7 +151,29 @@ const stations = [
     "Format": "FM",
     "Frequency": 105.5,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Gibbon",
+    "State": "NE",
+    latitude: 40.749,
+    longitude: -98.845,
+    "CallSign": "KMTY",
+    "Format": "FM",
+    "Frequency": 97.7,
+    "Sport": "Football",
+    "Year": 2025
+  },
+  {
+    "City": "Gordon",
+    "State": "NE",
+    latitude: 42.805,
+    longitude: -102.204,
+    "CallSign": "KSDZ",
+    "Format": "FM",
+    "Frequency": 95.5,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Grand Island",
@@ -140,18 +184,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1430,
     "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Grand Island",
-    "State": "NE",
-    latitude: 40.87227,
-    longitude: -98.368698,
-    "CallSign": "KRGY",
-    "Format": "FM",
-    "Frequency": 97.3,
-    "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Hastings",
@@ -162,29 +195,29 @@ const stations = [
     "Format": "AM",
     "Frequency": 1230,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Hastings",
     "State": "NE",
     latitude: 40.582425,
     longitude: -98.389035,
-    "CallSign": "KLIQ",
+    "CallSign": "KICS/KXPN",
     "Format": "FM",
     "Frequency": 94.5,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
-    "City": "Hiawatha",
-    "State": "KS",
-    latitude: 39.791367,
-    longitude: -95.600405,
-    "CallSign": "KLZA",
+    "City": "Hay Springs",
+    "State": "NE",
+    latitude: 42.684,
+    longitude: -102.687,
+    "CallSign": "KBPY",
     "Format": "FM",
-    "Frequency": 101.3,
+    "Frequency": 107.7,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Holdrege",
@@ -195,18 +228,18 @@ const stations = [
     "Format": "AM",
     "Frequency": 1380,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Holdrege",
     "State": "NE",
     latitude: 40.429207,
     longitude: -99.325955,
-    "CallSign": "KMTY",
+    "CallSign": "KUVR",
     "Format": "FM",
-    "Frequency": 97.7,
+    "Frequency": 96.9,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -217,7 +250,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 102.9,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -228,7 +261,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1340,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -239,7 +272,18 @@ const stations = [
     "Format": "FM",
     "Frequency": 105.9,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Kearney",
+    "State": "NE",
+    latitude: 40.75141,
+    longitude: -99.129054,
+    "CallSign": "KGFW",
+    "Format": "FM",
+    "Frequency": 96.1,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Lexington",
@@ -250,7 +294,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 880,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Lincoln",
@@ -261,7 +305,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1400,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Lincoln",
@@ -272,7 +316,18 @@ const stations = [
     "Format": "FM",
     "Frequency": 98.1,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "McCook",
+    "State": "NE",
+    latitude: 40.207969,
+    longitude: -100.620628,
+    "CallSign": "KIOD",
+    "Format": "FM",
+    "Frequency": 105.3,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "McCook",
@@ -283,7 +338,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 93.9,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "McCook",
@@ -294,7 +349,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 102.1,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Nebraska City",
@@ -305,18 +360,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1600,
     "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Nebraska City",
-    "State": "NE",
-    latitude: 40.707742,
-    longitude: -95.907718,
-    "CallSign": "KBIE",
-    "Format": "FM",
-    "Frequency": 103.1,
-    "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Norfolk",
@@ -327,7 +371,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 94.7,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "North Platte",
@@ -338,51 +382,95 @@ const stations = [
     "Format": "AM",
     "Frequency": 1240,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
-    "City": "Ogallala",
+    "City": "North Platte",
     "State": "NE",
-    latitude: 41.131676,
-    longitude: -101.663033,
-    "CallSign": "KZTL",
+    latitude: 41.102555,
+    longitude: -100.74907,
+    "CallSign": "KXNP",
     "Format": "FM",
-    "Frequency": 93.5,
+    "Frequency": 103.5,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Oberlin",
+    "State": "KS",
+    latitude: 39.818,
+    longitude: -100.526,
+    "CallSign": "KFNF",
+    "Format": "FM",
+    "Frequency": 101.1,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Omaha",
     "State": "NE",
     latitude: 41.291736,
     longitude: -96.171104,
-    "CallSign": "KXSP",
+    "CallSign": "KIBM",
     "Format": "AM",
-    "Frequency": 590,
+    "Frequency": 1490,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Omaha",
     "State": "NE",
     latitude: 41.291736,
     longitude: -96.171104,
-    "CallSign": "KEZO",
-    "Format": "FM",
-    "Frequency": 92.3,
+    "CallSign": "KCRO",
+    "Format": "AM",
+    "Frequency": 660,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Omaha",
+    "State": "NE",
+    latitude: 41.291736,
+    longitude: -96.171104,
+    "CallSign": "KOBM",
+    "Format": "FM",
+    "Frequency": 97.3,
+    "Sport": "Football",
+    "Year": 2025
+  },
+  {
+    "City": "O'Neill",
+    "State": "NE",
+    latitude: 42.457,
+    longitude: -98.647,
+    "CallSign": "KBRX",
+    "Format": "FM",
+    "Frequency": 102.9,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Rapid City",
     "State": "SD",
     latitude: 44.145868,
     longitude: -103.206866,
-    "CallSign": "KTOQ",
-    "Format": "AM",
-    "Frequency": 1340,
+    "CallSign": "KOTA",
+    "Format": "FM",
+    "Frequency": 100.7,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Rapid City",
+    "State": "SD",
+    latitude: 44.145868,
+    longitude: -103.206866,
+    "CallSign": "KOTA",
+    "Format": "AM",
+    "Frequency": 1380,
+    "Sport": "Football",
+    "Year": 2025
   },
   {
     "City": "Scottsbluff",
@@ -393,7 +481,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 960,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Scottsbluff",
@@ -404,7 +492,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 94.1,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Sidney",
@@ -415,7 +503,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1340,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Sidney",
@@ -426,29 +514,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 98.7,
     "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Sioux City",
-    "State": "IA",
-    latitude: 42.494745,
-    longitude: -96.399356,
-    "CallSign": "KSEZ",
-    "Format": "FM",
-    "Frequency": 97.9,
-    "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Sioux Falls",
-    "State": "SD",
-    latitude: 43.546358,
-    longitude: -96.69063,
-    "CallSign": "KSOO",
-    "Format": "FM",
-    "Frequency": 99.1,
-    "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Superior",
@@ -459,7 +525,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 1600,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Superior",
@@ -470,7 +536,7 @@ const stations = [
     "Format": "FM",
     "Frequency": 103.9,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Valentine",
@@ -481,7 +547,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 940,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "West Point",
@@ -492,40 +558,7 @@ const stations = [
     "Format": "AM",
     "Frequency": 840,
     "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "West Point",
-    "State": "NE",
-    latitude: 41.870968,
-    longitude: -96.777787,
-    "CallSign": "KTIC",
-    "Format": "FM",
-    "Frequency": 98.3,
-    "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "Yankton",
-    "State": "SD",
-    latitude: 42.94396,
-    longitude: -97.37689,
-    "CallSign": "KKYA",
-    "Format": "FM",
-    "Frequency": 93.1,
-    "Sport": "Football",
-    "Year": 2019
-  },
-  {
-    "City": "York",
-    "State": "NE",
-    latitude: 40.890132,
-    longitude: -97.597278,
-    "CallSign": "KAWL",
-    "Format": "AM",
-    "Frequency": 1370,
-    "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
   },
   {
     "City": "Winner",
@@ -536,6 +569,479 @@ const stations = [
     "Format": "AM",
     "Frequency": 1260,
     "Sport": "Football",
-    "Year": 2019
+    "Year": 2025
+  },
+  {
+    "City": "Yankton",
+    "State": "SD",
+    latitude: 42.94396,
+    longitude: -97.37689,
+    "CallSign": "KKYA",
+    "Format": "FM",
+    "Frequency": 93.1,
+    "Sport": "Football",
+    "Year": 2025
+  },
+  {
+    "City": "York",
+    "State": "NE",
+    latitude: 40.890132,
+    longitude: -97.597278,
+    "CallSign": "KAWL",
+    "Format": "AM",
+    "Frequency": 1370,
+    "Sport": "Football",
+    "Year": 2025
+  },
+  {
+    "City": "Ainsworth",
+    "State": "NE",
+    latitude: 42.542734,
+    longitude: -99.852364,
+    "CallSign": "KBRB",
+    "Format": "AM",
+    "Frequency": 1400,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Ainsworth",
+    "State": "NE",
+    latitude: 42.542734,
+    longitude: -99.852364,
+    "CallSign": "KBRB",
+    "Format": "FM",
+    "Frequency": 106.3,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Aurora",
+    "State": "NE",
+    latitude: 40.867,
+    longitude: -98.004,
+    "CallSign": "KRGY",
+    "Format": "FM",
+    "Frequency": 97.3,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Beatrice",
+    "State": "NE",
+    latitude: 40.313364,
+    longitude: -96.693082,
+    "CallSign": "KWBE",
+    "Format": "AM",
+    "Frequency": 1450,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Broken Bow",
+    "State": "NE",
+    latitude: 41.451119,
+    longitude: -99.621491,
+    "CallSign": "KBBN",
+    "Format": "FM",
+    "Frequency": 95.3,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Columbus",
+    "State": "NE",
+    latitude: 41.542962,
+    longitude: -97.376314,
+    "CallSign": "KJSK",
+    "Format": "AM",
+    "Frequency": 900,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Columbus",
+    "State": "NE",
+    latitude: 41.542962,
+    longitude: -97.376314,
+    "CallSign": "KKOT",
+    "Format": "FM",
+    "Frequency": 93.5,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Fairbury",
+    "State": "NE",
+    latitude: 40.175641,
+    longitude: -97.171023,
+    "CallSign": "KGMT",
+    "Format": "AM",
+    "Frequency": 1310,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Falls City",
+    "State": "NE",
+    latitude: 40.073908,
+    longitude: -95.602053,
+    "CallSign": "KTNC",
+    "Format": "AM",
+    "Frequency": 1230,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Falls City",
+    "State": "NE",
+    latitude: 40.073908,
+    longitude: -95.602053,
+    "CallSign": "KTNC",
+    "Format": "FM",
+    "Frequency": 107.1,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Fremont",
+    "State": "NE",
+    latitude: 41.487786,
+    longitude: -96.501672,
+    "CallSign": "KHUB",
+    "Format": "AM",
+    "Frequency": 1340,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Fremont",
+    "State": "NE",
+    latitude: 41.487786,
+    longitude: -96.501672,
+    "CallSign": "KFMT",
+    "Format": "FM",
+    "Frequency": 105.5,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Gibbon",
+    "State": "NE",
+    latitude: 40.749,
+    longitude: -98.845,
+    "CallSign": "KMTY",
+    "Format": "FM",
+    "Frequency": 97.7,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Grand Island",
+    "State": "NE",
+    latitude: 40.87227,
+    longitude: -98.368698,
+    "CallSign": "KRGI",
+    "Format": "AM",
+    "Frequency": 1430,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Hastings",
+    "State": "NE",
+    latitude: 40.582425,
+    longitude: -98.389035,
+    "CallSign": "KHAS",
+    "Format": "AM",
+    "Frequency": 1230,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Hastings",
+    "State": "NE",
+    latitude: 40.582425,
+    longitude: -98.389035,
+    "CallSign": "KICS",
+    "Format": "AM",
+    "Frequency": 1450,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Kearney",
+    "State": "NE",
+    latitude: 40.75141,
+    longitude: -99.129054,
+    "CallSign": "KXPN",
+    "Format": "AM",
+    "Frequency": 1460,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Holdrege",
+    "State": "NE",
+    latitude: 40.429207,
+    longitude: -99.325955,
+    "CallSign": "KUVR",
+    "Format": "AM",
+    "Frequency": 1380,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Holdrege",
+    "State": "NE",
+    latitude: 40.429207,
+    longitude: -99.325955,
+    "CallSign": "KUVR",
+    "Format": "FM",
+    "Frequency": 96.9,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Imperial",
+    "State": "NE",
+    latitude: 40.515114,
+    longitude: -101.632038,
+    "CallSign": "KADL",
+    "Format": "FM",
+    "Frequency": 102.9,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Kearney",
+    "State": "NE",
+    latitude: 40.75141,
+    longitude: -99.129054,
+    "CallSign": "KGFW",
+    "Format": "AM",
+    "Frequency": 1340,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Kearney",
+    "State": "NE",
+    latitude: 40.75141,
+    longitude: -99.129054,
+    "CallSign": "KGFW",
+    "Format": "FM",
+    "Frequency": 96.1,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Kearney",
+    "State": "NE",
+    latitude: 40.75141,
+    longitude: -99.129054,
+    "CallSign": "KQKY",
+    "Format": "FM",
+    "Frequency": 105.9,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Lexington",
+    "State": "NE",
+    latitude: 40.873227,
+    longitude: -99.718408,
+    "CallSign": "KRVN",
+    "Format": "AM",
+    "Frequency": 880,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Lincoln",
+    "State": "NE",
+    latitude: 40.865142,
+    longitude: -96.823133,
+    "CallSign": "KBBK",
+    "Format": "FM",
+    "Frequency": 107.3,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Nebraska City",
+    "State": "NE",
+    latitude: 40.707742,
+    longitude: -95.907718,
+    "CallSign": "KNCY",
+    "Format": "AM",
+    "Frequency": 1600,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "North Platte",
+    "State": "NE",
+    latitude: 41.102555,
+    longitude: -100.74907,
+    "CallSign": "KODY",
+    "Format": "AM",
+    "Frequency": 1240,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "North Platte",
+    "State": "NE",
+    latitude: 41.102555,
+    longitude: -100.74907,
+    "CallSign": "KXNP",
+    "Format": "FM",
+    "Frequency": 103.5,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "North Platte",
+    "State": "NE",
+    latitude: 41.102555,
+    longitude: -100.74907,
+    "CallSign": "KHAQ",
+    "Format": "FM",
+    "Frequency": 98.5,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Omaha",
+    "State": "NE",
+    latitude: 41.291736,
+    longitude: -96.171104,
+    "CallSign": "KIBM",
+    "Format": "AM",
+    "Frequency": 1490,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Omaha",
+    "State": "NE",
+    latitude: 41.291736,
+    longitude: -96.171104,
+    "CallSign": "KCRO",
+    "Format": "AM",
+    "Frequency": 660,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Omaha",
+    "State": "NE",
+    latitude: 41.291736,
+    longitude: -96.171104,
+    "CallSign": "KOBM",
+    "Format": "FM",
+    "Frequency": 97.3,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "O'Neill",
+    "State": "NE",
+    latitude: 42.457,
+    longitude: -98.647,
+    "CallSign": "KBRX",
+    "Format": "FM",
+    "Frequency": 102.9,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Oberlin",
+    "State": "KS",
+    latitude: 39.818,
+    longitude: -100.526,
+    "CallSign": "KFNF",
+    "Format": "FM",
+    "Frequency": 101.1,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Scottsbluff",
+    "State": "NE",
+    latitude: 41.922838,
+    longitude: -103.622904,
+    "CallSign": "KNEB",
+    "Format": "AM",
+    "Frequency": 960,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Scottsbluff",
+    "State": "NE",
+    latitude: 41.922838,
+    longitude: -103.622904,
+    "CallSign": "KNEB",
+    "Format": "FM",
+    "Frequency": 94.1,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Sidney",
+    "State": "NE",
+    latitude: 41.220549,
+    longitude: -102.995925,
+    "CallSign": "KSID",
+    "Format": "AM",
+    "Frequency": 1340,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Sidney",
+    "State": "NE",
+    latitude: 41.220549,
+    longitude: -102.995925,
+    "CallSign": "KSID",
+    "Format": "FM",
+    "Frequency": 98.7,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Superior",
+    "State": "NE",
+    latitude: 40.036673,
+    longitude: -98.069593,
+    "CallSign": "KRFS",
+    "Format": "AM",
+    "Frequency": 1600,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "Valentine",
+    "State": "NE",
+    latitude: 42.87278,
+    longitude: -100.55097,
+    "CallSign": "KVSH",
+    "Format": "AM",
+    "Frequency": 940,
+    "Sport": "Volleyball",
+    "Year": 2025
+  },
+  {
+    "City": "West Point",
+    "State": "NE",
+    latitude: 41.870968,
+    longitude: -96.777787,
+    "CallSign": "KTIC",
+    "Format": "AM",
+    "Frequency": 840,
+    "Sport": "Volleyball",
+    "Year": 2025
   }
 ];

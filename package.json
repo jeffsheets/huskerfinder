@@ -10,7 +10,5 @@
   "devDependencies": {
     "serve": "^11.1.0"
   },
-  "dependencies": {
-    "geolib": "^3.0.4"
-  }
+  "dependencies": {}
 }
