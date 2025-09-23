@@ -71,7 +71,7 @@ body {
 
 .container {
   display: flex;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 160px);
 }
 
 #results {
@@ -398,7 +398,7 @@ a:hover {
 
   .container {
     flex-direction: column;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 160px);
   }
 
   #results {
