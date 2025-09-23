@@ -237,9 +237,6 @@ function sortByLocation(point) {
 
   // Center on user location and zoom to show nearest stations
   if (results.length > 0) {
-    // Center the map on the user's location
-    // map.setView([point.latitude, point.longitude], 10);
-
     // Calculate the maximum distance to the nearest 5 stations to adjust zoom
     const maxDistance = Math.max(...results.slice(0, 5).map(s => s.distance));
 
