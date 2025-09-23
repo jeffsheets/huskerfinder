@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+  <title>Full Station List - Husker Radio Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="about-page">
+
+<div class="header">
+  <h1>🏈🏐 Nebraska Husker Radio Finder</h1>
+  <a href="/" class="nav-link">← Back to Radio Finder</a>
+</div>
+
+<div class="container">
+  <h2>Complete Station List</h2>
+
+  <p>Below is the complete list of radio stations that broadcast Nebraska Husker football and volleyball games. This information is compiled from various sources and updated for the 2025 season.</p>
+
+  <div class="station-source">
+    <p><strong>Source:</strong> Station information compiled from <a href="https://huskers.com/listen" target="_blank">huskers.com/listen</a> and other official sources. For the most current streaming options and additional information, visit <a href="https://huskers.com/listen" target="_blank">huskers.com/listen</a>.</p>
+  </div>
+
+  <div class="filter-controls">
+    <label>
+      <input type="checkbox" id="filterFootball" checked onchange="filterStations()">
+      <span>🏈 Football</span>
+    </label>
+    <label>
+      <input type="checkbox" id="filterVolleyball" checked onchange="filterStations()">
+      <span>🏐 Volleyball</span>
+    </label>
+  </div>
+
+  <div id="stationTable">
+    <!-- Station table will be populated by JavaScript -->
+  </div>
+</div>
+
+<div class="footer">
+  Made with ❤️ by <a href="https://sheetsj.com" target="_blank">Jeff Sheets</a> - husker grad and fan - GBR!
+  <span class="footer-divider">|</span>
+  Back to <a href="/">home</a> page
+  <span class="footer-divider">|</span>
+  <a href="about.html">About</a> this tool
+  <span class="footer-divider">|</span>
+  Thanks to <a href="https://huskers.com/listen" target="_blank">huskers.com</a> for reference
+  <span class="footer-divider">|</span>
+  If stations are not working, try <a href="https://huskers.com/listen" target="_blank">streaming live</a>
+</div>
+
+<script src="js/stations.js"></script>
+<script>
+let currentFilters = {
+  football: true,
+  volleyball: true
+};
+
+function filterStations() {
+  currentFilters.football = document.getElementById('filterFootball').checked;
+  currentFilters.volleyball = document.getElementById('filterVolleyball').checked;
+  renderStationTable();
+}
+
+function renderStationTable() {
+  // Filter stations based on current filters
+  const filteredStations = stations.filter(station =>
+    (station.Sport === 'Football' && currentFilters.football) ||
+    (station.Sport === 'Volleyball' && currentFilters.volleyball)
+  );
+
+  // Group stations by city and frequency to combine sports
+  const groupedStations = new Map();
+
+  filteredStations.forEach(station => {
+    const key = `${station.City}-${station.CallSign}-${station.Frequency}${station.Format}`;
+    if (!groupedStations.has(key)) {
+      groupedStations.set(key, {
+        ...station,
+        sports: []
+      });
+    }
+    groupedStations.get(key).sports.push(station.Sport);
+  });
+
+  // Convert to array and sort by state, then city, then frequency
+  const sortedStations = Array.from(groupedStations.values()).sort((a, b) => {
+    if (a.State !== b.State) return (a.State || '').localeCompare(b.State || '');
+    if (a.City !== b.City) return a.City.localeCompare(b.City);
+    return a.Frequency - b.Frequency;
+  });
+
+  // Build HTML table
+  let html = `
+    <table class="station-table">
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>State</th>
+          <th>Frequency</th>
+          <th>Call Sign</th>
+          <th>Sports</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  sortedStations.forEach(station => {
+    const uniqueSports = [...new Set(station.sports)];
+    const sportsHtml = uniqueSports.map(sport => {
+      const sportClass = sport.toLowerCase();
+      return `<span class="station-sport ${sportClass}">${sport}</span>`;
+    }).join(' ');
+
+    html += `
+      <tr>
+        <td>${station.City}</td>
+        <td>${station.State || ''}</td>
+        <td>${station.Frequency}${station.Format}</td>
+        <td>${station.CallSign}</td>
+        <td>${sportsHtml}</td>
+      </tr>
+    `;
+  });
+
+  html += `
+      </tbody>
+    </table>
+    <div class="station-count">
+      Showing ${sortedStations.length} stations
+    </div>
+  `;
+
+  document.getElementById('stationTable').innerHTML = html;
+}
+
+// Initialize the table when page loads
+document.addEventListener('DOMContentLoaded', renderStationTable);
+</script>
+
+</body>
+</html>
