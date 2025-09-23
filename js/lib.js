@@ -31,16 +31,31 @@ const getDistance = (from, to, accuracy = 1) => {
 };
 
 function lookupByLocation() {
-  setDisplay('Loading...');
-  setResults('');
+  setDisplay('🔍 Finding your location...');
+  setResults('<div style="text-align: center; color: #999; padding: 2rem;">Loading...</div>');
 
   navigator.geolocation.getCurrentPosition(function({coords}) {
       sortByLocation(coords);
 
-      setDisplay(`Lat/Lon: ${coords.latitude}, ${coords.longitude}`);
+      setDisplay(`📍 Your location: ${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`);
     },
-    () => {
-      setDisplay('Position lookup from browser failed');
+    (error) => {
+      console.error('Geolocation error:', error);
+      let errorMessage = 'Unable to get your location. ';
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          errorMessage += 'Please allow location access and try again.';
+          break;
+        case error.POSITION_UNAVAILABLE:
+          errorMessage += 'Location information unavailable.';
+          break;
+        case error.TIMEOUT:
+          errorMessage += 'Location request timed out.';
+          break;
+        default:
+          errorMessage += 'Please check your browser settings.';
+      }
+      setDisplay(`❌ ${errorMessage}`);
     });
 }
 
@@ -48,7 +63,13 @@ function setDisplay(text) {
   document.getElementById('display').innerHTML = text;
 }
 function setResults(text) {
-  document.getElementById('results').innerHTML = text;
+  const stationList = document.getElementById('station-list');
+  if (stationList) {
+    stationList.innerHTML = text;
+  } else {
+    // Fallback for compatibility
+    document.getElementById('results').innerHTML = text;
+  }
 }
 
 /**

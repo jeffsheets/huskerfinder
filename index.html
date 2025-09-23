@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <title>Husker Radio Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <h1>🏈🏐 Nebraska Husker Radio Finder</h1>
+</div>
+
+<div id="display">🔍 Finding your location...</div>
+
+<div class="container">
+  <div id="results">
+    <div class="controls-panel">
+      <button class="find-button" onclick="lookupByLocation()">
+        📍 Find Nearest Stations
+      </button>
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="showFootball" checked onchange="updateFilters()">
+          <span>🏈 Football</span>
+        </label>
+        <label>
+          <input type="checkbox" id="showVolleyball" checked onchange="updateFilters()">
+          <span>🏐 Volleyball</span>
+        </label>
+      </div>
+    </div>
+    <div id="station-list">
+      <div style="color: #999; text-align: center; padding: 2rem;">
+        Loading nearest stations...
+      </div>
+    </div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<div class="footer">
+  Made with ❤️ by <a href="https://sheetsj.com" target="_blank">Jeff Sheets</a> - husker grad and fan - GBR!
+  <span class="footer-divider">|</span>
+  <a href="about.html">About this tool</a>
+  <span class="footer-divider">|</span>
+  Thanks to <a href="https://huskers.com/listen" target="_blank">huskers.com</a> for reference
+  <span class="footer-divider">|</span>
+  If stations are not working, try <a href="https://huskers.com/listen" target="_blank">streaming live</a>
+</div>
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+
+<script src="js/geolib.js" lang="js"></script>
+<script src="js/stations.js" lang="js"></script>
+<script src="js/lib.js" lang="js"></script>
+<script src="js/map.js" lang="js"></script>
+</body>
+</html>
