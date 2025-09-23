@@ -398,7 +398,7 @@ a:hover {
 
   .container {
     flex-direction: column;
-    height: calc(100vh - 160px);
+    height: calc(100vh - 200px);
   }
 
   #results {
