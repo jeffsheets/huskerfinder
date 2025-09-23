@@ -252,6 +252,15 @@ function sortByLocation(point) {
     else zoomLevel = 7; // Very far stations
 
     map.setView([point.latitude, point.longitude], zoomLevel);
+
+    // Automatically open popup for closest station
+    if (results.length > 0) {
+      const closestStation = results[0];
+      // Small delay to ensure map has finished moving
+      setTimeout(() => {
+        openStationPopup(closestStation.latitude, closestStation.longitude);
+      }, 500);
+    }
   }
 }
 
@@ -259,6 +268,17 @@ function sortByLocation(point) {
 function focusStation(lat, lng) {
   map.setView([lat, lng], 10);
 
+  // Find and open the popup for this station
+  markers.forEach(marker => {
+    const markerLatLng = marker.getLatLng();
+    if (Math.abs(markerLatLng.lat - lat) < 0.001 && Math.abs(markerLatLng.lng - lng) < 0.001) {
+      marker.openPopup();
+    }
+  });
+}
+
+// Open popup for a specific station without changing the map view
+function openStationPopup(lat, lng) {
   // Find and open the popup for this station
   markers.forEach(marker => {
     const markerLatLng = marker.getLatLng();
