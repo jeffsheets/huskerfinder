@@ -26,6 +26,16 @@ body {
   margin: 0;
 }
 
+.title-link {
+  color: white;
+  text-decoration: none;
+}
+
+.title-link:hover {
+  text-decoration: none;
+  color: white;
+}
+
 .desktop-nav {
   display: flex;
   gap: 1.5rem;
