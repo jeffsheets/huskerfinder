@@ -5,7 +5,7 @@
   "author": "Jeff Sheets <jeffsheets@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn serve src"
+    "start": "yarn serve ."
   },
   "devDependencies": {
     "serve": "^11.1.0"
