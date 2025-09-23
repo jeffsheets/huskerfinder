@@ -126,8 +126,6 @@ function updateFilters() {
   }
 }
 
-// Override the sortByLocation function to work with the map
-const originalSortByLocation = sortByLocation;
 function sortByLocation(point) {
   userLocation = point;
 
@@ -237,13 +235,23 @@ function sortByLocation(point) {
 
   userMarker.bindPopup('<b>Your Location</b>').addTo(map);
 
-  // Zoom to show user and nearest stations
+  // Center on user location and zoom to show nearest stations
   if (results.length > 0) {
-    const bounds = L.latLngBounds([
-      [point.latitude, point.longitude],
-      ...results.slice(0, 5).map(s => [s.latitude, s.longitude])
-    ]);
-    map.fitBounds(bounds, { padding: [50, 50] });
+    // Center the map on the user's location
+    map.setView([point.latitude, point.longitude], 10);
+
+    // Calculate the maximum distance to the nearest 5 stations to adjust zoom
+    const maxDistance = Math.max(...results.slice(0, 5).map(s => s.distance));
+
+    // Adjust zoom level based on distance (closer stations = higher zoom)
+    let zoomLevel = 10; // default
+    if (maxDistance < 25) zoomLevel = 11;      // Very close stations
+    else if (maxDistance < 50) zoomLevel = 10; // Close stations
+    else if (maxDistance < 100) zoomLevel = 9; // Medium distance
+    else if (maxDistance < 200) zoomLevel = 8; // Far stations
+    else zoomLevel = 7; // Very far stations
+
+    map.setView([point.latitude, point.longitude], zoomLevel);
   }
 }
 
