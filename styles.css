@@ -331,10 +331,6 @@ a:hover {
   margin-top: 1rem;
 }
 
-.mobile-nav-link,
-.mobile-nav-divider {
-  display: none;
-}
 
 /* Footer Styles */
 .footer {
@@ -375,12 +371,8 @@ a:hover {
   }
 
   .desktop-nav {
-    display: none;
-  }
-
-  .mobile-nav-link,
-  .mobile-nav-divider {
-    display: inline;
+    align-self: flex-end;
+    margin-top: -0.5rem;
   }
 
   .container {
