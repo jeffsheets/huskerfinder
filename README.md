@@ -1,4 +1,4 @@
-# 🏈🏐 Husker Radio Finder
+# 🏈🏐 Huskers Radio Finder
 
 Find radio stations broadcasting Nebraska Husker football and volleyball games near your location.
 
