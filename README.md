@@ -32,11 +32,8 @@ Because I never know what station has the game, at home or on the road. And neve
 git clone https://github.com/jeffsheets/huskerfinder.git
 cd huskerfinder
 
-# Install dependencies
-yarn install
-
 # Start local server
-yarn start
+npx serve .
 
 # Visit http://localhost:3000
 ```
