@@ -246,7 +246,24 @@ function sortByLocation(point) {
     else if (maxDistance < 50) zoomLevel = 10; // Close stations
     else if (maxDistance < 100) zoomLevel = 9; // Medium distance
     else if (maxDistance < 200) zoomLevel = 8; // Far stations
-    else zoomLevel = 7; // Very far stations
+    else {
+      // For very far stations, calculate optimal zoom to fit both user and closest station
+      const closestStation = results[0];
+      const userLatLng = L.latLng(point.latitude, point.longitude);
+      const stationLatLng = L.latLng(closestStation.latitude, closestStation.longitude);
+
+      // Create bounds containing both points
+      const bounds = L.latLngBounds([userLatLng, stationLatLng]);
+
+      // Add some padding to the bounds (10% on each side)
+      const paddedBounds = bounds.pad(0.1);
+
+      // Calculate zoom level that fits both points
+      zoomLevel = map.getBoundsZoom(paddedBounds);
+
+      // Ensure zoom level is within reasonable limits
+      zoomLevel = Math.max(4, Math.min(8, zoomLevel));
+    }
 
     map.setView([point.latitude, point.longitude], zoomLevel);
 
