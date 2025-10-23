@@ -3,7 +3,9 @@ let markers = [];
 let userMarker;
 let currentFilters = {
   football: true,
-  volleyball: true
+  volleyball: true,
+  mensBasketball: true,
+  womensBasketball: true
 };
 let userLocation = null;
 
@@ -25,7 +27,9 @@ function initMap() {
 function getStationIcon(sport) {
   const colors = {
     'Football': '#d00000',
-    'Volleyball': '#333333'
+    'Volleyball': '#333333',
+    "Men's Basketball": '#D2B48C',
+    "Women's Basketball": '#FFB6D9'
   };
 
   return L.divIcon({
@@ -68,13 +72,19 @@ function addStationMarkers() {
     // Check if this station should be shown based on filters
     const shouldShow = stationList.some(s =>
       (s.Sport === 'Football' && currentFilters.football) ||
-      (s.Sport === 'Volleyball' && currentFilters.volleyball)
+      (s.Sport === 'Volleyball' && currentFilters.volleyball) ||
+      (s.Sport === "Men's Basketball" && currentFilters.mensBasketball) ||
+      (s.Sport === "Women's Basketball" && currentFilters.womensBasketball)
     );
 
     if (!shouldShow) return;
 
-    // Determine primary sport for icon color
-    const primarySport = stationList.find(s => s.Sport === 'Football') ? 'Football' : 'Volleyball';
+    // Determine primary sport for icon color (priority order: Football, Volleyball, Men's BB, Women's BB)
+    const primarySport = stationList.find(s => s.Sport === 'Football')?.Sport ||
+                        stationList.find(s => s.Sport === 'Volleyball')?.Sport ||
+                        stationList.find(s => s.Sport === "Men's Basketball")?.Sport ||
+                        stationList.find(s => s.Sport === "Women's Basketball")?.Sport ||
+                        'Football';
 
     const marker = L.marker(
       [firstStation.latitude, firstStation.longitude],
@@ -94,7 +104,13 @@ function addStationMarkers() {
 
     Object.keys(bySport).forEach(sport => {
       const sportStations = bySport[sport];
-      const sportColor = sport === 'Football' ? '#d00000' : '#333';
+      const sportColors = {
+        'Football': '#d00000',
+        'Volleyball': '#333',
+        "Men's Basketball": '#8B7355',
+        "Women's Basketball": '#FF69B4'
+      };
+      const sportColor = sportColors[sport] || '#666';
       popupContent += `<div style="margin-bottom: 8px;">`;
       popupContent += `<strong style="color: ${sportColor};">${sport}:</strong><br>`;
       sportStations.forEach(s => {
@@ -116,6 +132,8 @@ function addStationMarkers() {
 function updateFilters() {
   currentFilters.football = document.getElementById('showFootball').checked;
   currentFilters.volleyball = document.getElementById('showVolleyball').checked;
+  currentFilters.mensBasketball = document.getElementById('showMensBasketball').checked;
+  currentFilters.womensBasketball = document.getElementById('showWomensBasketball').checked;
 
   // Refresh markers
   addStationMarkers();
@@ -132,7 +150,9 @@ function sortByLocation(point) {
   // Filter stations based on current sport filters
   let filteredStations = stations.filter(station =>
     (station.Sport === 'Football' && currentFilters.football) ||
-    (station.Sport === 'Volleyball' && currentFilters.volleyball)
+    (station.Sport === 'Volleyball' && currentFilters.volleyball) ||
+    (station.Sport === "Men's Basketball" && currentFilters.mensBasketball) ||
+    (station.Sport === "Women's Basketball" && currentFilters.womensBasketball)
   );
 
   // Calculate distances for all filtered stations
@@ -187,9 +207,15 @@ function sortByLocation(point) {
     html += `<div class="station-sports">`;
     // Show all sports this station broadcasts
     uniqueSports.forEach(sport => {
-      html += `<span class="station-sport ${sport.toLowerCase()}">`;
-      html += `<span class="sport-long">${sport}</span>`;
-      html += `<span class="sport-short">${sport === 'Football' ? 'FB' : 'VB'}</span>`;
+      const sportClass = sport.toLowerCase().replace(/['\s]/g, '-');
+      const shortForms = {
+        'Football': 'FB',
+        'Volleyball': 'VB',
+        "Men's Basketball": 'MBB',
+        "Women's Basketball": 'WBB'
+      };
+      html += `<span class="station-sport ${sportClass}">`;
+      html += `${shortForms[sport] || sport}`;
       html += `</span>`;
     });
     html += `</div>`;
