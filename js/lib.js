@@ -46,7 +46,6 @@ function lookupByLocation() {
       setDisplay(`📍 Your location: ${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`);
     },
     (error) => {
-      console.error('Geolocation error:', error);
       let errorMessage = 'Unable to get your location. ';
       switch(error.code) {
         case error.PERMISSION_DENIED:
