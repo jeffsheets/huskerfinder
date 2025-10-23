@@ -34,6 +34,12 @@ function lookupByLocation() {
   setDisplay('🔍 Finding your location...');
   setResults('<div style="text-align: center; color: #999; padding: 2rem;">Loading...</div>');
 
+  // Check if geolocation is available
+  if (!navigator.geolocation) {
+    showFallbackStations();
+    return;
+  }
+
   navigator.geolocation.getCurrentPosition(function({coords}) {
       sortByLocation(coords);
 
@@ -44,19 +50,51 @@ function lookupByLocation() {
       let errorMessage = 'Unable to get your location. ';
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          errorMessage += 'Please allow location access and try again.';
+          errorMessage += 'Showing all stations - click "Find Nearest Stations" to enable location access.';
           break;
         case error.POSITION_UNAVAILABLE:
-          errorMessage += 'Location information unavailable.';
+          errorMessage += 'Showing all stations instead.';
           break;
         case error.TIMEOUT:
-          errorMessage += 'Location request timed out.';
+          errorMessage += 'Showing all stations instead.';
           break;
         default:
-          errorMessage += 'Please check your browser settings.';
+          errorMessage += 'Showing all stations instead.';
       }
-      setDisplay(`❌ ${errorMessage}`);
+      setDisplay(`ℹ️ ${errorMessage}`);
+      showFallbackStations();
     });
+}
+
+function showFallbackStations() {
+  // When location is unavailable, show helpful message and link to full list
+  // This ensures crawlers and users without location access still have a path forward
+
+  const html = `
+    <div style="padding: 2rem; text-align: center;">
+      <p style="color: #666; margin-bottom: 1rem;">
+        <strong>Location access is required to find stations near you.</strong>
+      </p>
+      <p style="color: #666; margin-bottom: 1.5rem;">
+        Click the "Find Nearest Stations" button above to enable location access,
+        or view all stations by city.
+      </p>
+      <a href="stations.html" style="
+        display: inline-block;
+        background: #d00000;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+      ">View Full Station List</a>
+    </div>
+  `;
+
+  setResults(html);
+
+  // Update the display message
+  setDisplay('ℹ️ Location unavailable. Click "Find Nearest Stations" to enable location access.');
 }
 
 function setDisplay(text) {
