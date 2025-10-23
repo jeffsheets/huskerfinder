@@ -43,11 +43,19 @@
   <div class="filter-controls">
     <label>
       <input type="checkbox" id="filterFootball" checked onchange="filterStations()">
-      <span>🏈 Football</span>
+      <span>🏈 FB</span>
     </label>
     <label>
       <input type="checkbox" id="filterVolleyball" checked onchange="filterStations()">
-      <span>🏐 Volleyball</span>
+      <span>🏐 VB</span>
+    </label>
+    <label>
+      <input type="checkbox" id="filterMensBasketball" checked onchange="filterStations()">
+      <span>🏀 MBB</span>
+    </label>
+    <label>
+      <input type="checkbox" id="filterWomensBasketball" checked onchange="filterStations()">
+      <span>🏀 WBB</span>
     </label>
   </div>
 
@@ -72,12 +80,16 @@
 <script>
 let currentFilters = {
   football: true,
-  volleyball: true
+  volleyball: true,
+  mensBasketball: true,
+  womensBasketball: true
 };
 
 function filterStations() {
   currentFilters.football = document.getElementById('filterFootball').checked;
   currentFilters.volleyball = document.getElementById('filterVolleyball').checked;
+  currentFilters.mensBasketball = document.getElementById('filterMensBasketball').checked;
+  currentFilters.womensBasketball = document.getElementById('filterWomensBasketball').checked;
   renderStationTable();
 }
 
@@ -85,7 +97,9 @@ function renderStationTable() {
   // Filter stations based on current filters
   const filteredStations = stations.filter(station =>
     (station.Sport === 'Football' && currentFilters.football) ||
-    (station.Sport === 'Volleyball' && currentFilters.volleyball)
+    (station.Sport === 'Volleyball' && currentFilters.volleyball) ||
+    (station.Sport === "Men's Basketball" && currentFilters.mensBasketball) ||
+    (station.Sport === "Women's Basketball" && currentFilters.womensBasketball)
   );
 
   // Group stations by city and frequency to combine sports
@@ -127,7 +141,7 @@ function renderStationTable() {
   sortedStations.forEach(station => {
     const uniqueSports = [...new Set(station.sports)];
     const sportsHtml = uniqueSports.map(sport => {
-      const sportClass = sport.toLowerCase();
+      const sportClass = sport.toLowerCase().replace(/['\s]/g, '-');
       return `<span class="station-sport ${sportClass}">${sport}</span>`;
     }).join(' ');
 

@@ -216,6 +216,18 @@ body {
   color: white;
 }
 
+.station-sport.mens-basketball,
+.station-sport.men-s-basketball {
+  background: #6c6d70;
+  color: white;
+}
+
+.station-sport.womens-basketball,
+.station-sport.women-s-basketball {
+  background: #FF1493;
+  color: white;
+}
+
 .sport-short {
   display: none;
 }
