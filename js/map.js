@@ -79,16 +79,10 @@ function addStationMarkers() {
 
     if (!shouldShow) return;
 
-    // Determine primary sport for icon color (priority order: Football, Volleyball, Men's BB, Women's BB)
-    const primarySport = stationList.find(s => s.Sport === 'Football')?.Sport ||
-                        stationList.find(s => s.Sport === 'Volleyball')?.Sport ||
-                        stationList.find(s => s.Sport === "Men's Basketball")?.Sport ||
-                        stationList.find(s => s.Sport === "Women's Basketball")?.Sport ||
-                        'Football';
-
+    // Use Husker red for all station markers
     const marker = L.marker(
       [firstStation.latitude, firstStation.longitude],
-      { icon: getStationIcon(primarySport) }
+      { icon: getStationIcon('Football') } // Always use Football (red) color
     );
 
     // Create popup content
@@ -144,7 +138,7 @@ function updateFilters() {
   }
 }
 
-function sortByLocation(point) {
+function sortByLocation(point, isFallback = false) {
   userLocation = point;
 
   // Filter stations based on current sport filters
@@ -263,38 +257,50 @@ function sortByLocation(point) {
 
   // Center on user location and zoom to show nearest stations
   if (results.length > 0) {
-    // Calculate the maximum distance to the nearest 5 stations to adjust zoom
-    const maxDistance = Math.max(...results.slice(0, 5).map(s => s.distance));
+    let zoomLevel;
+    let centerPoint;
 
-    // Adjust zoom level based on distance (closer stations = higher zoom)
-    let zoomLevel = 10; // default
-    if (maxDistance < 25) zoomLevel = 11;      // Very close stations
-    else if (maxDistance < 50) zoomLevel = 10; // Close stations
-    else if (maxDistance < 100) zoomLevel = 9; // Medium distance
-    else if (maxDistance < 200) zoomLevel = 8; // Far stations
-    else {
-      // For very far stations, calculate optimal zoom to fit both user and closest station
-      const closestStation = results[0];
-      const userLatLng = L.latLng(point.latitude, point.longitude);
-      const stationLatLng = L.latLng(closestStation.latitude, closestStation.longitude);
+    if (isFallback) {
+      // For fallback location, show the whole state of Nebraska
+      // Center on Nebraska (approximately) and zoom out to show all stations
+      centerPoint = [41.5, -99.8]; // Center of Nebraska
+      zoomLevel = 7; // State-wide view
+    } else {
+      // Calculate the maximum distance to the nearest 5 stations to adjust zoom
+      const maxDistance = Math.max(...results.slice(0, 5).map(s => s.distance));
 
-      // Create bounds containing both points
-      const bounds = L.latLngBounds([userLatLng, stationLatLng]);
+      // Adjust zoom level based on distance (closer stations = higher zoom)
+      zoomLevel = 10; // default
+      if (maxDistance < 25) zoomLevel = 11;      // Very close stations
+      else if (maxDistance < 50) zoomLevel = 10; // Close stations
+      else if (maxDistance < 100) zoomLevel = 9; // Medium distance
+      else if (maxDistance < 200) zoomLevel = 8; // Far stations
+      else {
+        // For very far stations, calculate optimal zoom to fit both user and closest station
+        const closestStation = results[0];
+        const userLatLng = L.latLng(point.latitude, point.longitude);
+        const stationLatLng = L.latLng(closestStation.latitude, closestStation.longitude);
 
-      // Add some padding to the bounds (10% on each side)
-      const paddedBounds = bounds.pad(0.1);
+        // Create bounds containing both points
+        const bounds = L.latLngBounds([userLatLng, stationLatLng]);
 
-      // Calculate zoom level that fits both points
-      zoomLevel = map.getBoundsZoom(paddedBounds);
+        // Add some padding to the bounds (10% on each side)
+        const paddedBounds = bounds.pad(0.1);
 
-      // Ensure zoom level is within reasonable limits
-      zoomLevel = Math.max(4, Math.min(8, zoomLevel));
+        // Calculate zoom level that fits both points
+        zoomLevel = map.getBoundsZoom(paddedBounds);
+
+        // Ensure zoom level is within reasonable limits
+        zoomLevel = Math.max(4, Math.min(8, zoomLevel));
+      }
+
+      centerPoint = [point.latitude, point.longitude];
     }
 
-    map.setView([point.latitude, point.longitude], zoomLevel);
+    map.setView(centerPoint, zoomLevel);
 
-    // Automatically open popup for closest station
-    if (results.length > 0) {
+    // Automatically open popup for closest station (skip for fallback to show more context)
+    if (!isFallback && results.length > 0) {
       const closestStation = results[0];
       // Small delay to ensure map has finished moving
       setTimeout(() => {

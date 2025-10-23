@@ -67,47 +67,34 @@ function lookupByLocation() {
 }
 
 function showFallbackStations() {
-  // Show a sample of stations from different areas of Nebraska when location is unavailable
-  // This ensures crawlers and users without location access still see content
+  // When location is unavailable, show helpful message and link to full list
+  // This ensures crawlers and users without location access still have a path forward
 
-  const fallbackCities = ['Lincoln', 'Omaha', 'Grand Island', 'Kearney', 'North Platte', 'Scottsbluff'];
-  const fallbackStations = stations.filter(station =>
-    fallbackCities.includes(station.City)
-  );
+  const html = `
+    <div style="padding: 2rem; text-align: center;">
+      <p style="color: #666; margin-bottom: 1rem;">
+        <strong>Location access is required to find stations near you.</strong>
+      </p>
+      <p style="color: #666; margin-bottom: 1.5rem;">
+        Click the "Find Nearest Stations" button above to enable location access,
+        or view all stations by city.
+      </p>
+      <a href="stations.html" style="
+        display: inline-block;
+        background: #d00000;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+      ">View Full Station List</a>
+    </div>
+  `;
 
-  // Group by city and take first station from each
-  const cityMap = new Map();
-  fallbackStations.forEach(station => {
-    if (!cityMap.has(station.City)) {
-      cityMap.set(station.City, station);
-    }
-  });
+  setResults(html);
 
-  const displayStations = Array.from(cityMap.values()).slice(0, 10);
-
-  if (displayStations.length > 0) {
-    // Use the same display format as location-based results
-    if (typeof sortByLocation !== 'undefined') {
-      // If we have the map.js loaded, show stations with proper formatting
-      setResults(displayStations.map(station =>
-        `<div class="station-item">
-          <div class="station-info">
-            <span class="station-freq">${station.Frequency}${station.Format}</span>
-            <span class="station-call">${station.CallSign}</span>
-            <span class="station-location">${station.City}, ${station.State || ''}</span>
-          </div>
-          <div class="station-sports">
-            <span class="station-sport ${station.Sport.toLowerCase().replace(/['\s]/g, '-')}">${station.Sport}</span>
-          </div>
-        </div>`
-      ).join(''));
-    } else {
-      // Fallback simple display
-      setResults(displayStations.map(station =>
-        `<div>${station.Frequency}${station.Format} ${station.CallSign}, ${station.City}, ${station.State} -- ${station.Sport}</div>`
-      ).join(''));
-    }
-  }
+  // Update the display message
+  setDisplay('ℹ️ Location unavailable. Click "Find Nearest Stations" to enable location access.');
 }
 
 function setDisplay(text) {
