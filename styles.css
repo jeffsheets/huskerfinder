@@ -285,6 +285,75 @@ a:hover {
   text-decoration: underline;
 }
 
+/* GPS Banner Styles */
+.gps-banner {
+  background: #fff3f3;
+  padding: 1.5rem;
+  border-left: 4px solid #d00000;
+  margin: 1rem 0 2rem 0;
+  border-radius: 4px;
+}
+
+.gps-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.gps-banner-text {
+  flex: 1;
+}
+
+.gps-banner-title {
+  color: #d00000;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  border: none;
+  padding: 0;
+}
+
+.gps-banner-subtitle {
+  color: #444;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.gps-banner-button {
+  display: block;
+  width: 80%;
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #d00000;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(208, 0, 0, 0.3);
+  border: 3px solid #d00000;
+}
+
+.gps-banner-button:hover {
+  background: #b00000;
+  border-color: #b00000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(208, 0, 0, 0.4);
+  text-decoration: none;
+}
+
+.gps-banner-button:active {
+  transform: translateY(-1px);
+  background: #900000;
+  border-color: #900000;
+  box-shadow: 0 3px 10px rgba(208, 0, 0, 0.3);
+}
+
 /* Station Table Styles */
 .station-source {
   background: #fff3f3;
@@ -292,6 +361,39 @@ a:hover {
   border-left: 4px solid #d00000;
   margin: 1rem 0;
   border-radius: 4px;
+}
+
+.station-list-details {
+  margin: 1.5rem 0;
+}
+
+.toggle-list-button {
+  width: 100%;
+  background: #f8f8f8;
+  border: 2px solid #d00000;
+  color: #d00000;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  list-style: none;
+  text-align: center;
+}
+
+.toggle-list-button:hover {
+  background: #fff3f3;
+  border-color: #b00000;
+  color: #b00000;
+}
+
+.toggle-list-button::-webkit-details-marker {
+  display: none;
+}
+
+.station-list-details[open] .toggle-list-button {
+  margin-bottom: 1.5rem;
 }
 
 .filter-controls {
@@ -518,6 +620,33 @@ a:hover {
   .about-page .container {
     margin: 1rem;
     padding: 1.5rem;
+  }
+
+  /* GPS Banner mobile styles */
+  .gps-banner {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gps-banner-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .gps-banner-title {
+    font-size: 1.2rem;
+  }
+
+  .gps-banner-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .gps-banner-button {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
   }
 
   /* Station table mobile styles */
