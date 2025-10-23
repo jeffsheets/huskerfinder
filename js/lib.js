@@ -34,6 +34,12 @@ function lookupByLocation() {
   setDisplay('🔍 Finding your location...');
   setResults('<div style="text-align: center; color: #999; padding: 2rem;">Loading...</div>');
 
+  // Check if geolocation is available
+  if (!navigator.geolocation) {
+    showFallbackStations();
+    return;
+  }
+
   navigator.geolocation.getCurrentPosition(function({coords}) {
       sortByLocation(coords);
 
@@ -44,19 +50,64 @@ function lookupByLocation() {
       let errorMessage = 'Unable to get your location. ';
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          errorMessage += 'Please allow location access and try again.';
+          errorMessage += 'Showing all stations - click "Find Nearest Stations" to enable location access.';
           break;
         case error.POSITION_UNAVAILABLE:
-          errorMessage += 'Location information unavailable.';
+          errorMessage += 'Showing all stations instead.';
           break;
         case error.TIMEOUT:
-          errorMessage += 'Location request timed out.';
+          errorMessage += 'Showing all stations instead.';
           break;
         default:
-          errorMessage += 'Please check your browser settings.';
+          errorMessage += 'Showing all stations instead.';
       }
-      setDisplay(`❌ ${errorMessage}`);
+      setDisplay(`ℹ️ ${errorMessage}`);
+      showFallbackStations();
     });
+}
+
+function showFallbackStations() {
+  // Show a sample of stations from different areas of Nebraska when location is unavailable
+  // This ensures crawlers and users without location access still see content
+
+  const fallbackCities = ['Lincoln', 'Omaha', 'Grand Island', 'Kearney', 'North Platte', 'Scottsbluff'];
+  const fallbackStations = stations.filter(station =>
+    fallbackCities.includes(station.City)
+  );
+
+  // Group by city and take first station from each
+  const cityMap = new Map();
+  fallbackStations.forEach(station => {
+    if (!cityMap.has(station.City)) {
+      cityMap.set(station.City, station);
+    }
+  });
+
+  const displayStations = Array.from(cityMap.values()).slice(0, 10);
+
+  if (displayStations.length > 0) {
+    // Use the same display format as location-based results
+    if (typeof sortByLocation !== 'undefined') {
+      // If we have the map.js loaded, show stations with proper formatting
+      setResults(displayStations.map(station =>
+        `<div class="station-item">
+          <div class="station-info">
+            <span class="station-freq">${station.Frequency}${station.Format}</span>
+            <span class="station-call">${station.CallSign}</span>
+            <span class="station-location">${station.City}, ${station.State || ''}</span>
+          </div>
+          <div class="station-sports">
+            <span class="station-sport ${station.Sport.toLowerCase().replace(/['\s]/g, '-')}">${station.Sport}</span>
+          </div>
+        </div>`
+      ).join(''));
+    } else {
+      // Fallback simple display
+      setResults(displayStations.map(station =>
+        `<div>${station.Frequency}${station.Format} ${station.CallSign}, ${station.City}, ${station.State} -- ${station.Sport}</div>`
+      ).join(''));
+    }
+  }
 }
 
 function setDisplay(text) {
