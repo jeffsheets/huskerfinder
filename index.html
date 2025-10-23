@@ -1,28 +1,59 @@
 <!doctype html>
 <html>
 <head>
-  <title>Huskers Radio Finder</title>
+  <title>Find Husker Radio Near Me - GPS Location Finder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Find radio stations broadcasting Nebraska Husker football and volleyball games near your location">
+  <meta name="description" content="Instantly find Nebraska Husker football, volleyball & basketball radio stations near you using GPS. Live game broadcasts with automatic distance calculation and interactive map.">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jeffsheets.github.io/huskerfinder/">
-  <meta property="og:title" content="Huskers Radio Finder - Find Local Game Broadcasts">
-  <meta property="og:description" content="Find radio stations broadcasting Nebraska Husker football and volleyball games near your location">
+  <meta property="og:title" content="Find Husker Radio Near Me - GPS Location Finder">
+  <meta property="og:description" content="Instantly find Nebraska Husker football, volleyball & basketball radio stations near you using GPS. Live game broadcasts with automatic distance calculation and interactive map.">
   <meta property="og:image" content="https://jeffsheets.github.io/huskerfinder/og-image.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://jeffsheets.github.io/huskerfinder/">
-  <meta property="twitter:title" content="Huskers Radio Finder - Find Local Game Broadcasts">
-  <meta property="twitter:description" content="Find radio stations broadcasting Nebraska Husker football and volleyball games near your location">
+  <meta property="twitter:title" content="Find Husker Radio Near Me - GPS Location Finder">
+  <meta property="twitter:description" content="Instantly find Nebraska Husker football, volleyball & basketball radio stations near you using GPS. Live game broadcasts with automatic distance calculation and interactive map.">
   <meta property="twitter:image" content="https://jeffsheets.github.io/huskerfinder/og-image.png">
 
   <!-- Additional meta for broader social media support -->
   <meta name="author" content="Jeff Sheets">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#d00000">
+
+  <!-- Schema.org structured data for better search engine understanding -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Huskers Radio Finder",
+    "description": "GPS-based radio station finder for Nebraska Husker football, volleyball, and basketball games",
+    "url": "https://jeffsheets.github.io/huskerfinder/",
+    "applicationCategory": "Utility",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript and geolocation support",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "GPS location detection",
+      "Interactive map with station markers",
+      "Automatic distance calculation",
+      "Filter by sport (Football, Volleyball, Basketball)",
+      "Real-time location-based search"
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Jeff Sheets",
+      "url": "https://sheetsj.com"
+    }
+  }
+  </script>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
