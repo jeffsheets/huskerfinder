@@ -6,7 +6,7 @@ Because I never know what station has the game, at home or on the road. And neve
 
 ## 🌐 Live App
 
-**[https://jeffsheets.github.io/huskerfinder/](https://jeffsheets.github.io/huskerfinder/)**
+**[https://huskerfinder.sheetsj.com/](https://huskerfinder.sheetsj.com/)**
 
 ## ✨ Features
 
@@ -19,7 +19,7 @@ Because I never know what station has the game, at home or on the road. And neve
 
 ## 🚀 Quick Start
 
-1. Visit the live site: [jeffsheets.github.io/huskerfinder](https://jeffsheets.github.io/huskerfinder/)
+1. Visit the live site: [huskerfinder.sheetsj.com](https://huskerfinder.sheetsj.com/)
 2. Allow location access when prompted
 3. View nearby stations sorted by distance
 4. Click on map markers or station list items for details
