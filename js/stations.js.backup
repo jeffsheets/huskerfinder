@@ -50,20 +50,13 @@ const stations = [
   {
     "City": "Alliance",
     "State": "NE",
-    "latitude": 42.10619444444445,
-    "longitude": -102.88861111111112,
+    "latitude": 42.09302,
+    "longitude": -102.8702,
     "CallSign": "KCOW",
     "Format": "FM",
     "Frequency": 92.5,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 42.10619444444445,
-    "towerLongitude": -102.88861111111112,
-    "cityLatitude": 42.09302,
-    "cityLongitude": -102.8702,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KCOW"
+    "Year": 2025
   },
   {
     "City": "Aurora",
@@ -292,18 +285,13 @@ const stations = [
   {
     "City": "Hastings",
     "State": "NE",
-    "latitude": 40.602222222222224,
-    "longitude": -98.83952777777777,
-    "CallSign": "KLIQ",
+    "latitude": 40.582425,
+    "longitude": -98.389035,
+    "CallSign": "KICS/KXPN",
     "Format": "FM",
     "Frequency": 94.5,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 40.602222222222224,
-    "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
-    "power": 233
+    "Year": 2025
   },
   {
     "City": "Hay Springs",
@@ -340,20 +328,13 @@ const stations = [
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -406,20 +387,13 @@ const stations = [
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Lexington",
@@ -664,20 +638,13 @@ const stations = [
   {
     "City": "Rapid City",
     "State": "SD",
-    "latitude": 44.03333333333333,
-    "longitude": -103.18794444444445,
+    "latitude": 44.145868,
+    "longitude": -103.206866,
     "CallSign": "KOTA",
     "Format": "FM",
     "Frequency": 100.7,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 44.03333333333333,
-    "towerLongitude": -103.18794444444445,
-    "cityLatitude": 44.145868,
-    "cityLongitude": -103.206866,
-    "power": 5,
-    "powerSource": "AM",
-    "translatorOf": "KOTA"
+    "Year": 2025
   },
   {
     "City": "Rapid City",
@@ -1018,20 +985,13 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.073908,
+    "longitude": -95.602053,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Volleyball",
-    "Year": 2025,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -1164,20 +1124,13 @@ const stations = [
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Volleyball",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -1214,20 +1167,13 @@ const stations = [
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Volleyball",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -1696,20 +1642,13 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.073908,
+    "longitude": -95.602053,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -1874,20 +1813,13 @@ const stations = [
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -1924,20 +1856,13 @@ const stations = [
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -2006,20 +1931,13 @@ const stations = [
   {
     "City": "Lincoln",
     "State": "NE",
-    "latitude": 40.848333333333336,
-    "longitude": -96.67502777777779,
+    "latitude": 40.811,
+    "longitude": -96.6803,
     "CallSign": "KLIN",
     "Format": "FM",
     "Frequency": 99.3,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.848333333333336,
-    "towerLongitude": -96.67502777777779,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KLIN"
+    "Year": 2025
   },
   {
     "City": "McCook",
@@ -2456,20 +2374,13 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.073908,
+    "longitude": -95.602053,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Women's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -2554,20 +2465,13 @@ const stations = [
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Women's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Holdrege",
@@ -2604,20 +2508,13 @@ const stations = [
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Women's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Kearney",

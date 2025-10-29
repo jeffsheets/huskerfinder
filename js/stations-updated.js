@@ -11,8 +11,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 1
   },
   {
@@ -27,8 +27,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 224
   },
   {
@@ -43,27 +43,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.10619444444445,
     "towerLongitude": -102.88861111111112,
-    "cityLatitude": 42.09302,
-    "cityLongitude": -102.8702,
+    "cityLatitude": 42.10619444444445,
+    "cityLongitude": -102.88861111111112,
     "power": 1
   },
   {
     "City": "Alliance",
     "State": "NE",
-    "latitude": 42.10619444444445,
-    "longitude": -102.88861111111112,
+    "latitude": 42.09302,
+    "longitude": -102.8702,
     "CallSign": "KCOW",
     "Format": "FM",
     "Frequency": 92.5,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 42.10619444444445,
-    "towerLongitude": -102.88861111111112,
-    "cityLatitude": 42.09302,
-    "cityLongitude": -102.8702,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KCOW"
+    "Year": 2025
   },
   {
     "City": "Aurora",
@@ -77,8 +70,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87888888888889,
     "towerLongitude": -98.09366666666666,
-    "cityLatitude": 40.867,
-    "cityLongitude": -98.004,
+    "cityLatitude": 40.87888888888889,
+    "cityLongitude": -98.09366666666666,
     "power": 247
   },
   {
@@ -93,8 +86,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.26361111111111,
     "towerLongitude": -96.77447222222222,
-    "cityLatitude": 40.313364,
-    "cityLongitude": -96.693082,
+    "cityLatitude": 40.26361111111111,
+    "cityLongitude": -96.77447222222222,
     "power": 0.53
   },
   {
@@ -109,8 +102,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.38722222222222,
     "towerLongitude": -99.82122222222222,
-    "cityLatitude": 41.451119,
-    "cityLongitude": -99.621491,
+    "cityLatitude": 41.38722222222222,
+    "cityLongitude": -99.82122222222222,
     "power": 237
   },
   {
@@ -125,8 +118,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.83219444444445,
     "towerLongitude": -103.0171388888889,
-    "cityLatitude": 42.774479,
-    "cityLongitude": -103.138479,
+    "cityLatitude": 42.83219444444445,
+    "cityLongitude": -103.0171388888889,
     "power": 1
   },
   {
@@ -141,8 +134,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.439722222222215,
     "towerLongitude": -97.39061111111111,
-    "cityLatitude": 41.4297,
-    "cityLongitude": -97.3686,
+    "cityLatitude": 41.439722222222215,
+    "cityLongitude": -97.39061111111111,
     "power": 1
   },
   {
@@ -157,8 +150,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.54111111111111,
     "towerLongitude": -97.6795,
-    "cityLatitude": 41.4297,
-    "cityLongitude": -97.3686,
+    "cityLatitude": 41.54111111111111,
+    "cityLongitude": -97.6795,
     "power": 228
   },
   {
@@ -173,8 +166,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.11611111111111,
     "towerLongitude": -97.15169444444444,
-    "cityLatitude": 40.175641,
-    "cityLongitude": -97.171023,
+    "cityLatitude": 40.11611111111111,
+    "cityLongitude": -97.15169444444444,
     "power": 0.5
   },
   {
@@ -189,8 +182,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.06583333333333,
     "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
+    "cityLatitude": 40.06583333333333,
+    "cityLongitude": -95.61552777777777,
     "power": 0.5
   },
   {
@@ -205,8 +198,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.43277777777777,
     "towerLongitude": -96.45475,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.43277777777777,
+    "cityLongitude": -96.45475,
     "power": 0.5
   },
   {
@@ -221,8 +214,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.41111111111111,
     "towerLongitude": -96.53169444444444,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.41111111111111,
+    "cityLongitude": -96.53169444444444,
     "power": 288
   },
   {
@@ -237,8 +230,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.749,
-    "cityLongitude": -98.845,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 249
   },
   {
@@ -253,8 +246,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.79886111111111,
     "towerLongitude": -102.26152777777777,
-    "cityLatitude": 42.805,
-    "cityLongitude": -102.204,
+    "cityLatitude": 42.79886111111111,
+    "cityLongitude": -102.26152777777777,
     "power": 238
   },
   {
@@ -269,8 +262,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87138888888889,
     "towerLongitude": -98.27444444444444,
-    "cityLatitude": 40.87227,
-    "cityLongitude": -98.368698,
+    "cityLatitude": 40.87138888888889,
+    "cityLongitude": -98.27444444444444,
     "power": 5
   },
   {
@@ -285,25 +278,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.57780555555556,
     "towerLongitude": -98.40505555555556,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
+    "cityLatitude": 40.57780555555556,
+    "cityLongitude": -98.40505555555556,
     "power": 1
   },
   {
     "City": "Hastings",
     "State": "NE",
-    "latitude": 40.602222222222224,
-    "longitude": -98.83952777777777,
-    "CallSign": "KLIQ",
+    "latitude": 40.582425,
+    "longitude": -98.389035,
+    "CallSign": "KICS/KXPN",
     "Format": "FM",
     "Frequency": 94.5,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 40.602222222222224,
-    "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
-    "power": 233
+    "Year": 2025
   },
   {
     "City": "Hay Springs",
@@ -317,8 +305,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.73941666666667,
     "towerLongitude": -102.69127777777778,
-    "cityLatitude": 42.684,
-    "cityLongitude": -102.687,
+    "cityLatitude": 42.73941666666667,
+    "cityLongitude": -102.69127777777778,
     "power": 299
   },
   {
@@ -333,27 +321,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 0.32
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -367,8 +348,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.5125,
     "towerLongitude": -101.64461111111112,
-    "cityLatitude": 40.515114,
-    "cityLongitude": -101.632038,
+    "cityLatitude": 40.5125,
+    "cityLongitude": -101.64461111111112,
     "power": 275
   },
   {
@@ -383,8 +364,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.668055555555554,
     "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.668055555555554,
+    "cityLongitude": -99.08147222222222,
     "power": 1
   },
   {
@@ -399,27 +380,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 290
   },
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Lexington",
@@ -433,8 +407,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.873227,
-    "cityLongitude": -99.718408,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 50
   },
   {
@@ -449,8 +423,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.848333333333336,
     "towerLongitude": -96.67502777777779,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
+    "cityLatitude": 40.848333333333336,
+    "cityLongitude": -96.67502777777779,
     "power": 1
   },
   {
@@ -465,8 +439,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.864444444444445,
     "towerLongitude": -97.27088888888889,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
+    "cityLatitude": 40.864444444444445,
+    "cityLongitude": -97.27088888888889,
     "power": 251
   },
   {
@@ -481,8 +455,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 287
   },
   {
@@ -497,8 +471,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 230
   },
   {
@@ -513,8 +487,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 271
   },
   {
@@ -529,8 +503,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.674166666666665,
     "towerLongitude": -95.88583333333334,
-    "cityLatitude": 40.707742,
-    "cityLongitude": -95.907718,
+    "cityLatitude": 40.674166666666665,
+    "cityLongitude": -95.88583333333334,
     "power": 0.5
   },
   {
@@ -545,8 +519,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.92444444444444,
     "towerLongitude": -97.60644444444443,
-    "cityLatitude": 42.019977,
-    "cityLongitude": -97.442989,
+    "cityLatitude": 41.92444444444444,
+    "cityLongitude": -97.60644444444443,
     "power": 234
   },
   {
@@ -561,8 +535,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.153888888888886,
     "towerLongitude": -100.77347222222222,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.153888888888886,
+    "cityLongitude": -100.77347222222222,
     "power": 1
   },
   {
@@ -577,8 +551,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21358333333334,
     "towerLongitude": -100.73041666666667,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21358333333334,
+    "cityLongitude": -100.73041666666667,
     "power": 278
   },
   {
@@ -593,8 +567,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 39.827222222222225,
     "towerLongitude": -100.64708333333334,
-    "cityLatitude": 39.818,
-    "cityLongitude": -100.526,
+    "cityLatitude": 39.827222222222225,
+    "cityLongitude": -100.64708333333334,
     "power": 266
   },
   {
@@ -609,8 +583,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 0.97
   },
   {
@@ -625,8 +599,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 1
   },
   {
@@ -641,8 +615,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.63913888888889,
     "towerLongitude": -96.2088888888889,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.63913888888889,
+    "cityLongitude": -96.2088888888889,
     "power": 247
   },
   {
@@ -657,27 +631,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.434999999999995,
     "towerLongitude": -98.56119444444444,
-    "cityLatitude": 42.457,
-    "cityLongitude": -98.647,
+    "cityLatitude": 42.434999999999995,
+    "cityLongitude": -98.56119444444444,
     "power": 275
   },
   {
     "City": "Rapid City",
     "State": "SD",
-    "latitude": 44.03333333333333,
-    "longitude": -103.18794444444445,
+    "latitude": 44.145868,
+    "longitude": -103.206866,
     "CallSign": "KOTA",
     "Format": "FM",
     "Frequency": 100.7,
     "Sport": "Football",
-    "Year": 2025,
-    "towerLatitude": 44.03333333333333,
-    "towerLongitude": -103.18794444444445,
-    "cityLatitude": 44.145868,
-    "cityLongitude": -103.206866,
-    "power": 5,
-    "powerSource": "AM",
-    "translatorOf": "KOTA"
+    "Year": 2025
   },
   {
     "City": "Rapid City",
@@ -691,8 +658,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 44.03333333333333,
     "towerLongitude": -103.18794444444445,
-    "cityLatitude": 44.145868,
-    "cityLongitude": -103.206866,
+    "cityLatitude": 44.03333333333333,
+    "cityLongitude": -103.18794444444445,
     "power": 5
   },
   {
@@ -707,8 +674,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.79163888888889,
     "towerLongitude": -103.6418888888889,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.79163888888889,
+    "cityLongitude": -103.6418888888889,
     "power": 5
   },
   {
@@ -723,8 +690,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.839666666666666,
     "towerLongitude": -103.82694444444444,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.839666666666666,
+    "cityLongitude": -103.82694444444444,
     "power": 231
   },
   {
@@ -739,8 +706,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.131166666666665,
     "towerLongitude": -102.9726111111111,
-    "cityLatitude": 41.220549,
-    "cityLongitude": -102.995925,
+    "cityLatitude": 41.131166666666665,
+    "cityLongitude": -102.9726111111111,
     "power": 1
   },
   {
@@ -755,8 +722,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.18275,
     "towerLongitude": -103.19630555555555,
-    "cityLatitude": 41.220549,
-    "cityLongitude": -102.995925,
+    "cityLatitude": 41.18275,
+    "cityLongitude": -103.19630555555555,
     "power": 254
   },
   {
@@ -771,8 +738,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.025,
     "towerLongitude": -98.07755555555555,
-    "cityLatitude": 40.036673,
-    "cityLongitude": -98.069593,
+    "cityLatitude": 40.025,
+    "cityLongitude": -98.07755555555555,
     "power": 0.5
   },
   {
@@ -787,8 +754,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.105555555555554,
     "towerLongitude": -98.10616666666667,
-    "cityLatitude": 40.036673,
-    "cityLongitude": -98.069593,
+    "cityLatitude": 40.105555555555554,
+    "cityLongitude": -98.10616666666667,
     "power": 280
   },
   {
@@ -803,8 +770,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.865,
     "towerLongitude": -100.51902777777778,
-    "cityLatitude": 42.87278,
-    "cityLongitude": -100.55097,
+    "cityLatitude": 42.865,
+    "cityLongitude": -100.51902777777778,
     "power": 5
   },
   {
@@ -819,8 +786,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.784166666666664,
     "towerLongitude": -96.67975,
-    "cityLatitude": 41.870968,
-    "cityLongitude": -96.777787,
+    "cityLatitude": 41.784166666666664,
+    "cityLongitude": -96.67975,
     "power": 5
   },
   {
@@ -835,8 +802,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 43.385555555555555,
     "towerLongitude": -99.91094444444445,
-    "cityLatitude": 43.331763,
-    "cityLongitude": -99.803286,
+    "cityLatitude": 43.385555555555555,
+    "cityLongitude": -99.91094444444445,
     "power": 5
   },
   {
@@ -851,8 +818,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.730250000000005,
     "towerLongitude": -97.40394444444445,
-    "cityLatitude": 42.94396,
-    "cityLongitude": -97.37689,
+    "cityLatitude": 42.730250000000005,
+    "cityLongitude": -97.40394444444445,
     "power": 226
   },
   {
@@ -867,8 +834,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.84277777777778,
     "towerLongitude": -97.58838888888889,
-    "cityLatitude": 40.890132,
-    "cityLongitude": -97.597278,
+    "cityLatitude": 40.84277777777778,
+    "cityLongitude": -97.58838888888889,
     "power": 0.5
   },
   {
@@ -883,8 +850,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 1
   },
   {
@@ -899,8 +866,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 224
   },
   {
@@ -915,8 +882,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87888888888889,
     "towerLongitude": -98.09366666666666,
-    "cityLatitude": 40.867,
-    "cityLongitude": -98.004,
+    "cityLatitude": 40.87888888888889,
+    "cityLongitude": -98.09366666666666,
     "power": 247
   },
   {
@@ -931,8 +898,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.26361111111111,
     "towerLongitude": -96.77447222222222,
-    "cityLatitude": 40.313364,
-    "cityLongitude": -96.693082,
+    "cityLatitude": 40.26361111111111,
+    "cityLongitude": -96.77447222222222,
     "power": 0.53
   },
   {
@@ -947,8 +914,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.38722222222222,
     "towerLongitude": -99.82122222222222,
-    "cityLatitude": 41.451119,
-    "cityLongitude": -99.621491,
+    "cityLatitude": 41.38722222222222,
+    "cityLongitude": -99.82122222222222,
     "power": 237
   },
   {
@@ -963,8 +930,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.439722222222215,
     "towerLongitude": -97.39061111111111,
-    "cityLatitude": 41.4297,
-    "cityLongitude": -97.3686,
+    "cityLatitude": 41.439722222222215,
+    "cityLongitude": -97.39061111111111,
     "power": 1
   },
   {
@@ -979,8 +946,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.54111111111111,
     "towerLongitude": -97.6795,
-    "cityLatitude": 41.4297,
-    "cityLongitude": -97.3686,
+    "cityLatitude": 41.54111111111111,
+    "cityLongitude": -97.6795,
     "power": 228
   },
   {
@@ -995,8 +962,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.11611111111111,
     "towerLongitude": -97.15169444444444,
-    "cityLatitude": 40.175641,
-    "cityLongitude": -97.171023,
+    "cityLatitude": 40.11611111111111,
+    "cityLongitude": -97.15169444444444,
     "power": 0.5
   },
   {
@@ -1011,27 +978,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.06583333333333,
     "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
+    "cityLatitude": 40.06583333333333,
+    "cityLongitude": -95.61552777777777,
     "power": 0.5
   },
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.073908,
+    "longitude": -95.602053,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Volleyball",
-    "Year": 2025,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -1045,8 +1005,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.43277777777777,
     "towerLongitude": -96.45475,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.43277777777777,
+    "cityLongitude": -96.45475,
     "power": 0.5
   },
   {
@@ -1061,8 +1021,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.41111111111111,
     "towerLongitude": -96.53169444444444,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.41111111111111,
+    "cityLongitude": -96.53169444444444,
     "power": 288
   },
   {
@@ -1077,8 +1037,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.749,
-    "cityLongitude": -98.845,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 249
   },
   {
@@ -1093,8 +1053,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87138888888889,
     "towerLongitude": -98.27444444444444,
-    "cityLatitude": 40.87227,
-    "cityLongitude": -98.368698,
+    "cityLatitude": 40.87138888888889,
+    "cityLongitude": -98.27444444444444,
     "power": 5
   },
   {
@@ -1109,8 +1069,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.57780555555556,
     "towerLongitude": -98.40505555555556,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
+    "cityLatitude": 40.57780555555556,
+    "cityLongitude": -98.40505555555556,
     "power": 1
   },
   {
@@ -1125,8 +1085,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.567527777777784,
     "towerLongitude": -98.3756111111111,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
+    "cityLatitude": 40.567527777777784,
+    "cityLongitude": -98.3756111111111,
     "power": 0.5
   },
   {
@@ -1141,8 +1101,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.69305555555555,
     "towerLongitude": -99.16702777777778,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.69305555555555,
+    "cityLongitude": -99.16702777777778,
     "power": 5
   },
   {
@@ -1157,27 +1117,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 0.32
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Volleyball",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -1191,8 +1144,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.5125,
     "towerLongitude": -101.64461111111112,
-    "cityLatitude": 40.515114,
-    "cityLongitude": -101.632038,
+    "cityLatitude": 40.5125,
+    "cityLongitude": -101.64461111111112,
     "power": 275
   },
   {
@@ -1207,27 +1160,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.668055555555554,
     "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.668055555555554,
+    "cityLongitude": -99.08147222222222,
     "power": 1
   },
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Volleyball",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -1241,8 +1187,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 290
   },
   {
@@ -1257,8 +1203,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.873227,
-    "cityLongitude": -99.718408,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 50
   },
   {
@@ -1273,8 +1219,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.727222222222224,
     "towerLongitude": -96.61447222222222,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
+    "cityLatitude": 40.727222222222224,
+    "cityLongitude": -96.61447222222222,
     "power": 297
   },
   {
@@ -1289,8 +1235,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.674166666666665,
     "towerLongitude": -95.88583333333334,
-    "cityLatitude": 40.707742,
-    "cityLongitude": -95.907718,
+    "cityLatitude": 40.674166666666665,
+    "cityLongitude": -95.88583333333334,
     "power": 0.5
   },
   {
@@ -1305,8 +1251,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.153888888888886,
     "towerLongitude": -100.77347222222222,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.153888888888886,
+    "cityLongitude": -100.77347222222222,
     "power": 1
   },
   {
@@ -1321,8 +1267,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21358333333334,
     "towerLongitude": -100.73041666666667,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21358333333334,
+    "cityLongitude": -100.73041666666667,
     "power": 278
   },
   {
@@ -1337,8 +1283,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21361111111111,
     "towerLongitude": -100.73069444444445,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21361111111111,
+    "cityLongitude": -100.73069444444445,
     "power": 253
   },
   {
@@ -1353,8 +1299,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 0.97
   },
   {
@@ -1369,8 +1315,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 1
   },
   {
@@ -1385,8 +1331,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.63913888888889,
     "towerLongitude": -96.2088888888889,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.63913888888889,
+    "cityLongitude": -96.2088888888889,
     "power": 247
   },
   {
@@ -1401,8 +1347,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.434999999999995,
     "towerLongitude": -98.56119444444444,
-    "cityLatitude": 42.457,
-    "cityLongitude": -98.647,
+    "cityLatitude": 42.434999999999995,
+    "cityLongitude": -98.56119444444444,
     "power": 275
   },
   {
@@ -1417,8 +1363,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 39.827222222222225,
     "towerLongitude": -100.64708333333334,
-    "cityLatitude": 39.818,
-    "cityLongitude": -100.526,
+    "cityLatitude": 39.827222222222225,
+    "cityLongitude": -100.64708333333334,
     "power": 266
   },
   {
@@ -1433,8 +1379,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.79163888888889,
     "towerLongitude": -103.6418888888889,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.79163888888889,
+    "cityLongitude": -103.6418888888889,
     "power": 5
   },
   {
@@ -1449,8 +1395,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.839666666666666,
     "towerLongitude": -103.82694444444444,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.839666666666666,
+    "cityLongitude": -103.82694444444444,
     "power": 231
   },
   {
@@ -1465,8 +1411,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.131166666666665,
     "towerLongitude": -102.9726111111111,
-    "cityLatitude": 41.220549,
-    "cityLongitude": -102.995925,
+    "cityLatitude": 41.131166666666665,
+    "cityLongitude": -102.9726111111111,
     "power": 1
   },
   {
@@ -1481,8 +1427,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.18275,
     "towerLongitude": -103.19630555555555,
-    "cityLatitude": 41.220549,
-    "cityLongitude": -102.995925,
+    "cityLatitude": 41.18275,
+    "cityLongitude": -103.19630555555555,
     "power": 254
   },
   {
@@ -1497,8 +1443,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.025,
     "towerLongitude": -98.07755555555555,
-    "cityLatitude": 40.036673,
-    "cityLongitude": -98.069593,
+    "cityLatitude": 40.025,
+    "cityLongitude": -98.07755555555555,
     "power": 0.5
   },
   {
@@ -1513,8 +1459,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.865,
     "towerLongitude": -100.51902777777778,
-    "cityLatitude": 42.87278,
-    "cityLongitude": -100.55097,
+    "cityLatitude": 42.865,
+    "cityLongitude": -100.51902777777778,
     "power": 5
   },
   {
@@ -1529,8 +1475,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.784166666666664,
     "towerLongitude": -96.67975,
-    "cityLatitude": 41.870968,
-    "cityLongitude": -96.777787,
+    "cityLatitude": 41.784166666666664,
+    "cityLongitude": -96.67975,
     "power": 5
   },
   {
@@ -1545,8 +1491,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 1
   },
   {
@@ -1561,8 +1507,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 224
   },
   {
@@ -1577,8 +1523,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87888888888889,
     "towerLongitude": -98.09366666666666,
-    "cityLatitude": 40.867,
-    "cityLongitude": -98.004,
+    "cityLatitude": 40.87888888888889,
+    "cityLongitude": -98.09366666666666,
     "power": 247
   },
   {
@@ -1593,8 +1539,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.26361111111111,
     "towerLongitude": -96.77447222222222,
-    "cityLatitude": 40.313364,
-    "cityLongitude": -96.693082,
+    "cityLatitude": 40.26361111111111,
+    "cityLongitude": -96.77447222222222,
     "power": 0.53
   },
   {
@@ -1609,8 +1555,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.38722222222222,
     "towerLongitude": -99.82122222222222,
-    "cityLatitude": 41.451119,
-    "cityLongitude": -99.621491,
+    "cityLatitude": 41.38722222222222,
+    "cityLongitude": -99.82122222222222,
     "power": 237
   },
   {
@@ -1625,8 +1571,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.83219444444445,
     "towerLongitude": -103.0171388888889,
-    "cityLatitude": 42.774479,
-    "cityLongitude": -103.138479,
+    "cityLatitude": 42.83219444444445,
+    "cityLongitude": -103.0171388888889,
     "power": 1
   },
   {
@@ -1641,8 +1587,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.439722222222215,
     "towerLongitude": -97.39061111111111,
-    "cityLatitude": 41.4297,
-    "cityLongitude": -97.3686,
+    "cityLatitude": 41.439722222222215,
+    "cityLongitude": -97.39061111111111,
     "power": 1
   },
   {
@@ -1657,8 +1603,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.54111111111111,
     "towerLongitude": -97.6795,
-    "cityLatitude": 41.4297,
-    "cityLongitude": -97.3686,
+    "cityLatitude": 41.54111111111111,
+    "cityLongitude": -97.6795,
     "power": 228
   },
   {
@@ -1673,8 +1619,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.11611111111111,
     "towerLongitude": -97.15169444444444,
-    "cityLatitude": 40.175641,
-    "cityLongitude": -97.171023,
+    "cityLatitude": 40.11611111111111,
+    "cityLongitude": -97.15169444444444,
     "power": 0.5
   },
   {
@@ -1689,27 +1635,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.06583333333333,
     "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
+    "cityLatitude": 40.06583333333333,
+    "cityLongitude": -95.61552777777777,
     "power": 0.5
   },
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.073908,
+    "longitude": -95.602053,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -1723,8 +1662,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.43277777777777,
     "towerLongitude": -96.45475,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.43277777777777,
+    "cityLongitude": -96.45475,
     "power": 0.5
   },
   {
@@ -1739,8 +1678,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.41111111111111,
     "towerLongitude": -96.53169444444444,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.41111111111111,
+    "cityLongitude": -96.53169444444444,
     "power": 288
   },
   {
@@ -1755,8 +1694,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.749,
-    "cityLongitude": -98.845,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 249
   },
   {
@@ -1771,8 +1710,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.79886111111111,
     "towerLongitude": -102.26152777777777,
-    "cityLatitude": 42.805,
-    "cityLongitude": -102.204,
+    "cityLatitude": 42.79886111111111,
+    "cityLongitude": -102.26152777777777,
     "power": 238
   },
   {
@@ -1787,8 +1726,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87138888888889,
     "towerLongitude": -98.27444444444444,
-    "cityLatitude": 40.87227,
-    "cityLongitude": -98.368698,
+    "cityLatitude": 40.87138888888889,
+    "cityLongitude": -98.27444444444444,
     "power": 5
   },
   {
@@ -1803,8 +1742,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.57780555555556,
     "towerLongitude": -98.40505555555556,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
+    "cityLatitude": 40.57780555555556,
+    "cityLongitude": -98.40505555555556,
     "power": 1
   },
   {
@@ -1819,8 +1758,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.567527777777784,
     "towerLongitude": -98.3756111111111,
-    "cityLatitude": 40.582425,
-    "cityLongitude": -98.389035,
+    "cityLatitude": 40.567527777777784,
+    "cityLongitude": -98.3756111111111,
     "power": 0.5
   },
   {
@@ -1835,8 +1774,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.69305555555555,
     "towerLongitude": -99.16702777777778,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.69305555555555,
+    "cityLongitude": -99.16702777777778,
     "power": 5
   },
   {
@@ -1851,8 +1790,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.73941666666667,
     "towerLongitude": -102.69127777777778,
-    "cityLatitude": 42.684,
-    "cityLongitude": -102.687,
+    "cityLatitude": 42.73941666666667,
+    "cityLongitude": -102.69127777777778,
     "power": 299
   },
   {
@@ -1867,27 +1806,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 0.32
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Imperial",
@@ -1901,8 +1833,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.5125,
     "towerLongitude": -101.64461111111112,
-    "cityLatitude": 40.515114,
-    "cityLongitude": -101.632038,
+    "cityLatitude": 40.5125,
+    "cityLongitude": -101.64461111111112,
     "power": 275
   },
   {
@@ -1917,27 +1849,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.668055555555554,
     "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.668055555555554,
+    "cityLongitude": -99.08147222222222,
     "power": 1
   },
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -1951,8 +1876,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 290
   },
   {
@@ -1967,8 +1892,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.873227,
-    "cityLongitude": -99.718408,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 50
   },
   {
@@ -1983,8 +1908,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.83777777777778,
     "towerLongitude": -99.93927777777778,
-    "cityLatitude": 40.873227,
-    "cityLongitude": -99.718408,
+    "cityLatitude": 40.83777777777778,
+    "cityLongitude": -99.93927777777778,
     "power": 1
   },
   {
@@ -1999,27 +1924,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.848333333333336,
     "towerLongitude": -96.67502777777779,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
+    "cityLatitude": 40.848333333333336,
+    "cityLongitude": -96.67502777777779,
     "power": 1
   },
   {
     "City": "Lincoln",
     "State": "NE",
-    "latitude": 40.848333333333336,
-    "longitude": -96.67502777777779,
+    "latitude": 40.811,
+    "longitude": -96.6803,
     "CallSign": "KLIN",
     "Format": "FM",
     "Frequency": 99.3,
     "Sport": "Men's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.848333333333336,
-    "towerLongitude": -96.67502777777779,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KLIN"
+    "Year": 2025
   },
   {
     "City": "McCook",
@@ -2033,8 +1951,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 287
   },
   {
@@ -2049,8 +1967,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 230
   },
   {
@@ -2065,8 +1983,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 271
   },
   {
@@ -2081,8 +1999,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.674166666666665,
     "towerLongitude": -95.88583333333334,
-    "cityLatitude": 40.707742,
-    "cityLongitude": -95.907718,
+    "cityLatitude": 40.674166666666665,
+    "cityLongitude": -95.88583333333334,
     "power": 0.5
   },
   {
@@ -2097,8 +2015,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.92444444444444,
     "towerLongitude": -97.60644444444443,
-    "cityLatitude": 42.019977,
-    "cityLongitude": -97.442989,
+    "cityLatitude": 41.92444444444444,
+    "cityLongitude": -97.60644444444443,
     "power": 234
   },
   {
@@ -2113,8 +2031,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.153888888888886,
     "towerLongitude": -100.77347222222222,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.153888888888886,
+    "cityLongitude": -100.77347222222222,
     "power": 1
   },
   {
@@ -2129,8 +2047,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21358333333334,
     "towerLongitude": -100.73041666666667,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21358333333334,
+    "cityLongitude": -100.73041666666667,
     "power": 278
   },
   {
@@ -2145,8 +2063,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21361111111111,
     "towerLongitude": -100.73069444444445,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21361111111111,
+    "cityLongitude": -100.73069444444445,
     "power": 253
   },
   {
@@ -2161,8 +2079,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 1
   },
   {
@@ -2177,8 +2095,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 0.97
   },
   {
@@ -2193,8 +2111,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.434999999999995,
     "towerLongitude": -98.56119444444444,
-    "cityLatitude": 42.457,
-    "cityLongitude": -98.647,
+    "cityLatitude": 42.434999999999995,
+    "cityLongitude": -98.56119444444444,
     "power": 275
   },
   {
@@ -2209,8 +2127,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.839666666666666,
     "towerLongitude": -103.82694444444444,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.839666666666666,
+    "cityLongitude": -103.82694444444444,
     "power": 231
   },
   {
@@ -2225,8 +2143,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.79163888888889,
     "towerLongitude": -103.6418888888889,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.79163888888889,
+    "cityLongitude": -103.6418888888889,
     "power": 5
   },
   {
@@ -2241,8 +2159,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.18275,
     "towerLongitude": -103.19630555555555,
-    "cityLatitude": 41.220549,
-    "cityLongitude": -102.995925,
+    "cityLatitude": 41.18275,
+    "cityLongitude": -103.19630555555555,
     "power": 254
   },
   {
@@ -2257,8 +2175,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.025,
     "towerLongitude": -98.07755555555555,
-    "cityLatitude": 40.036673,
-    "cityLongitude": -98.069593,
+    "cityLatitude": 40.025,
+    "cityLongitude": -98.07755555555555,
     "power": 0.5
   },
   {
@@ -2273,8 +2191,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.105555555555554,
     "towerLongitude": -98.10616666666667,
-    "cityLatitude": 40.036673,
-    "cityLongitude": -98.069593,
+    "cityLatitude": 40.105555555555554,
+    "cityLongitude": -98.10616666666667,
     "power": 280
   },
   {
@@ -2289,8 +2207,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.79163888888889,
     "towerLongitude": -103.6418888888889,
-    "cityLatitude": 41.8475,
-    "cityLongitude": -103.6616,
+    "cityLatitude": 41.79163888888889,
+    "cityLongitude": -103.6418888888889,
     "power": 1
   },
   {
@@ -2305,8 +2223,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.865,
     "towerLongitude": -100.51902777777778,
-    "cityLatitude": 42.87278,
-    "cityLongitude": -100.55097,
+    "cityLatitude": 42.865,
+    "cityLongitude": -100.51902777777778,
     "power": 5
   },
   {
@@ -2321,8 +2239,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.909166666666664,
     "towerLongitude": -100.56486111111111,
-    "cityLatitude": 42.87278,
-    "cityLongitude": -100.55097,
+    "cityLatitude": 42.909166666666664,
+    "cityLongitude": -100.56486111111111,
     "power": 258
   },
   {
@@ -2337,8 +2255,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 1
   },
   {
@@ -2353,8 +2271,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.55444444444444,
     "towerLongitude": -99.83149999999999,
-    "cityLatitude": 42.542734,
-    "cityLongitude": -99.852364,
+    "cityLatitude": 42.55444444444444,
+    "cityLongitude": -99.83149999999999,
     "power": 224
   },
   {
@@ -2369,8 +2287,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87888888888889,
     "towerLongitude": -98.09366666666666,
-    "cityLatitude": 40.867,
-    "cityLongitude": -98.004,
+    "cityLatitude": 40.87888888888889,
+    "cityLongitude": -98.09366666666666,
     "power": 247
   },
   {
@@ -2385,8 +2303,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.26361111111111,
     "towerLongitude": -96.77447222222222,
-    "cityLatitude": 40.313364,
-    "cityLongitude": -96.693082,
+    "cityLatitude": 40.26361111111111,
+    "cityLongitude": -96.77447222222222,
     "power": 0.53
   },
   {
@@ -2401,8 +2319,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.38722222222222,
     "towerLongitude": -99.82122222222222,
-    "cityLatitude": 41.451119,
-    "cityLongitude": -99.621491,
+    "cityLatitude": 41.38722222222222,
+    "cityLongitude": -99.82122222222222,
     "power": 237
   },
   {
@@ -2417,8 +2335,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.83219444444445,
     "towerLongitude": -103.0171388888889,
-    "cityLatitude": 42.774479,
-    "cityLongitude": -103.138479,
+    "cityLatitude": 42.83219444444445,
+    "cityLongitude": -103.0171388888889,
     "power": 1
   },
   {
@@ -2433,8 +2351,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.11611111111111,
     "towerLongitude": -97.15169444444444,
-    "cityLatitude": 40.175641,
-    "cityLongitude": -97.171023,
+    "cityLatitude": 40.11611111111111,
+    "cityLongitude": -97.15169444444444,
     "power": 0.5
   },
   {
@@ -2449,27 +2367,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.06583333333333,
     "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
+    "cityLatitude": 40.06583333333333,
+    "cityLongitude": -95.61552777777777,
     "power": 0.5
   },
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.073908,
+    "longitude": -95.602053,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Women's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
-    "cityLatitude": 40.073908,
-    "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "Year": 2025
   },
   {
     "City": "Fremont",
@@ -2483,8 +2394,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.43277777777777,
     "towerLongitude": -96.45475,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.43277777777777,
+    "cityLongitude": -96.45475,
     "power": 0.5
   },
   {
@@ -2499,8 +2410,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.41111111111111,
     "towerLongitude": -96.53169444444444,
-    "cityLatitude": 41.4333,
-    "cityLongitude": -96.4981,
+    "cityLatitude": 41.41111111111111,
+    "cityLongitude": -96.53169444444444,
     "power": 288
   },
   {
@@ -2515,8 +2426,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.749,
-    "cityLongitude": -98.845,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 249
   },
   {
@@ -2531,8 +2442,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.87138888888889,
     "towerLongitude": -98.27444444444444,
-    "cityLatitude": 40.87227,
-    "cityLongitude": -98.368698,
+    "cityLatitude": 40.87138888888889,
+    "cityLongitude": -98.27444444444444,
     "power": 5
   },
   {
@@ -2547,27 +2458,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.73941666666667,
     "towerLongitude": -102.69127777777778,
-    "cityLatitude": 42.684,
-    "cityLongitude": -102.687,
+    "cityLatitude": 42.73941666666667,
+    "cityLongitude": -102.69127777777778,
     "power": 299
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.429207,
+    "longitude": -99.325955,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Women's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "Year": 2025
   },
   {
     "City": "Holdrege",
@@ -2581,8 +2485,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.429207,
-    "cityLongitude": -99.325955,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 0.32
   },
   {
@@ -2597,27 +2501,20 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.668055555555554,
     "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.668055555555554,
+    "cityLongitude": -99.08147222222222,
     "power": 1
   },
   {
     "City": "Kearney",
     "State": "NE",
-    "latitude": 40.668055555555554,
-    "longitude": -99.08147222222222,
+    "latitude": 40.7,
+    "longitude": -99.081,
     "CallSign": "KGFW",
     "Format": "FM",
     "Frequency": 96.1,
     "Sport": "Women's Basketball",
-    "Year": 2025,
-    "towerLatitude": 40.668055555555554,
-    "towerLongitude": -99.08147222222222,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "Year": 2025
   },
   {
     "City": "Kearney",
@@ -2631,8 +2528,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.602222222222224,
     "towerLongitude": -98.83952777777777,
-    "cityLatitude": 40.7,
-    "cityLongitude": -99.081,
+    "cityLatitude": 40.602222222222224,
+    "cityLongitude": -98.83952777777777,
     "power": 290
   },
   {
@@ -2647,8 +2544,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.51583333333333,
     "towerLongitude": -99.39677777777779,
-    "cityLatitude": 40.873227,
-    "cityLongitude": -99.718408,
+    "cityLatitude": 40.51583333333333,
+    "cityLongitude": -99.39677777777779,
     "power": 50
   },
   {
@@ -2663,8 +2560,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.727222222222224,
     "towerLongitude": -96.61447222222222,
-    "cityLatitude": 40.811,
-    "cityLongitude": -96.6803,
+    "cityLatitude": 40.727222222222224,
+    "cityLongitude": -96.61447222222222,
     "power": 297
   },
   {
@@ -2679,8 +2576,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 287
   },
   {
@@ -2695,8 +2592,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 230
   },
   {
@@ -2711,8 +2608,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.19083333333333,
     "towerLongitude": -100.8085,
-    "cityLatitude": 40.207969,
-    "cityLongitude": -100.620628,
+    "cityLatitude": 40.19083333333333,
+    "cityLongitude": -100.8085,
     "power": 271
   },
   {
@@ -2727,8 +2624,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 40.674166666666665,
     "towerLongitude": -95.88583333333334,
-    "cityLatitude": 40.707742,
-    "cityLongitude": -95.907718,
+    "cityLatitude": 40.674166666666665,
+    "cityLongitude": -95.88583333333334,
     "power": 0.5
   },
   {
@@ -2743,8 +2640,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.153888888888886,
     "towerLongitude": -100.77347222222222,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.153888888888886,
+    "cityLongitude": -100.77347222222222,
     "power": 1
   },
   {
@@ -2759,8 +2656,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21358333333334,
     "towerLongitude": -100.73041666666667,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21358333333334,
+    "cityLongitude": -100.73041666666667,
     "power": 278
   },
   {
@@ -2775,8 +2672,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.21361111111111,
     "towerLongitude": -100.73069444444445,
-    "cityLatitude": 41.102555,
-    "cityLongitude": -100.74907,
+    "cityLatitude": 41.21361111111111,
+    "cityLongitude": -100.73069444444445,
     "power": 253
   },
   {
@@ -2791,8 +2688,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 1
   },
   {
@@ -2807,8 +2704,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.31305555555555,
     "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
+    "cityLatitude": 41.31305555555555,
+    "cityLongitude": -96.01030555555556,
     "power": 0.97
   },
   {
@@ -2823,8 +2720,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.839666666666666,
     "towerLongitude": -103.82694444444444,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.839666666666666,
+    "cityLongitude": -103.82694444444444,
     "power": 231
   },
   {
@@ -2839,8 +2736,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.79163888888889,
     "towerLongitude": -103.6418888888889,
-    "cityLatitude": 41.922838,
-    "cityLongitude": -103.622904,
+    "cityLatitude": 41.79163888888889,
+    "cityLongitude": -103.6418888888889,
     "power": 5
   },
   {
@@ -2855,8 +2752,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.18275,
     "towerLongitude": -103.19630555555555,
-    "cityLatitude": 41.220549,
-    "cityLongitude": -102.995925,
+    "cityLatitude": 41.18275,
+    "cityLongitude": -103.19630555555555,
     "power": 254
   },
   {
@@ -2871,8 +2768,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 41.79163888888889,
     "towerLongitude": -103.6418888888889,
-    "cityLatitude": 41.8475,
-    "cityLongitude": -103.6616,
+    "cityLatitude": 41.79163888888889,
+    "cityLongitude": -103.6418888888889,
     "power": 1
   },
   {
@@ -2887,8 +2784,8 @@ const stations = [
     "Year": 2025,
     "towerLatitude": 42.865,
     "towerLongitude": -100.51902777777778,
-    "cityLatitude": 42.87278,
-    "cityLongitude": -100.55097,
+    "cityLatitude": 42.865,
+    "cityLongitude": -100.51902777777778,
     "power": 5
   }
 ];
