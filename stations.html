@@ -35,8 +35,16 @@
 <body class="about-page">
 
 <div class="header">
-  <h1><a href="." class="title-link">🏈🏐🏀 Nebraska Huskers Radio Finder</a></h1>
-  <a href="." class="nav-link">← Back to Radio Finder</a>
+  <h1>
+    <a href="." class="title-link">
+      <span class="title-long">🏈🏐🏀 Nebraska Huskers Radio Finder</span>
+      <span class="title-short">🏈🏐🏀 Husker Finder</span>
+    </a>
+  </h1>
+  <a href="." class="nav-link">
+    <span class="nav-long">← Back to Radio Finder</span>
+    <span class="nav-short">← Back</span>
+  </a>
 </div>
 
 <div class="container">
@@ -151,16 +159,23 @@ function renderStationTable() {
     const uniqueSports = [...new Set(station.sports)];
     const sportsHtml = uniqueSports.map(sport => {
       const sportClass = sport.toLowerCase().replace(/['\s]/g, '-');
-      return `<span class="station-sport ${sportClass}">${sport}</span>`;
+      // Use short labels for badges
+      const shortLabel = {
+        'Football': 'FB',
+        'Volleyball': 'VB',
+        "Men's Basketball": 'MBB',
+        "Women's Basketball": 'WBB'
+      }[sport] || sport;
+      return `<span class="station-sport ${sportClass}">${shortLabel}</span>`;
     }).join(' ');
 
     html += `
       <tr>
-        <td>${station.City}</td>
-        <td>${station.State || ''}</td>
-        <td>${station.Frequency}${station.Format}</td>
-        <td>${station.CallSign}</td>
-        <td>${sportsHtml}</td>
+        <td data-label="City:">${station.City}</td>
+        <td data-label="State:">${station.State || ''}</td>
+        <td data-label="Frequency:">${station.Frequency}${station.Format}</td>
+        <td data-label="Call Sign:">${station.CallSign}</td>
+        <td data-label="Sports:">${sportsHtml}</td>
       </tr>
     `;
   });
