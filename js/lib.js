@@ -117,6 +117,100 @@ function metersToMiles(meters) {
 }
 
 /**
+ * Convert meters to kilometers
+ */
+function metersToKm(meters) {
+  return meters / 1000;
+}
+
+/**
+ * Calculate estimated signal strength
+ * Uses different propagation models for AM vs FM
+ *
+ * @param {number} powerKw - Transmitter power in kilowatts
+ * @param {number} distanceMeters - Distance from tower in meters
+ * @param {string} format - "AM" or "FM"
+ * @returns {number} Signal strength score (higher is better)
+ */
+function calculateSignalStrength(powerKw, distanceMeters, format) {
+  if (!powerKw || powerKw <= 0 || !distanceMeters || distanceMeters <= 0) {
+    return 0;
+  }
+
+  const distanceKm = metersToKm(distanceMeters);
+
+  // Prevent division by zero for very close distances
+  const minDistance = 0.1; // 100 meters minimum
+  const effectiveDistance = Math.max(distanceKm, minDistance);
+
+  let strength;
+
+  if (format === 'AM') {
+    // AM uses ground wave propagation - much better than inverse square
+    // Path loss is closer to inverse 1.5 power for AM ground wave
+    // Also, AM needs much less power to achieve similar coverage to FM
+    // Boost factor accounts for AM's superior propagation efficiency
+    strength = powerKw / Math.pow(effectiveDistance, 1.5);
+    strength = strength * 150; // Major AM boost for efficient ground wave propagation
+  } else {
+    // FM uses line-of-sight propagation - follows inverse square more closely
+    strength = powerKw / (effectiveDistance * effectiveDistance);
+  }
+
+  return strength;
+}
+
+/**
+ * Get signal strength category with emoji and color
+ *
+ * @param {number} strength - Signal strength score
+ * @returns {object} Category info with label, emoji, color, description
+ */
+function getSignalCategory(strength) {
+  if (strength >= 100) {
+    return {
+      label: 'Excellent',
+      emoji: '📶',
+      bars: '▰▰▰▰',
+      color: '#00aa00',
+      description: 'Very strong signal'
+    };
+  } else if (strength >= 10) {
+    return {
+      label: 'Good',
+      emoji: '📡',
+      bars: '▰▰▰▱',
+      color: '#4CAF50',
+      description: 'Strong signal'
+    };
+  } else if (strength >= 1) {
+    return {
+      label: 'Fair',
+      emoji: '📻',
+      bars: '▰▰▱▱',
+      color: '#FFA500',
+      description: 'Moderate signal'
+    };
+  } else if (strength >= 0.1) {
+    return {
+      label: 'Weak',
+      emoji: '📉',
+      bars: '▰▱▱▱',
+      color: '#ff6b6b',
+      description: 'Weak signal'
+    };
+  } else {
+    return {
+      label: 'Very Weak',
+      emoji: '⚠️',
+      bars: '▱▱▱▱',
+      color: '#999',
+      description: 'Very weak signal'
+    };
+  }
+}
+
+/**
  {
      "City": "Alliance",
      "State": "NE",
@@ -129,17 +223,72 @@ function metersToMiles(meters) {
      "Year": 2019
    }
  */
-function sortByLocation(point) {
-  const distances = stations.map(it => ({...it, distance: metersToMiles(getDistance(point, it))}));
-  const filtered = distances.filter(it=>it.distance < 50);
-  const results = filtered.length > 0 ? filtered : distances.slice(0, 5);
-  results.sort((a, b) => (a.distance - b.distance || b.Format.localeCompare(a.Format)));
+function sortByLocation(point, sortBy = 'distance') {
+  // Calculate distance and signal strength for each station
+  const stationsWithData = stations.map(station => {
+    const distanceMeters = getDistance(point, station);
+    const distanceMiles = metersToMiles(distanceMeters);
 
-  setResults(results.map(it => (
-    `<div>${it.Frequency}${it.Format} ${it.CallSign}, ${it.City}, ${it.State} -- ${it.distance}</div>`
-  )).join(''));
-}
+    // Calculate signal strength if we have power data
+    const signalStrength = station.power
+      ? calculateSignalStrength(station.power, distanceMeters, station.Format)
+      : 0;
 
-function sortByTowerLocation(point) {
-  //https://radio-locator.com/cgi-bin/locate?select=lonlat&latd=41&latm=9&lats=30&latpol=N&lond=96&lonm=6&lons=24&lonpol=W&band=Both&is_lic=Y&is_cp=Y&is_fl=Y&is_fx=Y&is_fb=Y&format=&dx=1&radius=&freq=&sort=dist
+    const signalCategory = getSignalCategory(signalStrength);
+
+    return {
+      ...station,
+      distance: distanceMiles,
+      distanceMeters: distanceMeters,
+      signalStrength: signalStrength,
+      signalCategory: signalCategory
+    };
+  });
+
+  // Filter to stations within reasonable range
+  const filtered = stationsWithData.filter(it => it.distance < 150);
+  const results = filtered.length > 0 ? filtered : stationsWithData.slice(0, 15);
+
+  // Sort by distance or signal strength
+  if (sortBy === 'signal') {
+    // Sort by signal strength (highest first), then by distance
+    results.sort((a, b) => (b.signalStrength - a.signalStrength) || (a.distance - b.distance));
+  } else {
+    // Sort by distance (nearest first), then by format (FM before AM)
+    results.sort((a, b) => (a.distance - b.distance) || (b.Format.localeCompare(a.Format)));
+  }
+
+  // Take top 15
+  const top15 = results.slice(0, 15);
+
+  // Generate HTML with signal indicators
+  const html = top15.map(station => {
+    const signalIndicator = station.signalStrength > 0
+      ? `<span style="color: ${station.signalCategory.color}; font-size: 0.9em;" title="${station.signalCategory.description}">
+           ${station.signalCategory.bars}
+         </span>`
+      : '';
+
+    const powerInfo = station.power
+      ? `<span style="color: #666; font-size: 0.85em;">${station.power} kW</span>`
+      : '';
+
+    return `
+      <div style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="flex: 1;">
+            <strong>${station.Frequency}${station.Format}</strong>
+            ${station.CallSign} - ${station.City}, ${station.State}
+            ${powerInfo}
+          </div>
+          <div style="text-align: right; margin-left: 1rem;">
+            ${signalIndicator}
+            <div style="font-size: 0.9em; color: #666;">${station.distance} mi</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  setResults(html);
 }

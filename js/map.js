@@ -8,6 +8,7 @@ let currentFilters = {
   womensBasketball: true
 };
 let userLocation = null;
+let currentSortBy = 'distance'; // 'distance' or 'signal'
 
 // Initialize the map centered on Nebraska
 function initMap() {
@@ -138,6 +139,9 @@ function updateFilters() {
   }
 }
 
+// Note: Sorting is now fixed to 'distance' mode
+// Signal strength indicators are shown for reference only
+
 function sortByLocation(point, isFallback = false) {
   userLocation = point;
 
@@ -149,16 +153,31 @@ function sortByLocation(point, isFallback = false) {
     (station.Sport === "Women's Basketball" && currentFilters.womensBasketball)
   );
 
-  // Calculate distances for all filtered stations
-  const stationsWithDistance = filteredStations.map(it => ({
-    ...it,
-    distance: metersToMiles(getDistance(point, it))
-  }));
+  // Calculate distances and signal strength for all filtered stations
+  const stationsWithData = filteredStations.map(station => {
+    const distanceMeters = getDistance(point, station);
+    const distanceMiles = metersToMiles(distanceMeters);
+
+    // Calculate signal strength if we have power data
+    const signalStrength = station.power
+      ? calculateSignalStrength(station.power, distanceMeters, station.Format)
+      : 0;
+
+    const signalCategory = getSignalCategory(signalStrength);
+
+    return {
+      ...station,
+      distance: distanceMiles,
+      distanceMeters: distanceMeters,
+      signalStrength: signalStrength,
+      signalCategory: signalCategory
+    };
+  });
 
   // Group stations by unique frequency/callsign/location combination
   const groupedStations = new Map();
 
-  stationsWithDistance.forEach(station => {
+  stationsWithData.forEach(station => {
     const key = `${station.CallSign}-${station.Frequency}${station.Format}-${station.City}`;
 
     if (!groupedStations.has(key)) {
@@ -171,6 +190,9 @@ function sortByLocation(point, isFallback = false) {
         latitude: station.latitude,
         longitude: station.longitude,
         distance: station.distance,
+        power: station.power,
+        signalStrength: station.signalStrength,
+        signalCategory: station.signalCategory,
         sports: []
       });
     }
@@ -178,10 +200,18 @@ function sortByLocation(point, isFallback = false) {
     groupedStations.get(key).sports.push(station.Sport);
   });
 
-  // Convert to array and sort by distance
-  const results = Array.from(groupedStations.values())
-    .sort((a, b) => a.distance - b.distance)
-    .slice(0, 10);
+  // Convert to array and sort based on current sort mode
+  let results = Array.from(groupedStations.values());
+
+  if (currentSortBy === 'signal') {
+    // Sort by signal strength (highest first), then by distance
+    results.sort((a, b) => (b.signalStrength - a.signalStrength) || (a.distance - b.distance));
+  } else {
+    // Sort by distance (nearest first)
+    results.sort((a, b) => a.distance - b.distance);
+  }
+
+  results = results.slice(0, 15);
 
   // Update the display with enhanced HTML
   let html = '';
@@ -189,15 +219,22 @@ function sortByLocation(point, isFallback = false) {
     const isNearest = index < 3;
     const uniqueSports = [...new Set(station.sports)];
 
+    // Signal strength indicator
+    const signalIndicator = station.signalStrength > 0
+      ? `<span class="signal-indicator" style="color: ${station.signalCategory.color};" title="${station.signalCategory.description}">
+           ${station.signalCategory.bars}
+         </span>`
+      : '';
+
     html += `<div class="station-item ${isNearest ? 'nearest' : ''}"
                   onclick="focusStation(${station.latitude}, ${station.longitude})">`;
     html += `<div class="station-info">`;
     html += `<span class="station-freq">${station.Frequency}${station.Format}</span>`;
     html += `<span class="station-call">${station.CallSign}</span>`;
     html += `<span class="station-location">${station.City}, ${station.State || ''}</span>`;
-    html += `<span class="station-distance"><span class="distance-long">${station.distance} miles away</span><span class="distance-short">${station.distance}mi</span></span>`;
     html += `</div>`;
 
+    html += `<div class="station-meta">`;
     html += `<div class="station-sports">`;
     // Show all sports this station broadcasts
     uniqueSports.forEach(sport => {
@@ -212,6 +249,11 @@ function sortByLocation(point, isFallback = false) {
       html += `${shortForms[sport] || sport}`;
       html += `</span>`;
     });
+    html += `</div>`;
+    html += `<div class="station-right">`;
+    html += signalIndicator;
+    html += `<span class="station-distance"><span class="distance-long">${station.distance} miles away</span><span class="distance-short">${station.distance}mi</span></span>`;
+    html += `</div>`;
     html += `</div>`;
 
     html += `</div>`;

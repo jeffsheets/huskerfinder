@@ -63,30 +63,43 @@ These FM frequencies rebroadcast AM signals and use AM tower locations:
 
 ### Data Files
 - `scripts/fcc-data-cache.json` - Cached FCC data (779 stations)
-- `js/stations.js.backup` - Original stations file backup
 
 ### Scripts
 - `scripts/fetch-fcc-bulk.js` - Fetch fresh FCC data (NE, SD, KS)
 - `scripts/update-stations.js` - Match and update station data
 - `scripts/fix-unmatched.js` - Fix unmatched FM translators
 
+**Note:** Use git for version control. Scripts create backup files during execution, but they can be deleted once changes are verified.
+
+## Current Features
+
+1. **Signal Strength Indicators** ✅
+   - Visual signal bars (▰▰▰▱) displayed for each station
+   - Uses different propagation models for AM vs FM
+   - Color-coded: green (excellent), orange (fair), red (weak)
+   - Reference only - sorting is by distance
+
+2. **Actual Tower Locations** ✅
+   - All coordinates from FCC database
+   - Distances calculated to actual towers, not city centers
+
+3. **15 Nearest Stations** ✅
+   - Shows top 15 results instead of 10
+   - Sorted by distance (most reliable)
+
 ## Potential Future Enhancements
 
-1. **Signal Strength Calculation**
-   - Use power and distance: `strength = power / (distance²)`
-   - Show estimated signal strength in UI
-
-2. **Display Power Info**
-   - Show "50 kW" vs "1 kW" in station list
-   - Help users understand signal strength differences
-
-3. **Directional Antennas**
+1. **Directional Antennas**
    - Some towers don't broadcast equally in all directions
    - Could factor in antenna patterns for accuracy
 
-4. **Update Frequency**
+2. **Update Frequency**
    - Re-run `scripts/fetch-fcc-bulk.js` annually
    - Stations change call signs, power, locations
+
+3. **Terrain Analysis**
+   - Factor in hills, mountains, urban density
+   - Would significantly improve signal estimates
 
 ## Testing
 To verify everything works:

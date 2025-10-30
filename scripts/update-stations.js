@@ -98,13 +98,8 @@ console.log('='.repeat(60) + '\n');
 // Generate the new stations.js file
 const output = `const stations = ${JSON.stringify(updatedStations, null, 2)};\n`;
 
-// Save to a new file first for review
-const backupFile = './js/stations.js.backup';
+// Save to a temporary file for review
 const newFile = './js/stations-updated.js';
-
-// Create backup
-fs.copyFileSync('./js/stations.js', backupFile);
-console.log(`✓ Created backup: ${backupFile}`);
 
 // Write new version
 fs.writeFileSync(newFile, output);
@@ -114,4 +109,4 @@ console.log('\nNext steps:');
 console.log('1. Review the changes in stations-updated.js');
 console.log('2. If it looks good, run: mv js/stations-updated.js js/stations.js');
 console.log('3. Test the app to make sure it still works');
-console.log('4. The backup is in js/stations.js.backup if you need to revert');
+console.log('4. Use git to track changes (git diff js/stations.js)');

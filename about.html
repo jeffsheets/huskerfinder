@@ -42,19 +42,20 @@
   <p>This app was built for you -- Find the radio stations that broadcast Husker football and volleyball games near your location</p>
 
   <h3>How It Works</h3>
-  <p>Uses your device's geolocation, then searches through a list of stations that carry Husker sports. Results sorted by distance from your location</p>
+  <p>Uses your device's geolocation, then searches through a list of stations that carry Husker sports. Results are sorted by distance from your location to the actual radio tower, with signal strength indicators to help you find the best reception.</p>
 
   <div class="highlight">
-    <p><strong>Important Note:</strong> We calculate distances based on city locations, not actual radio tower positions or signal coverage areas. Guessing that stations in closer cities will generally provide better reception, but this isn't always accurate.</p>
+    <p><strong>Accuracy Note:</strong> We use actual FCC tower locations and calculate distances to those towers. Signal strength bars (▰▰▰▱) provide estimated signal quality based on tower power and distance, but actual reception depends on terrain, buildings, weather, and other factors. Try the closest stations first!</p>
   </div>
 
   <h3>Tips for Best Results</h3>
   <p>Since radio coverage can vary greatly based on terrain, weather, tower power, and other factors:</p>
   <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
     <li>Try the first few stations in your list - don't stop at just the closest one</li>
+    <li>Signal strength bars (▰▰▰▱) are estimates - always try the nearest towers first</li>
     <li>AM stations often have better long-distance coverage, especially at night</li>
     <li>FM stations typically provide clearer audio when in range</li>
-    <li>If you're having trouble with reception, try stations from nearby cities</li>
+    <li>If you're having trouble with reception, try multiple stations from the list</li>
   </ul>
 
   <h3>Alternative Options</h3>
@@ -67,9 +68,11 @@
   <p>This application uses:</p>
   <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
     <li>Browser geolocation API to determine your position</li>
-    <li>A curated list of radio stations that carry Husker games</li>
-    <li>Distance calculations to sort stations by proximity</li>
-    <li>Interactive mapping to visualize station locations</li>
+    <li>FCC (Federal Communications Commission) tower data for accurate location coordinates</li>
+    <li>Transmitter power data to estimate signal strength</li>
+    <li>Distance calculations using actual tower positions</li>
+    <li>Interactive mapping powered by Leaflet and OpenStreetMap</li>
+    <li>Signal strength estimates using RF propagation models (for reference only)</li>
   </ul>
 
   <p>Special thanks to <a href="https://huskers.com" target="_blank">huskers.com</a> for serving as a reference for station information and providing the official streaming option.</p>

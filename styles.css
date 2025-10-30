@@ -193,8 +193,40 @@ body {
   display: none;
 }
 
+.station-power {
+  color: #666;
+  font-size: 0.85em;
+  background: #e8f5e9;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.station-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.station-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signal-indicator {
+  font-size: 1.1em;
+  font-weight: bold;
+  letter-spacing: -1px;
+  cursor: help;
+}
+
 .station-sports {
-  margin-top: 0.25rem;
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
 }
 
 .station-sport {
