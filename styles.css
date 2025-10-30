@@ -196,12 +196,12 @@ body {
 
 .station-freq {
   font-weight: bold;
-  color: #333;
+  color: #d00000;
   font-size: 0.95rem;
 }
 
 .station-call {
-  color: #d00000;
+  color: #333;
   font-weight: 600;
   font-size: 0.95rem;
 }

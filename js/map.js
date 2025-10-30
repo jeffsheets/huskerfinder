@@ -109,7 +109,7 @@ function addStationMarkers() {
       popupContent += `<div style="margin-bottom: 8px;">`;
       popupContent += `<strong style="color: ${sportColor};">${sport}:</strong><br>`;
       sportStations.forEach(s => {
-        popupContent += `<span style="margin-left: 10px;">${s.Frequency}${s.Format} - ${s.CallSign}</span><br>`;
+        popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}</span><br>`;
       });
       popupContent += `</div>`;
     });
