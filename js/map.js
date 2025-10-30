@@ -229,9 +229,9 @@ function sortByLocation(point, isFallback = false) {
     html += `<div class="station-item ${isNearest ? 'nearest' : ''}"
                   onclick="focusStation(${station.latitude}, ${station.longitude})">`;
     html += `<div class="station-info">`;
+    html += `<span class="station-location">${station.City}</span>`;
     html += `<span class="station-freq">${station.Frequency}${station.Format}</span>`;
     html += `<span class="station-call">${station.CallSign}</span>`;
-    html += `<span class="station-location">${station.City}, ${station.State || ''}</span>`;
     html += `</div>`;
 
     html += `<div class="station-meta">`;
@@ -252,7 +252,7 @@ function sortByLocation(point, isFallback = false) {
     html += `</div>`;
     html += `<div class="station-right">`;
     html += signalIndicator;
-    html += `<span class="station-distance"><span class="distance-long">${station.distance} miles away</span><span class="distance-short">${station.distance}mi</span></span>`;
+    html += `<span class="station-distance"><span class="distance-long">${station.distance} miles</span><span class="distance-short">${station.distance}mi</span></span>`;
     html += `</div>`;
     html += `</div>`;
 
