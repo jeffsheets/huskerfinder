@@ -1,0 +1,65 @@
+# Husker Radio Finder
+
+> Find Nebraska Huskers radio stations near your location using GPS
+
+## Overview
+
+Husker Radio Finder is a free web tool that helps Nebraska Huskers fans find AM and FM radio stations broadcasting football, volleyball, and basketball games near their current location. The app uses GPS/geolocation to calculate distances to actual FCC radio tower locations and displays results sorted by proximity.
+
+## Key Features
+
+- GPS-based station finder with automatic distance calculation
+- Interactive map showing station locations and user position
+- Signal strength estimates based on tower power and distance
+- Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
+- 179+ stations across Nebraska, South Dakota, and Kansas
+- No account required, completely free, privacy-focused (location stays on device)
+
+## Major Husker Radio Stations
+
+- KLIN 1400 AM - Lincoln, NE (Capital City flagship)
+- KRVN 880 AM - Lexington, NE (Rural Nebraska flagship, 50,000 watts)
+- KCRO 660 AM - Omaha, NE
+- KIBM 1490 AM - Omaha, NE
+- KFAB 1110 AM - Omaha, NE (historical flagship)
+
+## How It Works
+
+1. User clicks "Find Nearest Stations" button
+2. Browser requests GPS location permission
+3. App calculates distance from user to each radio tower using haversine formula
+4. Results display the 15 nearest stations sorted by distance
+5. Interactive map shows station markers and auto-zooms to relevant area
+
+## Common Questions
+
+Q: What radio station plays Nebraska Husker football near me?
+A: Use the Husker Radio Finder at huskerfinder.sheetsj.com to find stations based on your GPS location.
+
+Q: What is the flagship radio station for Nebraska Huskers?
+A: KLIN 1400 AM in Lincoln and KRVN 880 AM in Lexington are major flagship stations for the Huskers Radio Network.
+
+Q: Can I listen to Nebraska volleyball on the radio?
+A: Yes, many stations in the Huskers Radio Network broadcast volleyball games. Use the filter on the site to show only volleyball stations.
+
+Q: How many radio stations broadcast Husker games?
+A: Over 70 unique stations (179+ frequencies including AM/FM simulcasts) broadcast Nebraska Huskers games across Nebraska, South Dakota, and Kansas.
+
+## Technical Details
+
+- Static web application (HTML, CSS, vanilla JavaScript)
+- Uses Leaflet.js for interactive mapping
+- Station coordinates from FCC tower database
+- Signal strength calculated using RF propagation models
+
+## URL
+
+https://huskerfinder.sheetsj.com/
+
+## Author
+
+Created by Jeff Sheets (sheetsj.com), a Nebraska graduate and Husker fan.
+
+## Data Source
+
+Station information compiled from huskers.com/listen and FCC tower records. Updated for the 2025-26 season.

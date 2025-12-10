@@ -1,0 +1,7 @@
+# Robots.txt for Husker Radio Finder
+# https://huskerfinder.sheetsj.com/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://huskerfinder.sheetsj.com/sitemap.xml

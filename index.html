@@ -1,7 +1,8 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <title>Find Husker Radio Near Me - GPS Location Finder</title>
+  <link rel="canonical" href="https://huskerfinder.sheetsj.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Find Nebraska Husker 2025-26 football, volleyball & basketball radio stations near you using GPS. Live game broadcasts with automatic distance calculation and interactive map.">
 
@@ -10,17 +11,17 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://jeffsheets.github.io/huskerfinder/">
+  <meta property="og:url" content="https://huskerfinder.sheetsj.com/">
   <meta property="og:title" content="Find Husker Radio Near Me - GPS Location Finder">
   <meta property="og:description" content="Find Nebraska Husker 2025-26 football, volleyball & basketball radio stations near you using GPS. Live game broadcasts with automatic distance calculation and interactive map.">
-  <meta property="og:image" content="https://jeffsheets.github.io/huskerfinder/og-image.png">
+  <meta property="og:image" content="https://huskerfinder.sheetsj.com/og-image.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://jeffsheets.github.io/huskerfinder/">
+  <meta property="twitter:url" content="https://huskerfinder.sheetsj.com/">
   <meta property="twitter:title" content="Find Husker Radio Near Me - GPS Location Finder">
   <meta property="twitter:description" content="Find Nebraska Husker 2025-26 football, volleyball & basketball radio stations near you using GPS. Live game broadcasts with automatic distance calculation and interactive map.">
-  <meta property="twitter:image" content="https://jeffsheets.github.io/huskerfinder/og-image.png">
+  <meta property="twitter:image" content="https://huskerfinder.sheetsj.com/og-image.png">
 
   <!-- Additional meta for broader social media support -->
   <meta name="author" content="Jeff Sheets">
@@ -35,10 +36,11 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Huskers Radio Finder",
-    "description": "GPS-based radio station finder for Nebraska Husker football, volleyball, and basketball games",
-    "url": "https://jeffsheets.github.io/huskerfinder/",
-    "applicationCategory": "Utility",
+    "name": "Husker Radio Finder",
+    "alternateName": ["Nebraska Huskers Radio Finder", "Huskers Radio Station Finder", "Nebraska Football Radio Finder"],
+    "description": "Find Nebraska Huskers radio stations near you. GPS-based finder for football, volleyball, and basketball game broadcasts on AM and FM radio.",
+    "url": "https://huskerfinder.sheetsj.com/",
+    "applicationCategory": "SportsApplication",
     "operatingSystem": "Web Browser",
     "browserRequirements": "Requires JavaScript and geolocation support",
     "offers": {
@@ -50,14 +52,75 @@
       "GPS location detection",
       "Interactive map with station markers",
       "Automatic distance calculation",
-      "Filter by sport (Football, Volleyball, Basketball)",
-      "Real-time location-based search"
+      "Filter by sport (Football, Volleyball, Men's Basketball, Women's Basketball)",
+      "Real-time location-based search",
+      "Signal strength estimation",
+      "179+ radio stations across Nebraska, South Dakota, and Kansas"
     ],
     "author": {
       "@type": "Person",
       "name": "Jeff Sheets",
       "url": "https://sheetsj.com"
+    },
+    "about": {
+      "@type": "SportsTeam",
+      "name": "Nebraska Cornhuskers",
+      "sport": ["American Football", "Volleyball", "Basketball"],
+      "memberOf": {
+        "@type": "SportsOrganization",
+        "name": "Big Ten Conference"
+      }
     }
+  }
+  </script>
+
+  <!-- FAQ Schema for AI and search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What radio station plays Nebraska Husker football near me?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the Husker Radio Finder to find the nearest radio station broadcasting Nebraska Huskers football. Simply allow location access and the app will show you the closest stations sorted by distance from your current location. Major stations include KLIN 1400 AM (Lincoln), KRVN 880 AM (Lexington), and KCRO 660 AM (Omaha)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the flagship radio station for Nebraska Huskers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Nebraska Huskers Radio Network has several flagship stations. KLIN 1400 AM in Lincoln is a major flagship, and KRVN 880 AM in Lexington is the powerful rural Nebraska flagship with 50,000 watts covering much of the Great Plains. KFAB 1110 AM in Omaha has historically been a flagship station as well."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I listen to Nebraska volleyball on the radio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, many stations in the Huskers Radio Network broadcast Nebraska volleyball games. Use the Husker Radio Finder and filter by volleyball to see stations near you that carry volleyball broadcasts. The same network that broadcasts football also carries volleyball and basketball games."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many radio stations broadcast Nebraska Husker games?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Over 70 unique radio stations (179+ frequencies including AM/FM simulcasts) broadcast Nebraska Huskers games across Nebraska, South Dakota, and Kansas. This extensive network ensures fans can find Husker broadcasts throughout the region."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the Husker Radio Finder work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Husker Radio Finder uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Results are sorted by distance, with signal strength estimates based on tower power. Simply click 'Find Nearest Stations' and allow location access to get started."
+        }
+      }
+    ]
   }
   </script>
 
@@ -126,6 +189,44 @@
   </div>
   <div id="map"></div>
 </div>
+
+<!-- Static content for search engines and crawlers that don't execute JavaScript -->
+<noscript>
+  <div class="static-stations">
+    <h2>Nebraska Huskers Radio Stations</h2>
+    <p>Find radio stations broadcasting Nebraska Husker football, volleyball, and basketball games. Enable JavaScript for the interactive GPS finder, or browse the stations below:</p>
+
+    <h3>Major Flagship Stations</h3>
+    <ul>
+      <li><strong>KLIN 1400 AM</strong> - Lincoln, NE (Football, Volleyball, Basketball)</li>
+      <li><strong>KRVN 880 AM</strong> - Lexington, NE (50,000 watts - Football, Volleyball, Basketball)</li>
+      <li><strong>KCRO 660 AM</strong> - Omaha, NE (Football)</li>
+      <li><strong>KIBM 1490 AM</strong> - Omaha, NE (Football)</li>
+      <li><strong>KFAB 1110 AM</strong> - Omaha, NE (Historical flagship)</li>
+    </ul>
+
+    <h3>Nebraska Stations (Partial List)</h3>
+    <ul>
+      <li>KBRB 1400 AM / 106.3 FM - Ainsworth, NE</li>
+      <li>KCOW 1400 AM / 92.5 FM - Alliance, NE</li>
+      <li>KRGY 97.3 FM - Aurora, NE</li>
+      <li>KWBE 1450 AM - Beatrice, NE</li>
+      <li>KBBN 95.3 FM - Broken Bow, NE</li>
+      <li>KCSR 610 AM - Chadron, NE</li>
+      <li>KJSK 900 AM - Columbus, NE</li>
+      <li>KHAS 1230 AM - Hastings, NE</li>
+      <li>KGFW 1340 AM - Kearney, NE</li>
+      <li>KNLV 1060 AM - Ord, NE</li>
+      <li>KOGA 930 AM - Ogallala, NE</li>
+      <li>KVSH 940 AM - Valentine, NE</li>
+      <li>KTCH 1590 AM - Wayne, NE</li>
+      <li>KZEN 100.3 FM - Central City, NE</li>
+    </ul>
+
+    <p><a href="stations.html">View the complete list of 179+ stations</a></p>
+    <p>Data source: <a href="https://huskers.com/listen">huskers.com/listen</a></p>
+  </div>
+</noscript>
 
 <div class="footer">
   Made with ❤️ by <a href="https://sheetsj.com" target="_blank">Jeff Sheets</a> - GBR!
