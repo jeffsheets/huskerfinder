@@ -53,6 +53,25 @@ let html = `
       <tbody>
   `;
 
+// AM nighttime behavior flag — keep in sync with nightBehavior() in js/lib.js
+// and the copy inside stations.html's renderStationTable()
+function nightBehavior(station) {
+  if (station.Format !== 'AM' || station.powerNight == null || station.powerNight >= station.power) {
+    return null;
+  }
+  if (station.powerNight <= 0) {
+    return {
+      symbol: '☀️',
+      title: 'Daytime-only AM station — off the air from sunset to sunrise, so not available during night games'
+    };
+  }
+  const fmt = kw => kw >= 1 ? `${kw} kW` : `${Math.round(kw * 1000)} watts`;
+  return {
+    symbol: '🌙',
+    title: `Runs reduced power after sunset (${fmt(station.power)} day → ${fmt(station.powerNight)} night) — expect a weaker signal during night games`
+  };
+}
+
 sortedStations.forEach(station => {
   const uniqueSports = [...new Set(station.sports)];
   const sportsHtml = uniqueSports.map(sport => {
@@ -66,11 +85,14 @@ sortedStations.forEach(station => {
     return `<span class="station-sport ${sportClass}">${shortLabel}</span>`;
   }).join(' ');
 
+  const night = nightBehavior(station);
+  const nightHtml = night ? ` <span class="night-flag" title="${night.title}">${night.symbol}</span>` : '';
+
   html += `
       <tr>
         <td data-label="City:">${station.City}</td>
         <td data-label="State:">${station.State || ''}</td>
-        <td data-label="Frequency:">${station.Frequency}${station.Format}</td>
+        <td data-label="Frequency:">${station.Frequency}${station.Format}${nightHtml}</td>
         <td data-label="Call Sign:">${station.CallSign}${station.role ? ` <span class="station-role ${station.role}">${station.role}</span>` : ''}</td>
         <td data-label="Sports:">${sportsHtml}</td>
       </tr>

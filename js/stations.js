@@ -32,8 +32,9 @@ const stations = [
     "cityLongitude": -99.852364,
     "power": 0.25,
     "haat": 50,
-    "powerSource": "translator-estimate",
-    "translatorOf": "KBRB"
+    "powerSource": "FCC-FX",
+    "translatorOf": "KBRB",
+    "translatorCallSign": "K292HE"
   },
   {
     "City": "Alliance",
@@ -55,21 +56,22 @@ const stations = [
   {
     "City": "Alliance",
     "State": "NE",
-    "latitude": 42.10619444444445,
+    "latitude": 42.10616666666667,
     "longitude": -102.88861111111112,
     "CallSign": "KCOW",
     "Format": "FM",
     "Frequency": 92.5,
     "Sport": "Football",
     "Year": 2026,
-    "towerLatitude": 42.10619444444445,
+    "towerLatitude": 42.10616666666667,
     "towerLongitude": -102.88861111111112,
     "cityLatitude": 42.09302,
     "cityLongitude": -102.8702,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KCOW",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K223CY"
   },
   {
     "City": "Aurora",
@@ -210,21 +212,22 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.115,
+    "longitude": -95.65194444444445,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Football",
     "Year": 2026,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
+    "towerLatitude": 40.115,
+    "towerLongitude": -95.65194444444445,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KTNC",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K296HK"
   },
   {
     "City": "Fremont",
@@ -335,7 +338,7 @@ const stations = [
     "longitude": -98.3756111111111,
     "CallSign": "KICS",
     "Format": "AM",
-    "Frequency": 1450,
+    "Frequency": 1550,
     "Sport": "Football",
     "Year": 2026,
     "towerLatitude": 40.567527777777784,
@@ -394,26 +397,27 @@ const stations = [
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.32,
-    "powerNight": 0.32
+    "powerNight": 0
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.51555555555556,
+    "longitude": -99.39833333333334,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Football",
     "Year": 2026,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
+    "towerLatitude": 40.51555555555556,
+    "towerLongitude": -99.39833333333334,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KUVR",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K245CK"
   },
   {
     "City": "Imperial",
@@ -481,9 +485,10 @@ const stations = [
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KGFW",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K241CN"
   },
   {
     "City": "Lexington",
@@ -539,21 +544,22 @@ const stations = [
   {
     "City": "Lincoln",
     "State": "NE",
-    "latitude": 40.848333333333336,
-    "longitude": -96.67502777777779,
+    "latitude": 40.811388888888885,
+    "longitude": -96.70280555555556,
     "CallSign": "KLIN",
     "Format": "FM",
     "Frequency": 99.3,
     "Sport": "Football",
     "Year": 2026,
-    "towerLatitude": 40.848333333333336,
-    "towerLongitude": -96.67502777777779,
+    "towerLatitude": 40.811388888888885,
+    "towerLongitude": -96.70280555555556,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KLIN",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K257GN"
   },
   {
     "City": "Lincoln",
@@ -780,21 +786,22 @@ const stations = [
   {
     "City": "Rapid City",
     "State": "SD",
-    "latitude": 44.03333333333333,
-    "longitude": -103.18794444444445,
+    "latitude": 44.06861111111112,
+    "longitude": -103.25102777777778,
     "CallSign": "KOTA",
     "Format": "FM",
     "Frequency": 100.7,
     "Sport": "Football",
     "Year": 2026,
-    "towerLatitude": 44.03333333333333,
-    "towerLongitude": -103.18794444444445,
+    "towerLatitude": 44.06861111111112,
+    "towerLongitude": -103.25102777777778,
     "cityLatitude": 44.145868,
     "cityLongitude": -103.206866,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KOTA",
-    "haat": 50
+    "haat": 94,
+    "translatorCallSign": "K264CP"
   },
   {
     "City": "Rapid City",
@@ -964,7 +971,7 @@ const stations = [
     "cityLatitude": 41.870968,
     "cityLongitude": -96.777787,
     "power": 5,
-    "powerNight": 5
+    "powerNight": 0
   },
   {
     "City": "Winner",
@@ -1050,8 +1057,9 @@ const stations = [
     "cityLongitude": -99.852364,
     "power": 0.25,
     "haat": 50,
-    "powerSource": "translator-estimate",
-    "translatorOf": "KBRB"
+    "powerSource": "FCC-FX",
+    "translatorOf": "KBRB",
+    "translatorCallSign": "K292HE"
   },
   {
     "City": "Aurora",
@@ -1175,21 +1183,22 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.115,
+    "longitude": -95.65194444444445,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Volleyball",
     "Year": 2026,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
+    "towerLatitude": 40.115,
+    "towerLongitude": -95.65194444444445,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KTNC",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K296HK"
   },
   {
     "City": "Fremont",
@@ -1283,7 +1292,7 @@ const stations = [
     "longitude": -98.3756111111111,
     "CallSign": "KICS",
     "Format": "AM",
-    "Frequency": 1450,
+    "Frequency": 1550,
     "Sport": "Volleyball",
     "Year": 2026,
     "towerLatitude": 40.567527777777784,
@@ -1325,26 +1334,27 @@ const stations = [
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.32,
-    "powerNight": 0.32
+    "powerNight": 0
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.51555555555556,
+    "longitude": -99.39833333333334,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Volleyball",
     "Year": 2026,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
+    "towerLatitude": 40.51555555555556,
+    "towerLongitude": -99.39833333333334,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KUVR",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K245CK"
   },
   {
     "City": "Imperial",
@@ -1395,9 +1405,10 @@ const stations = [
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KGFW",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K241CN"
   },
   {
     "City": "Kearney",
@@ -1773,7 +1784,7 @@ const stations = [
     "cityLatitude": 41.870968,
     "cityLongitude": -96.777787,
     "power": 5,
-    "powerNight": 5
+    "powerNight": 0
   },
   {
     "City": "Ainsworth",
@@ -1808,8 +1819,9 @@ const stations = [
     "cityLongitude": -99.852364,
     "power": 0.25,
     "haat": 50,
-    "powerSource": "translator-estimate",
-    "translatorOf": "KBRB"
+    "powerSource": "FCC-FX",
+    "translatorOf": "KBRB",
+    "translatorCallSign": "K292HE"
   },
   {
     "City": "Aurora",
@@ -1950,21 +1962,22 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.115,
+    "longitude": -95.65194444444445,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Men's Basketball",
     "Year": 2026,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
+    "towerLatitude": 40.115,
+    "towerLongitude": -95.65194444444445,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KTNC",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K296HK"
   },
   {
     "City": "Fremont",
@@ -2075,7 +2088,7 @@ const stations = [
     "longitude": -98.3756111111111,
     "CallSign": "KICS",
     "Format": "AM",
-    "Frequency": 1450,
+    "Frequency": 1550,
     "Sport": "Men's Basketball",
     "Year": 2026,
     "towerLatitude": 40.567527777777784,
@@ -2134,26 +2147,27 @@ const stations = [
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.32,
-    "powerNight": 0.32
+    "powerNight": 0
   },
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.51555555555556,
+    "longitude": -99.39833333333334,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Men's Basketball",
     "Year": 2026,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
+    "towerLatitude": 40.51555555555556,
+    "towerLongitude": -99.39833333333334,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KUVR",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K245CK"
   },
   {
     "City": "Imperial",
@@ -2204,9 +2218,10 @@ const stations = [
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KGFW",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K241CN"
   },
   {
     "City": "Kearney",
@@ -2279,21 +2294,22 @@ const stations = [
   {
     "City": "Lincoln",
     "State": "NE",
-    "latitude": 40.848333333333336,
-    "longitude": -96.67502777777779,
+    "latitude": 40.811388888888885,
+    "longitude": -96.70280555555556,
     "CallSign": "KLIN",
     "Format": "FM",
     "Frequency": 99.3,
     "Sport": "Men's Basketball",
     "Year": 2026,
-    "towerLatitude": 40.848333333333336,
-    "towerLongitude": -96.67502777777779,
+    "towerLatitude": 40.811388888888885,
+    "towerLongitude": -96.70280555555556,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KLIN",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K257GN"
   },
   {
     "City": "McCook",
@@ -2653,8 +2669,9 @@ const stations = [
     "cityLongitude": -99.852364,
     "power": 0.25,
     "haat": 50,
-    "powerSource": "translator-estimate",
-    "translatorOf": "KBRB"
+    "powerSource": "FCC-FX",
+    "translatorOf": "KBRB",
+    "translatorCallSign": "K292HE"
   },
   {
     "City": "Aurora",
@@ -2761,21 +2778,22 @@ const stations = [
   {
     "City": "Falls City",
     "State": "NE",
-    "latitude": 40.06583333333333,
-    "longitude": -95.61552777777777,
+    "latitude": 40.115,
+    "longitude": -95.65194444444445,
     "CallSign": "KTNC",
     "Format": "FM",
     "Frequency": 107.1,
     "Sport": "Women's Basketball",
     "Year": 2026,
-    "towerLatitude": 40.06583333333333,
-    "towerLongitude": -95.61552777777777,
+    "towerLatitude": 40.115,
+    "towerLongitude": -95.65194444444445,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KTNC",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K296HK"
   },
   {
     "City": "Fremont",
@@ -2865,21 +2883,22 @@ const stations = [
   {
     "City": "Holdrege",
     "State": "NE",
-    "latitude": 40.51583333333333,
-    "longitude": -99.39677777777779,
+    "latitude": 40.51555555555556,
+    "longitude": -99.39833333333334,
     "CallSign": "KUVR",
     "Format": "FM",
     "Frequency": 96.9,
     "Sport": "Women's Basketball",
     "Year": 2026,
-    "towerLatitude": 40.51583333333333,
-    "towerLongitude": -99.39677777777779,
+    "towerLatitude": 40.51555555555556,
+    "towerLongitude": -99.39833333333334,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KUVR",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K245CK"
   },
   {
     "City": "Holdrege",
@@ -2896,7 +2915,7 @@ const stations = [
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
     "power": 0.32,
-    "powerNight": 0.32
+    "powerNight": 0
   },
   {
     "City": "Kearney",
@@ -2930,9 +2949,10 @@ const stations = [
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
     "power": 0.25,
-    "powerSource": "translator-estimate",
+    "powerSource": "FCC-FX",
     "translatorOf": "KGFW",
-    "haat": 50
+    "haat": 50,
+    "translatorCallSign": "K241CN"
   },
   {
     "City": "Kearney",

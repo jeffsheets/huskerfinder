@@ -110,7 +110,9 @@ function addStationMarkers() {
       popupContent += `<strong style="color: ${sportColor};">${sport}:</strong><br>`;
       sportStations.forEach(s => {
         const roleTag = s.role ? ` <em style="color: #999; font-size: 0.85em;">(${s.role})</em>` : '';
-        popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}${roleTag}</span><br>`;
+        const night = nightBehavior(s);
+        const nightTag = night ? ` <span class="night-flag" title="${night.title}">${night.symbol}</span>` : '';
+        popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}${roleTag}${nightTag}</span><br>`;
       });
       popupContent += `</div>`;
     });
@@ -192,6 +194,7 @@ function sortByLocation(point, isFallback = false) {
         longitude: station.longitude,
         distance: station.distance,
         power: station.power,
+        powerNight: station.powerNight,
         signalStrength: station.signalStrength,
         signalCategory: station.signalCategory,
         role: station.role,
@@ -215,6 +218,27 @@ function sortByLocation(point, isFallback = false) {
 
   results = results.slice(0, 15);
 
+  // Contextual legend in the controls panel (stays visible while the list
+  // scrolls; tooltips don't exist on mobile) — shown only when a listed
+  // station carries a day/night flag, with only the symbols actually shown
+  const legendEl = document.getElementById('nightLegend');
+  if (legendEl) {
+    const flags = results.map(s => nightBehavior(s)).filter(Boolean);
+    if (flags.length > 0) {
+      const parts = [];
+      if (flags.some(f => f.symbol === '☀️')) {
+        parts.push('☀️ off air after sunset');
+      }
+      if (flags.some(f => f.symbol === '🌙')) {
+        parts.push('🌙 weaker at night');
+      }
+      legendEl.innerHTML = parts.join(' &nbsp;·&nbsp; ');
+      legendEl.style.display = 'block';
+    } else {
+      legendEl.style.display = 'none';
+    }
+  }
+
   // Update the display with enhanced HTML
   let html = '';
   results.forEach((station, index) => {
@@ -234,6 +258,10 @@ function sortByLocation(point, isFallback = false) {
     html += `<span class="station-location">${station.City}</span>`;
     html += `<span class="station-freq">${station.Frequency}${station.Format}</span>`;
     html += `<span class="station-call">${station.CallSign}</span>`;
+    const night = nightBehavior(station);
+    if (night) {
+      html += `<span class="night-flag" title="${night.title}">${night.symbol}</span>`;
+    }
     if (station.role) {
       const roleTitle = station.role === 'primary'
         ? 'Primary Husker station for this market'
@@ -244,17 +272,16 @@ function sortByLocation(point, isFallback = false) {
 
     html += `<div class="station-meta">`;
     html += `<div class="station-sports">`;
-    // Show all sports this station broadcasts
+    // Show all sports this station broadcasts (🏀 disambiguated with M/W)
     uniqueSports.forEach(sport => {
-      const sportClass = sport.toLowerCase().replace(/['\s]/g, '-');
-      const shortForms = {
-        'Football': 'FB',
-        'Volleyball': 'VB',
-        "Men's Basketball": 'MBB',
-        "Women's Basketball": 'WBB'
+      const emojiForms = {
+        'Football': '🏈',
+        'Volleyball': '🏐',
+        "Men's Basketball": '🏀<sup>M</sup>',
+        "Women's Basketball": '🏀<sup>W</sup>'
       };
-      html += `<span class="station-sport ${sportClass}">`;
-      html += `${shortForms[sport] || sport}`;
+      html += `<span class="station-sport-emoji" title="${sport}">`;
+      html += `${emojiForms[sport] || sport}`;
       html += `</span>`;
     });
     html += `</div>`;

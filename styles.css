@@ -177,6 +177,43 @@ body {
   flex-shrink: 0;
 }
 
+.night-flag {
+  cursor: help;
+  font-size: 0.85em;
+}
+
+.night-legend {
+  display: block;
+  color: #777;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* Compact one-line legend pill in the controls panel, faded Husker red */
+a.night-legend {
+  padding: 0.3rem 0.6rem;
+  margin-top: 0.55rem;
+  text-decoration: none;
+  color: #8a5a5a;
+  background: #fff3f3;
+  border: 1px solid #f3dada;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a.night-legend:hover {
+  color: #d00000;
+  border-color: #e5baba;
+}
+
+/* Full-sentence legend under the station table on stations.html */
+p.night-legend {
+  text-align: left;
+  margin: 0.75rem 0;
+}
+
 #map {
   flex: 1;
   height: 100%;
@@ -295,6 +332,19 @@ body {
   font-size: 0.75rem;
   margin-right: 0;
   line-height: 1.2;
+}
+
+.station-sport-emoji {
+  font-size: 0.95rem;
+  line-height: 1.2;
+  cursor: help;
+}
+
+.station-sport-emoji sup {
+  font-size: 0.6em;
+  font-weight: 700;
+  color: #666;
+  margin-left: -0.1em;
 }
 
 /* Primary/secondary market role badge (currently only Omaha: WOW primary, KCRO overflow) */

@@ -27,18 +27,55 @@ const stationsFile = fs.readFileSync('./js/stations.js', 'utf8');
 const stations = eval(stationsFile.replace('const stations = ', ''));
 
 // Call signs in stations.js that differ from the FCC license
-const CALLSIGN_ALIASES = {
-  'WOW': 'KXSP' // 590 AM Omaha brands as "WOW" but is licensed KXSP
-};
+// (590 AM Omaha was licensed KXSP until its 2026 relaunch legally restored
+// the historic WOW callsign, so no alias is needed for it anymore)
+const CALLSIGN_ALIASES = {};
 
-// stations.js frequency -> FCC licensed frequency (lookup only; display unchanged)
-const FREQUENCY_ALIASES = {
-  'KICS-AM': { from: 1450, to: 1550 } // KICS Hastings is licensed at 1550
-};
-
-// FM entries that are actually low-power translators of an AM station.
+// Fallback for FM translators with no FX record in the cache.
 // Translators max out at 0.25 kW ERP; 50m HAAT is a typical assumption.
 const TRANSLATOR_DEFAULTS = { power: 0.25, haat: 50 };
+
+/**
+ * Find the licensed FX (translator) record matching an FM entry: same
+ * frequency, licensed, within 60 km of the station's current coordinates.
+ */
+function findTranslatorLicense(station) {
+  const toRad = x => x * Math.PI / 180;
+  const kmBetween = (aLat, aLon, bLat, bLon) => Math.acos(Math.min(1,
+    Math.sin(toRad(aLat)) * Math.sin(toRad(bLat)) +
+    Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.cos(toRad(aLon) - toRad(bLon))
+  )) * 6378.137;
+
+  const candidates = fccData
+    .filter(fcc => fcc.service === 'FX' && fcc.status === 'LIC' &&
+      Math.abs(fcc.frequency - station.Frequency) < 0.05 && fcc.latitude)
+    .map(fcc => ({ fcc, km: kmBetween(station.latitude, station.longitude, fcc.latitude, fcc.longitude) }))
+    .filter(c => c.km < 60)
+    .sort((a, b) => a.km - b.km);
+  return candidates.length ? candidates[0].fcc : null;
+}
+
+function applyTranslator(station) {
+  const updated = { ...station };
+  updated.translatorOf = station.translatorOf || station.CallSign;
+  const fx = findTranslatorLicense(station);
+  if (fx) {
+    updated.power = fx.power || TRANSLATOR_DEFAULTS.power;
+    updated.haat = fx.haat || TRANSLATOR_DEFAULTS.haat;
+    updated.latitude = fx.latitude;
+    updated.longitude = fx.longitude;
+    updated.towerLatitude = fx.latitude;
+    updated.towerLongitude = fx.longitude;
+    updated.translatorCallSign = fx.callSign;
+    updated.powerSource = 'FCC-FX';
+  } else {
+    updated.power = TRANSLATOR_DEFAULTS.power;
+    updated.haat = TRANSLATOR_DEFAULTS.haat;
+    updated.powerSource = 'translator-estimate';
+  }
+  delete updated.powerNight;
+  return updated;
+}
 
 function parseFccFields(fcc) {
   const f = fcc.rawLine.split('|');
@@ -69,22 +106,14 @@ let fmFixed = 0, amFixed = 0, translators = 0, unmatched = [];
 const updatedStations = stations.map(station => {
   const updated = { ...station };
 
-  // Existing translator entries keep their tower coords but get honest FM
-  // translator power instead of the parent AM station's transmitter power.
+  // Known translator entries: match against their real FX license
   if (station.translatorOf || station.powerSource === 'AM') {
     translators++;
-    updated.power = TRANSLATOR_DEFAULTS.power;
-    updated.haat = TRANSLATOR_DEFAULTS.haat;
-    updated.powerSource = 'translator-estimate';
-    delete updated.powerNight;
-    return updated;
+    return applyTranslator(station);
   }
 
   const callSign = CALLSIGN_ALIASES[station.CallSign] || station.CallSign;
-  const freqAlias = FREQUENCY_ALIASES[`${station.CallSign}-${station.Format}`];
-  const frequency = (freqAlias && station.Frequency === freqAlias.from)
-    ? freqAlias.to
-    : station.Frequency;
+  const frequency = station.Frequency;
 
   const entries = fccMap.get(`${callSign}-${station.Format}`) || [];
   // Only licensed facilities (field [9] = LIC) — the FCC query also returns
@@ -100,13 +129,9 @@ const updatedStations = stations.map(station => {
   if (matches.length === 0) {
     // KBRB 106.3 and any future callsign-frequency mismatch: the FCC has the
     // callsign but not this frequency, meaning it's a translator frequency.
-    if (entries.length > 0 || station.Format === 'FM') {
+    if (station.Format === 'FM') {
       translators++;
-      updated.power = TRANSLATOR_DEFAULTS.power;
-      updated.haat = TRANSLATOR_DEFAULTS.haat;
-      updated.powerSource = 'translator-estimate';
-      updated.translatorOf = updated.translatorOf || station.CallSign;
-      return updated;
+      return applyTranslator(station);
     }
     unmatched.push(`${station.CallSign} ${station.Frequency}${station.Format} (${station.City})`);
     return station;
@@ -118,15 +143,20 @@ const updatedStations = stations.map(station => {
     updated.haat = parsed.haat;
     fmFixed++;
   } else {
-    // AM: separate rows for day and night power
-    let day = null, night = null;
+    // AM: separate rows for day and night power. A station with only a DAY
+    // row is a daytime-only license (Class D daytimer) — it signs off at
+    // sunset, so its night power is 0. UNL = unlimited, same power all night.
+    let day = null, night = null, unlimited = false;
     matches.forEach(fcc => {
       const parsed = parseFccFields(fcc);
       if (parsed.hours === 'NIG') night = parsed.erp;
-      else day = parsed.erp; // DAY or UNL
+      else {
+        day = parsed.erp;
+        if (parsed.hours === 'UNL') unlimited = true;
+      }
     });
     updated.power = day || night;
-    updated.powerNight = night || day;
+    updated.powerNight = unlimited ? updated.power : (night || 0);
     amFixed++;
   }
 

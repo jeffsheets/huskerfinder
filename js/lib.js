@@ -244,6 +244,33 @@ const SIGNAL_TIER_FLOORS = {
 };
 
 /**
+ * Describe an AM station's nighttime behavior so users searching in the
+ * afternoon know what to expect for an evening game — not just what the
+ * signal is right now. Returns null for stations that don't change at night.
+ * Keep in sync with the copies in stations.html and
+ * scripts/generate-station-table.js.
+ *
+ * @param {object} station - Station record
+ * @returns {object|null} { symbol, title } or null
+ */
+function nightBehavior(station) {
+  if (station.Format !== 'AM' || station.powerNight == null || station.powerNight >= station.power) {
+    return null;
+  }
+  if (station.powerNight <= 0) {
+    return {
+      symbol: '☀️',
+      title: 'Daytime-only AM station — off the air from sunset to sunrise, so not available during night games'
+    };
+  }
+  const fmt = kw => kw >= 1 ? `${kw} kW` : `${Math.round(kw * 1000)} watts`;
+  return {
+    symbol: '🌙',
+    title: `Runs reduced power after sunset (${fmt(station.power)} day → ${fmt(station.powerNight)} night) — expect a weaker signal during night games`
+  };
+}
+
+/**
  * Estimate signal at the listener's location for one station.
  *
  * @param {object} station - Station record (power, haat, powerNight, Format, Frequency, coords)
@@ -263,9 +290,17 @@ function estimateSignal(station, distanceMeters) {
 
   if (station.Format === 'AM') {
     let power = station.power;
-    if (station.powerNight && station.powerNight < station.power
+    if (station.powerNight != null && station.powerNight < station.power
         && isNightAt(station.latitude, station.longitude)) {
       power = station.powerNight;
+      if (power <= 0) {
+        // Daytime-only license: the station signs off at sunset
+        return {
+          strength: -99,
+          category: { label: 'Off air', emoji: '🌙', bars: '▱▱▱▱', color: '#999',
+            description: 'Daytime-only AM station — off the air from sunset to sunrise' }
+        };
+      }
       nightNote = ` (reduced nighttime power: ${power >= 1 ? power + ' kW' : (power * 1000) + ' watts'})`;
     }
     level = 20 * Math.log10(amFieldStrengthMvm(power, station.Frequency, distanceKm));
