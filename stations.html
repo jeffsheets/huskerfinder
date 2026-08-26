@@ -55,9 +55,11 @@
 
   <h2>2026-27 Husker Radio Network Station List</h2>
 
-  <p>Nebraska Husker football games are broadcast on <strong>59 Husker Radio Network affiliate stations</strong> across Nebraska, South Dakota, and Kansas for the 2026 season. Volleyball airs on 44 stations, men's basketball on 49, and women's basketball on 35. Below is the complete list of all 61 AM and FM frequencies that carry Husker games, sorted by city — or use the <a href=".">GPS finder</a> to see the closest Husker radio station to you right now.</p>
+  <p>Nebraska Husker football games are broadcast on <strong>about 60 Husker Radio Network affiliate stations</strong> across Nebraska, South Dakota, and Kansas for the 2026 season. Volleyball airs on about 45 stations, men's basketball on about 50, and women's basketball on about 35. Below is the complete list of AM and FM frequencies that carry Husker games, sorted by city — or use the <a href=".">GPS finder</a> to see the closest Husker radio station to you right now.</p>
 
   <p><strong>Source:</strong> Compiled from the official Husker Radio Network affiliate list at <a href="https://huskers.com/listen" target="_blank">huskers.com/listen</a> and FCC tower records. <em>Updated August 2026 for the 2026-27 seasons.</em></p>
+
+  <p><em>New for 2026: <strong>WOW 590 AM</strong> in Omaha — the relaunched historic signal — carries Husker football, volleyball, and basketball (<a href="https://www.walnutmediausa.com/am-590-wow-historic-signal-returns" target="_blank">Walnut Media announcement</a>, <a href="https://en.wikipedia.org/wiki/WOW_(AM)" target="_blank">Wikipedia</a>). It replaces the low-power KIBM 1490 AM as the primary Omaha AM home for Husker games; KCRO 660 AM remains the secondary Omaha station, carrying games when schedules conflict. It was announced in July 2026 and may not yet appear on the official huskers.com list.</em></p>
 
   <p><em>Game day tip: inside Memorial Stadium, the Husker Radio Network feed is also available on 87.7 FM.</em></p>
 
@@ -451,17 +453,17 @@
       <tr>
         <td data-label="City:">Omaha</td>
         <td data-label="State:">NE</td>
-        <td data-label="Frequency:">660AM</td>
-        <td data-label="Call Sign:">KCRO</td>
-        <td data-label="Sports:"><span class="station-sport volleyball">VB</span> <span class="station-sport men-s-basketball">MBB</span> <span class="station-sport women-s-basketball">WBB</span></td>
+        <td data-label="Frequency:">590AM</td>
+        <td data-label="Call Sign:">WOW <span class="station-role primary">primary</span></td>
+        <td data-label="Sports:"><span class="station-sport football">FB</span> <span class="station-sport volleyball">VB</span> <span class="station-sport men-s-basketball">MBB</span> <span class="station-sport women-s-basketball">WBB</span></td>
       </tr>
     
       <tr>
         <td data-label="City:">Omaha</td>
         <td data-label="State:">NE</td>
-        <td data-label="Frequency:">1490AM</td>
-        <td data-label="Call Sign:">KIBM</td>
-        <td data-label="Sports:"><span class="station-sport football">FB</span> <span class="station-sport volleyball">VB</span> <span class="station-sport men-s-basketball">MBB</span> <span class="station-sport women-s-basketball">WBB</span></td>
+        <td data-label="Frequency:">660AM</td>
+        <td data-label="Call Sign:">KCRO <span class="station-role secondary">secondary</span></td>
+        <td data-label="Sports:"><span class="station-sport volleyball">VB</span> <span class="station-sport men-s-basketball">MBB</span> <span class="station-sport women-s-basketball">WBB</span></td>
       </tr>
     
       <tr>
@@ -691,7 +693,7 @@ function renderStationTable() {
         <td data-label="City:">${station.City}</td>
         <td data-label="State:">${station.State || ''}</td>
         <td data-label="Frequency:">${station.Frequency}${station.Format}</td>
-        <td data-label="Call Sign:">${station.CallSign}</td>
+        <td data-label="Call Sign:">${station.CallSign}${station.role ? ` <span class="station-role ${station.role}">${station.role}</span>` : ''}</td>
         <td data-label="Sports:">${sportsHtml}</td>
       </tr>
     `;

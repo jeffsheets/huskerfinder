@@ -684,22 +684,6 @@ const stations = [
   {
     "City": "Omaha",
     "State": "NE",
-    "latitude": 41.31305555555555,
-    "longitude": -96.01030555555556,
-    "CallSign": "KIBM",
-    "Format": "AM",
-    "Frequency": 1490,
-    "Sport": "Football",
-    "Year": 2026,
-    "towerLatitude": 41.31305555555555,
-    "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
-    "power": 0.97
-  },
-  {
-    "City": "Omaha",
-    "State": "NE",
     "latitude": 41.63913888888889,
     "longitude": -96.2088888888889,
     "CallSign": "KOBM",
@@ -712,6 +696,23 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 247
+  },
+  {
+    "City": "Omaha",
+    "State": "NE",
+    "latitude": 41.31527777777777,
+    "longitude": -95.99808333333333,
+    "CallSign": "WOW",
+    "Format": "AM",
+    "Frequency": 590,
+    "Sport": "Football",
+    "Year": 2026,
+    "towerLatitude": 41.31527777777777,
+    "towerLongitude": -95.99808333333333,
+    "cityLatitude": 41.2565,
+    "cityLongitude": -96.0547,
+    "power": 5,
+    "role": "primary"
   },
   {
     "City": "O'Neill",
@@ -1494,22 +1495,6 @@ const stations = [
     "State": "NE",
     "latitude": 41.31305555555555,
     "longitude": -96.01030555555556,
-    "CallSign": "KIBM",
-    "Format": "AM",
-    "Frequency": 1490,
-    "Sport": "Volleyball",
-    "Year": 2026,
-    "towerLatitude": 41.31305555555555,
-    "towerLongitude": -96.01030555555556,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
-    "power": 0.97
-  },
-  {
-    "City": "Omaha",
-    "State": "NE",
-    "latitude": 41.31305555555555,
-    "longitude": -96.01030555555556,
     "CallSign": "KCRO",
     "Format": "AM",
     "Frequency": 660,
@@ -1519,7 +1504,8 @@ const stations = [
     "towerLongitude": -96.01030555555556,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 1
+    "power": 1,
+    "role": "secondary"
   },
   {
     "City": "Omaha",
@@ -1536,6 +1522,23 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 247
+  },
+  {
+    "City": "Omaha",
+    "State": "NE",
+    "latitude": 41.31527777777777,
+    "longitude": -95.99808333333333,
+    "CallSign": "WOW",
+    "Format": "AM",
+    "Frequency": 590,
+    "Sport": "Volleyball",
+    "Year": 2026,
+    "towerLatitude": 41.31527777777777,
+    "towerLongitude": -95.99808333333333,
+    "cityLatitude": 41.2565,
+    "cityLongitude": -96.0547,
+    "power": 5,
+    "role": "primary"
   },
   {
     "City": "O'Neill",
@@ -2295,23 +2298,25 @@ const stations = [
     "towerLongitude": -96.01030555555556,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 1
+    "power": 1,
+    "role": "secondary"
   },
   {
     "City": "Omaha",
     "State": "NE",
-    "latitude": 41.31305555555555,
-    "longitude": -96.01030555555556,
-    "CallSign": "KIBM",
+    "latitude": 41.31527777777777,
+    "longitude": -95.99808333333333,
+    "CallSign": "WOW",
     "Format": "AM",
-    "Frequency": 1490,
+    "Frequency": 590,
     "Sport": "Men's Basketball",
     "Year": 2026,
-    "towerLatitude": 41.31305555555555,
-    "towerLongitude": -96.01030555555556,
+    "towerLatitude": 41.31527777777777,
+    "towerLongitude": -95.99808333333333,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 0.97
+    "power": 5,
+    "role": "primary"
   },
   {
     "City": "O'Neill",
@@ -2925,23 +2930,25 @@ const stations = [
     "towerLongitude": -96.01030555555556,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 1
+    "power": 1,
+    "role": "secondary"
   },
   {
     "City": "Omaha",
     "State": "NE",
-    "latitude": 41.31305555555555,
-    "longitude": -96.01030555555556,
-    "CallSign": "KIBM",
+    "latitude": 41.31527777777777,
+    "longitude": -95.99808333333333,
+    "CallSign": "WOW",
     "Format": "AM",
-    "Frequency": 1490,
+    "Frequency": 590,
     "Sport": "Women's Basketball",
     "Year": 2026,
-    "towerLatitude": 41.31305555555555,
-    "towerLongitude": -96.01030555555556,
+    "towerLatitude": 41.31527777777777,
+    "towerLongitude": -95.99808333333333,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 0.97
+    "power": 5,
+    "role": "primary"
   },
   {
     "City": "Scottsbluff",

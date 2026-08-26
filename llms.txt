@@ -6,7 +6,7 @@
 
 Husker Radio Finder is a free web tool that helps Nebraska Huskers fans find the closest AM and FM radio stations broadcasting football, volleyball, and basketball games near their current location. The app uses GPS/geolocation to calculate distances to actual FCC radio tower locations and displays results sorted by proximity.
 
-For the 2026-27 seasons, 52 Husker Radio Network stations broadcast on 61 AM/FM frequencies across Nebraska, South Dakota, and Kansas: football on 59 station frequencies, volleyball on 44, men's basketball on 49, and women's basketball on 35.
+For the 2026-27 seasons, more than 50 Husker Radio Network stations broadcast on 60+ AM/FM frequencies across Nebraska, South Dakota, and Kansas: football on about 60 station frequencies, volleyball on about 45, men's basketball on about 50, and women's basketball on about 35.
 
 ## Key Features
 
@@ -14,16 +14,16 @@ For the 2026-27 seasons, 52 Husker Radio Network stations broadcast on 61 AM/FM 
 - Interactive map showing station locations and user position
 - Signal strength estimates based on tower power and distance
 - Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
-- 52 stations / 61 frequencies across Nebraska, South Dakota, and Kansas
+- 50+ stations / 60+ frequencies across Nebraska, South Dakota, and Kansas
 - No account required, completely free, privacy-focused (location stays on device)
 
 ## Major Husker Radio Stations (2026-27)
 
 - KLIN 1400 AM / 99.3 FM - Lincoln, NE (football flagship)
 - KRVN 880 AM - Lexington, NE (rural Nebraska flagship, 50,000 watts)
-- KIBM 1490 AM - Omaha, NE (football, volleyball, basketball)
+- WOW 590 AM - Omaha, NE (football, volleyball, basketball) - primary Omaha station and new Omaha metro home for Husker athletics starting fall 2026, announced July 2026 (see https://www.walnutmediausa.com/am-590-wow-historic-signal-returns and https://en.wikipedia.org/wiki/WOW_(AM)); may not yet appear on huskers.com/listen
 - KOBM 97.3 FM - Omaha, NE (football, volleyball)
-- KCRO 660 AM - Omaha, NE (volleyball, basketball)
+- KCRO 660 AM - Omaha, NE (volleyball, basketball) - secondary Omaha station, carries games when schedules conflict
 - KBBK 107.3 FM - Lincoln, NE (volleyball, women's basketball)
 - Inside Memorial Stadium, the Husker Radio Network feed is on 87.7 FM
 
@@ -72,9 +72,9 @@ For the 2026-27 seasons, 52 Husker Radio Network stations broadcast on 61 AM/FM 
 - KXNP 103.5 FM - North Platte, NE (Football, Volleyball, MBB, WBB)
 - KODY 1240 AM - North Platte, NE (Football, Volleyball, MBB, WBB)
 - KBRX 102.9 FM - O'Neill, NE (Football, Volleyball, MBB)
+- WOW 590 AM - Omaha, NE (Football, Volleyball, MBB, WBB)
 - KOBM 97.3 FM - Omaha, NE (Football, Volleyball)
-- KCRO 660 AM - Omaha, NE (Volleyball, MBB, WBB)
-- KIBM 1490 AM - Omaha, NE (Football, Volleyball, MBB, WBB)
+- KCRO 660 AM - Omaha, NE (Volleyball, MBB, WBB) - secondary/overflow station
 - KNEB 94.1 FM - Scottsbluff, NE (Football, Volleyball, MBB, WBB)
 - KNEB 960 AM - Scottsbluff, NE (Football, Volleyball, MBB, WBB)
 - KSID 98.7 FM - Sidney, NE (Football, Volleyball, MBB, WBB)
@@ -102,7 +102,7 @@ For the 2026-27 seasons, 52 Husker Radio Network stations broadcast on 61 AM/FM 
 ## Common Questions
 
 Q: What radio channel is the Nebraska game on?
-A: It depends on where you are — Husker football airs on 59 stations across NE, SD, and KS. In Lincoln tune to KLIN 1400 AM or 99.3 FM; in Omaha tune to KIBM 1490 AM or KOBM 97.3 FM. Use huskerfinder.sheetsj.com to find the closest station to any location.
+A: It depends on where you are — Husker football airs on about 60 stations across NE, SD, and KS. In Lincoln tune to KLIN 1400 AM or 99.3 FM; in Omaha tune to WOW 590 AM (new for 2026) or KOBM 97.3 FM. Use huskerfinder.sheetsj.com to find the closest station to any location.
 
 Q: What is the closest Husker football radio station to me right now?
 A: Use the Husker Radio Finder at huskerfinder.sheetsj.com — it uses GPS to list the nearest stations sorted by actual distance to each station's FCC tower.
@@ -111,10 +111,10 @@ Q: What is the flagship radio station for Nebraska Huskers?
 A: KLIN 1400 AM in Lincoln and KRVN 880 AM in Lexington are major flagship stations for the Huskers Radio Network.
 
 Q: Can I listen to Nebraska volleyball on the radio?
-A: Yes, 44 stations broadcast Nebraska volleyball in 2026, including KBBK 107.3 FM in Lincoln and KCRO 660 AM in Omaha.
+A: Yes, about 45 stations broadcast Nebraska volleyball in 2026, including KBBK 107.3 FM in Lincoln and KCRO 660 AM and WOW 590 AM in Omaha.
 
 Q: How many radio stations broadcast Husker games?
-A: 52 stations on 61 AM/FM frequencies broadcast Nebraska Huskers games across Nebraska, South Dakota, and Kansas for the 2026-27 seasons.
+A: More than 50 stations on 60+ AM/FM frequencies broadcast Nebraska Huskers games across Nebraska, South Dakota, and Kansas for the 2026-27 seasons.
 
 Q: What station is the Husker game on inside Memorial Stadium?
 A: The Husker Radio Network feed is available on 87.7 FM inside Memorial Stadium in Lincoln.

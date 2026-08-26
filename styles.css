@@ -267,6 +267,29 @@ body {
   line-height: 1.2;
 }
 
+/* Primary/secondary market role badge (currently only Omaha: WOW primary, KCRO overflow) */
+.station-role {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+.station-role.primary {
+  background: #d00000;
+  color: #fff;
+}
+
+.station-role.secondary {
+  background: #e0e0e0;
+  color: #666;
+}
+
 .station-sport.football {
   background: #d00000;
   color: white;

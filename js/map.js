@@ -109,7 +109,8 @@ function addStationMarkers() {
       popupContent += `<div style="margin-bottom: 8px;">`;
       popupContent += `<strong style="color: ${sportColor};">${sport}:</strong><br>`;
       sportStations.forEach(s => {
-        popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}</span><br>`;
+        const roleTag = s.role ? ` <em style="color: #999; font-size: 0.85em;">(${s.role})</em>` : '';
+        popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}${roleTag}</span><br>`;
       });
       popupContent += `</div>`;
     });
@@ -193,6 +194,7 @@ function sortByLocation(point, isFallback = false) {
         power: station.power,
         signalStrength: station.signalStrength,
         signalCategory: station.signalCategory,
+        role: station.role,
         sports: []
       });
     }
@@ -232,6 +234,12 @@ function sortByLocation(point, isFallback = false) {
     html += `<span class="station-location">${station.City}</span>`;
     html += `<span class="station-freq">${station.Frequency}${station.Format}</span>`;
     html += `<span class="station-call">${station.CallSign}</span>`;
+    if (station.role) {
+      const roleTitle = station.role === 'primary'
+        ? 'Primary Husker station for this market'
+        : 'Secondary station — carries games when schedules conflict';
+      html += `<span class="station-role ${station.role}" title="${roleTitle}">${station.role}</span>`;
+    }
     html += `</div>`;
 
     html += `<div class="station-meta">`;
@@ -341,9 +349,12 @@ function sortByLocation(point, isFallback = false) {
 
     map.setView(centerPoint, zoomLevel);
 
-    // Automatically open popup for closest station (skip for fallback to show more context)
+    // Automatically open popup for closest station (skip for fallback to show more context).
+    // Prefer the closest football station when the football filter is on — football is the
+    // flagship sport, so a nearby volleyball/basketball-only station shouldn't win the popup.
     if (!isFallback && results.length > 0) {
-      const closestStation = results[0];
+      const closestStation = (currentFilters.football &&
+        results.find(s => s.sports.includes('Football'))) || results[0];
       // Small delay to ensure map has finished moving
       setTimeout(() => {
         openStationPopup(closestStation.latitude, closestStation.longitude);

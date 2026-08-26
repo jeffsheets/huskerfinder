@@ -71,7 +71,7 @@ sortedStations.forEach(station => {
         <td data-label="City:">${station.City}</td>
         <td data-label="State:">${station.State || ''}</td>
         <td data-label="Frequency:">${station.Frequency}${station.Format}</td>
-        <td data-label="Call Sign:">${station.CallSign}</td>
+        <td data-label="Call Sign:">${station.CallSign}${station.role ? ` <span class="station-role ${station.role}">${station.role}</span>` : ''}</td>
         <td data-label="Sports:">${sportsHtml}</td>
       </tr>
     `;
