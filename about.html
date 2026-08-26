@@ -29,7 +29,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-08-26">
+  <link rel="stylesheet" href="styles.css?v=2026-08-26b">
 </head>
 <body class="about-page">
 
@@ -54,11 +54,22 @@
   <p>This app was built for you -- Find the radio stations that broadcast Husker football and volleyball games near your location</p>
 
   <h3>How It Works</h3>
-  <p>Uses your device's geolocation, then searches through a list of stations that carry Husker sports. Results are sorted by distance from your location to the actual radio tower, with signal strength indicators to help you find the best reception.</p>
+  <p>Uses your device's geolocation, then searches through a list of stations that carry Husker sports. Results are sorted by the estimated signal strength at your location — or by straight-line distance to the tower if you switch the "Sort by" option — with signal bars to help you find the best reception.</p>
 
   <div class="highlight">
-    <p><strong>Accuracy Note:</strong> We use actual FCC tower locations and calculate distances to those towers. Signal strength bars (▰▰▰▱) provide estimated signal quality based on tower power and distance, but actual reception depends on terrain, buildings, weather, and other factors. Try the closest stations first!</p>
+    <p><strong>Accuracy Note:</strong> We use actual FCC tower locations and licensed power data, and estimate signal strength with the same propagation curves the FCC uses to define station coverage. Real reception still depends on terrain, buildings, weather, and your radio. Try a couple of the top stations!</p>
   </div>
+
+  <h3 id="signal-strength">How Signal Strength Is Estimated</h3>
+  <p>Each station's signal bars (▰▰▰▱) and the "Strongest signal" sort are calculated from the station's FCC license data and your distance from its tower:</p>
+  <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+    <li><strong>FM stations</strong> are rated using the FCC's own F(50,50) propagation curves — the same curves the FCC uses to draw official coverage maps — based on the station's licensed effective radiated power (ERP) and antenna height above average terrain (HAAT). A 100,000-watt antenna on a 1,000-foot tower reaches much farther than the same power on a short one.</li>
+    <li><strong>AM stations</strong> are rated with a groundwave propagation model using the station's licensed transmitter power and frequency. AM signals hug the ground, and the Great Plains has some of the best soil conductivity in the country — that's why a 50,000-watt station like KRVN 880 is listenable across most of Nebraska in the daytime, and why lower AM frequencies (590, 660, 880) carry much farther than higher ones (1400+).</li>
+    <li><strong>FM translators</strong> (low-power FM repeaters of AM stations, like KLIN 99.3 FM) are capped by the FCC at 250 watts, so they're only rated strong within roughly 5–15 miles of their town — that's real, not a bug.</li>
+  </ul>
+
+  <h4>Why AM stations get weaker at night</h4>
+  <p>At night, AM signals bounce off the ionosphere and can travel hundreds of miles ("skywave"). To keep thousands of stations from interfering with each other, the FCC licenses most AM stations with a <strong>mandatory lower nighttime power</strong>, in effect from local sunset to local sunrise. This isn't optional and can't be waived for a game broadcast — for example, KICS in Hastings runs 500 watts during the day but must drop to just 27 watts at night, while KRVN 880, KFAB 1110, and WOW 590 are engineered to keep full power around the clock (usually with directional antennas). This app checks whether the sun is down at each station's tower and automatically uses the nighttime power in its estimates — so for a 7pm kickoff, the rankings reflect what you'll actually be able to hear.</p>
 
   <h3>Tips for Best Results</h3>
   <p>Since radio coverage can vary greatly based on terrain, weather, tower power, and other factors:</p>
@@ -81,10 +92,12 @@
   <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
     <li>Browser geolocation API to determine your position</li>
     <li>FCC (Federal Communications Commission) tower data for accurate location coordinates</li>
-    <li>Transmitter power data to estimate signal strength</li>
+    <li>Licensed transmitter power (AM day/night) and ERP + antenna height (FM) from FCC records</li>
     <li>Distance calculations using actual tower positions</li>
     <li>Interactive mapping powered by Leaflet and OpenStreetMap</li>
-    <li>Signal strength estimates using RF propagation models (for reference only)</li>
+    <li>FM signal estimates interpolated from the FCC F(50,50) propagation curve tables (47 CFR 73.333)</li>
+    <li>AM signal estimates from a Norton groundwave model with Great Plains soil conductivity (FCC M3 map)</li>
+    <li>A sunrise/sunset calculation at each tower to apply AM nighttime power restrictions</li>
   </ul>
 
   <p>Special thanks to <a href="https://huskers.com" target="_blank">huskers.com</a> for serving as a reference for station information and providing the official streaming option.</p>
@@ -109,6 +122,16 @@
     <details>
       <summary>How many radio stations broadcast Husker games?</summary>
       <p>More than 50 Husker Radio Network stations broadcasting on 60+ AM and FM frequencies (including AM/FM simulcasts) carry Nebraska Huskers games across Nebraska, South Dakota, and Kansas for the 2026-27 seasons. View the <a href="stations.html">complete station list</a> for all frequencies.</p>
+    </details>
+
+    <details>
+      <summary>How accurate are the signal strength bars?</summary>
+      <p>They're estimates built from each station's FCC license: FM uses the FCC's official F(50,50) coverage curves (power + antenna height), and AM uses a groundwave model tuned for Great Plains soil. They're good enough to rank stations against each other, which is what the "Strongest signal" sort does. Real-world reception still varies with terrain, buildings, weather, and your radio — see <a href="#signal-strength">"How Signal Strength Is Estimated"</a> above for the full story.</p>
+    </details>
+
+    <details>
+      <summary>Why does an AM station I hear all day turn to static at night?</summary>
+      <p>Most AM stations are required by the FCC to cut power at night (local sunset to sunrise) so their signals don't skip off the ionosphere and interfere with distant stations. Some drop dramatically — KICS Hastings goes from 500 watts to 27 watts. The finder accounts for this: after sunset it uses each station's nighttime power, so evening game rankings match reality. Big stations like KRVN 880 and WOW 590 keep full power all night.</p>
     </details>
 
     <details>

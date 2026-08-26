@@ -94,11 +94,12 @@ To update the station list for a new season:
 3. Run `node scripts/fetch-fcc-bulk.js` to get FCC tower data (cached in `scripts/fcc-data-cache.json`)
 4. Run `node scripts/update-stations.js` to match and update coordinates
 5. Run `node scripts/fix-unmatched.js` if needed for FM translators
-6. Run `node scripts/generate-station-table.js` to re-render the static station table in stations.html (SEO/AI crawlers don't execute JS, so the table is pre-rendered into the HTML)
-7. Update the station counts in visible copy if they changed (index.html FAQ + JSON-LD, stations.html intro, about.html FAQ, llms.txt)
-8. **Bump the `?v=` cache-busting query params** on every changed JS/CSS reference (`js/stations.js`, `js/lib.js`, `js/map.js` in index.html; `js/stations.js` in stations.html; `styles.css` in all three pages). Use the current date, e.g. `?v=2026-08-26`. GitHub Pages serves JS/CSS with `max-age=14400` (4 hours), so browsers keep the old file until the URL changes.
-9. Review changes and test the app
-10. After the changes are deployed, ping IndexNow so Bing re-crawls (key file is committed in the site root):
+6. Run `node scripts/update-signal-data.js` to set corrected power (FM ERP kW / AM day kW), `powerNight` (AM), and `haat` (FM antenna height, meters) from the FCC cache — these feed the signal-strength estimates
+7. Run `node scripts/generate-station-table.js` to re-render the static station table in stations.html (SEO/AI crawlers don't execute JS, so the table is pre-rendered into the HTML)
+8. Update the station counts in visible copy if they changed (index.html FAQ + JSON-LD, stations.html intro, about.html FAQ, llms.txt)
+9. **Bump the `?v=` cache-busting query params** on every changed JS/CSS reference (`js/stations.js`, `js/lib.js`, `js/map.js` in index.html; `js/stations.js` in stations.html; `styles.css` in all three pages). Use the current date, e.g. `?v=2026-08-26`. GitHub Pages serves JS/CSS with `max-age=14400` (4 hours), so browsers keep the old file until the URL changes.
+10. Review changes and test the app
+11. After the changes are deployed, ping IndexNow so Bing re-crawls (key file is committed in the site root):
    ```bash
    curl -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json; charset=utf-8" -d '{
      "host": "huskerfinder.sheetsj.com",

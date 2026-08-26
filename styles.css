@@ -147,6 +147,36 @@ body {
   flex-shrink: 0;
 }
 
+.sort-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-left: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.sort-group .sort-label {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.sort-group label {
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.sort-group input[type="radio"] {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 #map {
   flex: 1;
   height: 100%;

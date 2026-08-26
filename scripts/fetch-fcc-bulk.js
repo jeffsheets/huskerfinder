@@ -101,21 +101,32 @@ function parseFCCData(data, format) {
     if (line && line.includes('|')) {
       const fields = line.split('|');
 
-      // Basic validation - make sure this is a data line
-      if (fields.length > 20 && fields[3].trim() === format) {
+      // Basic validation - make sure this is a data line.
+      // FM queries also return FX (translator) and FL (LPFM) rows - keep them,
+      // tagged by service, since Husker affiliates include FM translators.
+      const service = fields.length > 20 ? fields[3].trim() : '';
+      const serviceOk = format === 'FM' ? ['FM', 'FX', 'FL'].includes(service) : service === format;
+      if (fields.length > 20 && serviceOk) {
         const callSign = fields[1].trim().replace(/-FM$/, '');
         const frequency = parseFloat(fields[2]);
         const city = fields[10].trim();
         const state = fields[11].trim();
+        const status = fields[9].trim(); // LIC / CP / MOD / ...
 
-        // Power is in different fields for AM vs FM
-        // For FM: field 4 is ERP in kW
-        // For AM: field 14 might be power
+        // FM: field [4] is the CHANNEL NUMBER (freq = 87.9 + 0.2*(ch-200)).
+        // Real ERP is [14] (horizontal) / [15] (vertical) in kW, and
+        // [16]/[17] is antenna HAAT in meters.
+        // AM: [14] is power in kW; day/night appear as separate rows with
+        // [5] = DAY / NIG / UNL.
         let power = null;
+        let haat = null;
+        let hours = null;
         if (format === 'FM') {
-          power = parseFloat(fields[4]) || null;
+          power = parseFloat(fields[14]) || parseFloat(fields[15]) || null;
+          haat = parseFloat(fields[16]) || parseFloat(fields[17]) || null;
         } else if (format === 'AM') {
           power = parseFloat(fields[14]) || null;
+          hours = fields[5].trim(); // DAY / NIG / UNL
         }
 
         // Coordinates are in DMS format:
@@ -154,9 +165,13 @@ function parseFCCData(data, format) {
           callSign,
           frequency,
           format,
+          service,
+          status,
           city,
           state,
           power,
+          haat,
+          hours,
           latitude,
           longitude,
           rawLine: line

@@ -12,7 +12,7 @@ For the 2026-27 seasons, more than 50 Husker Radio Network stations broadcast on
 
 - GPS-based finder for the closest Husker radio station to you right now
 - Interactive map showing station locations and user position
-- Signal strength estimates based on tower power and distance
+- Sort by distance or by estimated signal strength at your location
 - Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
 - 50+ stations / 60+ frequencies across Nebraska, South Dakota, and Kansas
 - No account required, completely free, privacy-focused (location stays on device)
@@ -124,7 +124,7 @@ A: The Husker Radio Network feed is available on 87.7 FM inside Memorial Stadium
 - Static web application (HTML, CSS, vanilla JavaScript)
 - Uses Leaflet.js for interactive mapping
 - Station coordinates from FCC tower database
-- Signal strength calculated using RF propagation models
+- FM signal strength from FCC F(50,50) propagation curves (licensed ERP + antenna HAAT); AM from a Norton groundwave model with Great Plains soil conductivity, using licensed day or night power depending on local sunset/sunrise
 
 ## URL
 

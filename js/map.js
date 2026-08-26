@@ -8,7 +8,7 @@ let currentFilters = {
   womensBasketball: true
 };
 let userLocation = null;
-let currentSortBy = 'distance'; // 'distance' or 'signal'
+let currentSortBy = 'signal'; // 'signal' or 'distance'
 
 // Initialize the map centered on Nebraska
 function initMap() {
@@ -140,8 +140,13 @@ function updateFilters() {
   }
 }
 
-// Note: Sorting is now fixed to 'distance' mode
-// Signal strength indicators are shown for reference only
+// Switch between sorting by distance and by predicted signal strength
+function updateSortBy(mode) {
+  currentSortBy = mode;
+  if (userLocation) {
+    sortByLocation(userLocation);
+  }
+}
 
 function sortByLocation(point, isFallback = false) {
   userLocation = point;
@@ -159,19 +164,14 @@ function sortByLocation(point, isFallback = false) {
     const distanceMeters = getDistance(point, station);
     const distanceMiles = metersToMiles(distanceMeters);
 
-    // Calculate signal strength if we have power data
-    const signalStrength = station.power
-      ? calculateSignalStrength(station.power, distanceMeters, station.Format)
-      : 0;
-
-    const signalCategory = getSignalCategory(signalStrength);
+    const signal = estimateSignal(station, distanceMeters);
 
     return {
       ...station,
       distance: distanceMiles,
       distanceMeters: distanceMeters,
-      signalStrength: signalStrength,
-      signalCategory: signalCategory
+      signalStrength: signal.strength,
+      signalCategory: signal.category
     };
   });
 

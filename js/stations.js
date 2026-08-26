@@ -13,7 +13,8 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Ainsworth",
@@ -29,7 +30,10 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 224
+    "power": 0.25,
+    "haat": 50,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KBRB"
   },
   {
     "City": "Alliance",
@@ -45,7 +49,8 @@ const stations = [
     "towerLongitude": -102.88861111111112,
     "cityLatitude": 42.09302,
     "cityLongitude": -102.8702,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Alliance",
@@ -61,9 +66,10 @@ const stations = [
     "towerLongitude": -102.88861111111112,
     "cityLatitude": 42.09302,
     "cityLongitude": -102.8702,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KCOW"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KCOW",
+    "haat": 50
   },
   {
     "City": "Aurora",
@@ -79,7 +85,8 @@ const stations = [
     "towerLongitude": -98.09366666666666,
     "cityLatitude": 40.867,
     "cityLongitude": -98.004,
-    "power": 247
+    "power": 50,
+    "haat": 106
   },
   {
     "City": "Beatrice",
@@ -95,7 +102,8 @@ const stations = [
     "towerLongitude": -96.77447222222222,
     "cityLatitude": 40.313364,
     "cityLongitude": -96.693082,
-    "power": 0.53
+    "power": 0.53,
+    "powerNight": 0.53
   },
   {
     "City": "Broken Bow",
@@ -111,7 +119,8 @@ const stations = [
     "towerLongitude": -99.82122222222222,
     "cityLatitude": 41.451119,
     "cityLongitude": -99.621491,
-    "power": 237
+    "power": 30,
+    "haat": 174.9
   },
   {
     "City": "Chadron",
@@ -127,7 +136,8 @@ const stations = [
     "towerLongitude": -103.0171388888889,
     "cityLatitude": 42.774479,
     "cityLongitude": -103.138479,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.118
   },
   {
     "City": "Columbus",
@@ -143,7 +153,8 @@ const stations = [
     "towerLongitude": -97.39061111111111,
     "cityLatitude": 41.4297,
     "cityLongitude": -97.3686,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.065
   },
   {
     "City": "Columbus",
@@ -159,7 +170,8 @@ const stations = [
     "towerLongitude": -97.6795,
     "cityLatitude": 41.4297,
     "cityLongitude": -97.3686,
-    "power": 228
+    "power": 100,
+    "haat": 299
   },
   {
     "City": "Fairbury",
@@ -175,7 +187,8 @@ const stations = [
     "towerLongitude": -97.15169444444444,
     "cityLatitude": 40.175641,
     "cityLongitude": -97.171023,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.095
   },
   {
     "City": "Falls City",
@@ -191,7 +204,8 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 1
   },
   {
     "City": "Falls City",
@@ -207,9 +221,10 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KTNC",
+    "haat": 50
   },
   {
     "City": "Fremont",
@@ -225,7 +240,8 @@ const stations = [
     "towerLongitude": -96.45475,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.25
   },
   {
     "City": "Fremont",
@@ -241,7 +257,8 @@ const stations = [
     "towerLongitude": -96.53169444444444,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 288
+    "power": 1.2,
+    "haat": 137
   },
   {
     "City": "Gibbon",
@@ -257,7 +274,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.749,
     "cityLongitude": -98.845,
-    "power": 249
+    "power": 50,
+    "haat": 148.3
   },
   {
     "City": "Gordon",
@@ -273,7 +291,8 @@ const stations = [
     "towerLongitude": -102.26152777777777,
     "cityLatitude": 42.805,
     "cityLongitude": -102.204,
-    "power": 238
+    "power": 60,
+    "haat": 95
   },
   {
     "City": "Grand Island",
@@ -289,7 +308,8 @@ const stations = [
     "towerLongitude": -98.27444444444444,
     "cityLatitude": 40.87227,
     "cityLongitude": -98.368698,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.021
   },
   {
     "City": "Hastings",
@@ -305,7 +325,8 @@ const stations = [
     "towerLongitude": -98.40505555555556,
     "cityLatitude": 40.582425,
     "cityLongitude": -98.389035,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Hastings",
@@ -321,7 +342,8 @@ const stations = [
     "towerLongitude": -98.3756111111111,
     "cityLatitude": 40.582425,
     "cityLongitude": -98.389035,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.027
   },
   {
     "City": "Kearney",
@@ -337,7 +359,8 @@ const stations = [
     "towerLongitude": -99.16702777777778,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.056
   },
   {
     "City": "Hay Springs",
@@ -353,7 +376,8 @@ const stations = [
     "towerLongitude": -102.69127777777778,
     "cityLatitude": 42.684,
     "cityLongitude": -102.687,
-    "power": 299
+    "power": 50,
+    "haat": 142
   },
   {
     "City": "Holdrege",
@@ -369,7 +393,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32
+    "power": 0.32,
+    "powerNight": 0.32
   },
   {
     "City": "Holdrege",
@@ -385,9 +410,10 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KUVR",
+    "haat": 50
   },
   {
     "City": "Imperial",
@@ -403,7 +429,8 @@ const stations = [
     "towerLongitude": -101.64461111111112,
     "cityLatitude": 40.515114,
     "cityLongitude": -101.632038,
-    "power": 275
+    "power": 0.3,
+    "haat": 68
   },
   {
     "City": "Kearney",
@@ -419,7 +446,8 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Kearney",
@@ -435,7 +463,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 290
+    "power": 100,
+    "haat": 367
   },
   {
     "City": "Kearney",
@@ -451,9 +480,10 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KGFW",
+    "haat": 50
   },
   {
     "City": "Lexington",
@@ -469,7 +499,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.873227,
     "cityLongitude": -99.718408,
-    "power": 50
+    "power": 50,
+    "powerNight": 50
   },
   {
     "City": "Lexington",
@@ -485,7 +516,8 @@ const stations = [
     "towerLongitude": -99.93927777777778,
     "cityLatitude": 40.873227,
     "cityLongitude": -99.718408,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.017
   },
   {
     "City": "Lincoln",
@@ -501,7 +533,8 @@ const stations = [
     "towerLongitude": -96.67502777777779,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Lincoln",
@@ -517,9 +550,10 @@ const stations = [
     "towerLongitude": -96.67502777777779,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KLIN"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KLIN",
+    "haat": 50
   },
   {
     "City": "Lincoln",
@@ -535,7 +569,8 @@ const stations = [
     "towerLongitude": -97.27088888888889,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 251
+    "power": 100,
+    "haat": 299
   },
   {
     "City": "McCook",
@@ -551,7 +586,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 287
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "McCook",
@@ -567,7 +603,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 230
+    "power": 50,
+    "haat": 150
   },
   {
     "City": "McCook",
@@ -583,7 +620,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 271
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "Nebraska City",
@@ -599,7 +637,8 @@ const stations = [
     "towerLongitude": -95.88583333333334,
     "cityLatitude": 40.707742,
     "cityLongitude": -95.907718,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.031
   },
   {
     "City": "Norfolk",
@@ -615,7 +654,8 @@ const stations = [
     "towerLongitude": -97.60644444444443,
     "cityLatitude": 42.019977,
     "cityLongitude": -97.442989,
-    "power": 234
+    "power": 100,
+    "haat": 164.2
   },
   {
     "City": "North Platte",
@@ -631,7 +671,8 @@ const stations = [
     "towerLongitude": -100.77347222222222,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "North Platte",
@@ -647,7 +688,8 @@ const stations = [
     "towerLongitude": -100.73041666666667,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 278
+    "power": 100,
+    "haat": 146
   },
   {
     "City": "North Platte",
@@ -663,7 +705,8 @@ const stations = [
     "towerLongitude": -100.73069444444445,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 253
+    "power": 100,
+    "haat": 113
   },
   {
     "City": "Oberlin",
@@ -679,7 +722,8 @@ const stations = [
     "towerLongitude": -100.64708333333334,
     "cityLatitude": 39.818,
     "cityLongitude": -100.526,
-    "power": 266
+    "power": 100,
+    "haat": 135
   },
   {
     "City": "Omaha",
@@ -695,7 +739,8 @@ const stations = [
     "towerLongitude": -96.2088888888889,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 247
+    "power": 25,
+    "haat": 92
   },
   {
     "City": "Omaha",
@@ -712,7 +757,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 5,
-    "role": "primary"
+    "role": "primary",
+    "powerNight": 5
   },
   {
     "City": "O'Neill",
@@ -728,7 +774,8 @@ const stations = [
     "towerLongitude": -98.56119444444444,
     "cityLatitude": 42.457,
     "cityLongitude": -98.647,
-    "power": 275
+    "power": 100,
+    "haat": 131
   },
   {
     "City": "Rapid City",
@@ -744,9 +791,10 @@ const stations = [
     "towerLongitude": -103.18794444444445,
     "cityLatitude": 44.145868,
     "cityLongitude": -103.206866,
-    "power": 5,
-    "powerSource": "AM",
-    "translatorOf": "KOTA"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KOTA",
+    "haat": 50
   },
   {
     "City": "Rapid City",
@@ -762,7 +810,8 @@ const stations = [
     "towerLongitude": -103.18794444444445,
     "cityLatitude": 44.145868,
     "cityLongitude": -103.206866,
-    "power": 5
+    "power": 5,
+    "powerNight": 5
   },
   {
     "City": "Scottsbluff",
@@ -778,7 +827,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.35
   },
   {
     "City": "Scottsbluff",
@@ -794,7 +844,8 @@ const stations = [
     "towerLongitude": -103.82694444444444,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 231
+    "power": 75,
+    "haat": 339
   },
   {
     "City": "Sidney",
@@ -810,7 +861,8 @@ const stations = [
     "towerLongitude": -103.19630555555555,
     "cityLatitude": 41.220549,
     "cityLongitude": -102.995925,
-    "power": 254
+    "power": 100,
+    "haat": 117
   },
   {
     "City": "Superior",
@@ -826,7 +878,8 @@ const stations = [
     "towerLongitude": -98.07755555555555,
     "cityLatitude": 40.036673,
     "cityLongitude": -98.069593,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.044
   },
   {
     "City": "Superior",
@@ -842,7 +895,8 @@ const stations = [
     "towerLongitude": -98.10616666666667,
     "cityLatitude": 40.036673,
     "cityLongitude": -98.069593,
-    "power": 280
+    "power": 12,
+    "haat": 100
   },
   {
     "City": "Terrytown",
@@ -858,7 +912,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.8475,
     "cityLongitude": -103.6616,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.075
   },
   {
     "City": "Valentine",
@@ -874,7 +929,8 @@ const stations = [
     "towerLongitude": -100.51902777777778,
     "cityLatitude": 42.87278,
     "cityLongitude": -100.55097,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.019
   },
   {
     "City": "Valentine",
@@ -890,7 +946,8 @@ const stations = [
     "towerLongitude": -100.56486111111111,
     "cityLatitude": 42.87278,
     "cityLongitude": -100.55097,
-    "power": 258
+    "power": 25,
+    "haat": 87
   },
   {
     "City": "West Point",
@@ -906,7 +963,8 @@ const stations = [
     "towerLongitude": -96.67975,
     "cityLatitude": 41.870968,
     "cityLongitude": -96.777787,
-    "power": 5
+    "power": 5,
+    "powerNight": 5
   },
   {
     "City": "Winner",
@@ -922,7 +980,8 @@ const stations = [
     "towerLongitude": -99.91094444444445,
     "cityLatitude": 43.331763,
     "cityLongitude": -99.803286,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.15
   },
   {
     "City": "Yankton",
@@ -938,7 +997,8 @@ const stations = [
     "towerLongitude": -97.40394444444445,
     "cityLatitude": 42.94396,
     "cityLongitude": -97.37689,
-    "power": 226
+    "power": 100,
+    "haat": 143
   },
   {
     "City": "York",
@@ -954,7 +1014,8 @@ const stations = [
     "towerLongitude": -97.58838888888889,
     "cityLatitude": 40.890132,
     "cityLongitude": -97.597278,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.176
   },
   {
     "City": "Ainsworth",
@@ -970,7 +1031,8 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Ainsworth",
@@ -986,7 +1048,10 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 224
+    "power": 0.25,
+    "haat": 50,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KBRB"
   },
   {
     "City": "Aurora",
@@ -1002,7 +1067,8 @@ const stations = [
     "towerLongitude": -98.09366666666666,
     "cityLatitude": 40.867,
     "cityLongitude": -98.004,
-    "power": 247
+    "power": 50,
+    "haat": 106
   },
   {
     "City": "Beatrice",
@@ -1018,7 +1084,8 @@ const stations = [
     "towerLongitude": -96.77447222222222,
     "cityLatitude": 40.313364,
     "cityLongitude": -96.693082,
-    "power": 0.53
+    "power": 0.53,
+    "powerNight": 0.53
   },
   {
     "City": "Broken Bow",
@@ -1034,7 +1101,8 @@ const stations = [
     "towerLongitude": -99.82122222222222,
     "cityLatitude": 41.451119,
     "cityLongitude": -99.621491,
-    "power": 237
+    "power": 30,
+    "haat": 174.9
   },
   {
     "City": "Columbus",
@@ -1050,7 +1118,8 @@ const stations = [
     "towerLongitude": -97.39061111111111,
     "cityLatitude": 41.4297,
     "cityLongitude": -97.3686,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.065
   },
   {
     "City": "Columbus",
@@ -1066,7 +1135,8 @@ const stations = [
     "towerLongitude": -97.6795,
     "cityLatitude": 41.4297,
     "cityLongitude": -97.3686,
-    "power": 228
+    "power": 100,
+    "haat": 299
   },
   {
     "City": "Fairbury",
@@ -1082,7 +1152,8 @@ const stations = [
     "towerLongitude": -97.15169444444444,
     "cityLatitude": 40.175641,
     "cityLongitude": -97.171023,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.095
   },
   {
     "City": "Falls City",
@@ -1098,7 +1169,8 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 1
   },
   {
     "City": "Falls City",
@@ -1114,9 +1186,10 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KTNC",
+    "haat": 50
   },
   {
     "City": "Fremont",
@@ -1132,7 +1205,8 @@ const stations = [
     "towerLongitude": -96.45475,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.25
   },
   {
     "City": "Fremont",
@@ -1148,7 +1222,8 @@ const stations = [
     "towerLongitude": -96.53169444444444,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 288
+    "power": 1.2,
+    "haat": 137
   },
   {
     "City": "Gibbon",
@@ -1164,7 +1239,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.749,
     "cityLongitude": -98.845,
-    "power": 249
+    "power": 50,
+    "haat": 148.3
   },
   {
     "City": "Grand Island",
@@ -1180,7 +1256,8 @@ const stations = [
     "towerLongitude": -98.27444444444444,
     "cityLatitude": 40.87227,
     "cityLongitude": -98.368698,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.021
   },
   {
     "City": "Hastings",
@@ -1196,7 +1273,8 @@ const stations = [
     "towerLongitude": -98.40505555555556,
     "cityLatitude": 40.582425,
     "cityLongitude": -98.389035,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Hastings",
@@ -1212,7 +1290,8 @@ const stations = [
     "towerLongitude": -98.3756111111111,
     "cityLatitude": 40.582425,
     "cityLongitude": -98.389035,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.027
   },
   {
     "City": "Kearney",
@@ -1228,7 +1307,8 @@ const stations = [
     "towerLongitude": -99.16702777777778,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.056
   },
   {
     "City": "Holdrege",
@@ -1244,7 +1324,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32
+    "power": 0.32,
+    "powerNight": 0.32
   },
   {
     "City": "Holdrege",
@@ -1260,9 +1341,10 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KUVR",
+    "haat": 50
   },
   {
     "City": "Imperial",
@@ -1278,7 +1360,8 @@ const stations = [
     "towerLongitude": -101.64461111111112,
     "cityLatitude": 40.515114,
     "cityLongitude": -101.632038,
-    "power": 275
+    "power": 0.3,
+    "haat": 68
   },
   {
     "City": "Kearney",
@@ -1294,7 +1377,8 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Kearney",
@@ -1310,9 +1394,10 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KGFW",
+    "haat": 50
   },
   {
     "City": "Kearney",
@@ -1328,7 +1413,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 290
+    "power": 100,
+    "haat": 367
   },
   {
     "City": "Lexington",
@@ -1344,7 +1430,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.873227,
     "cityLongitude": -99.718408,
-    "power": 50
+    "power": 50,
+    "powerNight": 50
   },
   {
     "City": "Lincoln",
@@ -1360,7 +1447,8 @@ const stations = [
     "towerLongitude": -96.61447222222222,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 297
+    "power": 100,
+    "haat": 168
   },
   {
     "City": "McCook",
@@ -1376,7 +1464,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 287
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "McCook",
@@ -1392,7 +1481,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 230
+    "power": 50,
+    "haat": 150
   },
   {
     "City": "McCook",
@@ -1408,7 +1498,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 271
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "Nebraska City",
@@ -1424,7 +1515,8 @@ const stations = [
     "towerLongitude": -95.88583333333334,
     "cityLatitude": 40.707742,
     "cityLongitude": -95.907718,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.031
   },
   {
     "City": "North Platte",
@@ -1440,7 +1532,8 @@ const stations = [
     "towerLongitude": -100.77347222222222,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "North Platte",
@@ -1456,7 +1549,8 @@ const stations = [
     "towerLongitude": -100.73041666666667,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 278
+    "power": 100,
+    "haat": 146
   },
   {
     "City": "North Platte",
@@ -1472,7 +1566,8 @@ const stations = [
     "towerLongitude": -100.73069444444445,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 253
+    "power": 100,
+    "haat": 113
   },
   {
     "City": "Oberlin",
@@ -1488,7 +1583,8 @@ const stations = [
     "towerLongitude": -100.64708333333334,
     "cityLatitude": 39.818,
     "cityLongitude": -100.526,
-    "power": 266
+    "power": 100,
+    "haat": 135
   },
   {
     "City": "Omaha",
@@ -1505,7 +1601,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 1,
-    "role": "secondary"
+    "role": "secondary",
+    "powerNight": 0.054
   },
   {
     "City": "Omaha",
@@ -1521,7 +1618,8 @@ const stations = [
     "towerLongitude": -96.2088888888889,
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
-    "power": 247
+    "power": 25,
+    "haat": 92
   },
   {
     "City": "Omaha",
@@ -1538,7 +1636,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 5,
-    "role": "primary"
+    "role": "primary",
+    "powerNight": 5
   },
   {
     "City": "O'Neill",
@@ -1554,7 +1653,8 @@ const stations = [
     "towerLongitude": -98.56119444444444,
     "cityLatitude": 42.457,
     "cityLongitude": -98.647,
-    "power": 275
+    "power": 100,
+    "haat": 131
   },
   {
     "City": "Scottsbluff",
@@ -1570,7 +1670,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.35
   },
   {
     "City": "Scottsbluff",
@@ -1586,7 +1687,8 @@ const stations = [
     "towerLongitude": -103.82694444444444,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 231
+    "power": 75,
+    "haat": 339
   },
   {
     "City": "Sidney",
@@ -1602,7 +1704,8 @@ const stations = [
     "towerLongitude": -103.19630555555555,
     "cityLatitude": 41.220549,
     "cityLongitude": -102.995925,
-    "power": 254
+    "power": 100,
+    "haat": 117
   },
   {
     "City": "Superior",
@@ -1618,7 +1721,8 @@ const stations = [
     "towerLongitude": -98.07755555555555,
     "cityLatitude": 40.036673,
     "cityLongitude": -98.069593,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.044
   },
   {
     "City": "Terrytown",
@@ -1634,7 +1738,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.8475,
     "cityLongitude": -103.6616,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.075
   },
   {
     "City": "Valentine",
@@ -1650,7 +1755,8 @@ const stations = [
     "towerLongitude": -100.51902777777778,
     "cityLatitude": 42.87278,
     "cityLongitude": -100.55097,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.019
   },
   {
     "City": "West Point",
@@ -1666,7 +1772,8 @@ const stations = [
     "towerLongitude": -96.67975,
     "cityLatitude": 41.870968,
     "cityLongitude": -96.777787,
-    "power": 5
+    "power": 5,
+    "powerNight": 5
   },
   {
     "City": "Ainsworth",
@@ -1682,7 +1789,8 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Ainsworth",
@@ -1698,7 +1806,10 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 224
+    "power": 0.25,
+    "haat": 50,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KBRB"
   },
   {
     "City": "Aurora",
@@ -1714,7 +1825,8 @@ const stations = [
     "towerLongitude": -98.09366666666666,
     "cityLatitude": 40.867,
     "cityLongitude": -98.004,
-    "power": 247
+    "power": 50,
+    "haat": 106
   },
   {
     "City": "Beatrice",
@@ -1730,7 +1842,8 @@ const stations = [
     "towerLongitude": -96.77447222222222,
     "cityLatitude": 40.313364,
     "cityLongitude": -96.693082,
-    "power": 0.53
+    "power": 0.53,
+    "powerNight": 0.53
   },
   {
     "City": "Broken Bow",
@@ -1746,7 +1859,8 @@ const stations = [
     "towerLongitude": -99.82122222222222,
     "cityLatitude": 41.451119,
     "cityLongitude": -99.621491,
-    "power": 237
+    "power": 30,
+    "haat": 174.9
   },
   {
     "City": "Chadron",
@@ -1762,7 +1876,8 @@ const stations = [
     "towerLongitude": -103.0171388888889,
     "cityLatitude": 42.774479,
     "cityLongitude": -103.138479,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.118
   },
   {
     "City": "Columbus",
@@ -1778,7 +1893,8 @@ const stations = [
     "towerLongitude": -97.39061111111111,
     "cityLatitude": 41.4297,
     "cityLongitude": -97.3686,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.065
   },
   {
     "City": "Columbus",
@@ -1794,7 +1910,8 @@ const stations = [
     "towerLongitude": -97.6795,
     "cityLatitude": 41.4297,
     "cityLongitude": -97.3686,
-    "power": 228
+    "power": 100,
+    "haat": 299
   },
   {
     "City": "Fairbury",
@@ -1810,7 +1927,8 @@ const stations = [
     "towerLongitude": -97.15169444444444,
     "cityLatitude": 40.175641,
     "cityLongitude": -97.171023,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.095
   },
   {
     "City": "Falls City",
@@ -1826,7 +1944,8 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 1
   },
   {
     "City": "Falls City",
@@ -1842,9 +1961,10 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KTNC",
+    "haat": 50
   },
   {
     "City": "Fremont",
@@ -1860,7 +1980,8 @@ const stations = [
     "towerLongitude": -96.45475,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.25
   },
   {
     "City": "Fremont",
@@ -1876,7 +1997,8 @@ const stations = [
     "towerLongitude": -96.53169444444444,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 288
+    "power": 1.2,
+    "haat": 137
   },
   {
     "City": "Gibbon",
@@ -1892,7 +2014,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.749,
     "cityLongitude": -98.845,
-    "power": 249
+    "power": 50,
+    "haat": 148.3
   },
   {
     "City": "Gordon",
@@ -1908,7 +2031,8 @@ const stations = [
     "towerLongitude": -102.26152777777777,
     "cityLatitude": 42.805,
     "cityLongitude": -102.204,
-    "power": 238
+    "power": 60,
+    "haat": 95
   },
   {
     "City": "Grand Island",
@@ -1924,7 +2048,8 @@ const stations = [
     "towerLongitude": -98.27444444444444,
     "cityLatitude": 40.87227,
     "cityLongitude": -98.368698,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.021
   },
   {
     "City": "Hastings",
@@ -1940,7 +2065,8 @@ const stations = [
     "towerLongitude": -98.40505555555556,
     "cityLatitude": 40.582425,
     "cityLongitude": -98.389035,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Hastings",
@@ -1956,7 +2082,8 @@ const stations = [
     "towerLongitude": -98.3756111111111,
     "cityLatitude": 40.582425,
     "cityLongitude": -98.389035,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.027
   },
   {
     "City": "Kearney",
@@ -1972,7 +2099,8 @@ const stations = [
     "towerLongitude": -99.16702777777778,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.056
   },
   {
     "City": "Hay Springs",
@@ -1988,7 +2116,8 @@ const stations = [
     "towerLongitude": -102.69127777777778,
     "cityLatitude": 42.684,
     "cityLongitude": -102.687,
-    "power": 299
+    "power": 50,
+    "haat": 142
   },
   {
     "City": "Holdrege",
@@ -2004,7 +2133,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32
+    "power": 0.32,
+    "powerNight": 0.32
   },
   {
     "City": "Holdrege",
@@ -2020,9 +2150,10 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KUVR",
+    "haat": 50
   },
   {
     "City": "Imperial",
@@ -2038,7 +2169,8 @@ const stations = [
     "towerLongitude": -101.64461111111112,
     "cityLatitude": 40.515114,
     "cityLongitude": -101.632038,
-    "power": 275
+    "power": 0.3,
+    "haat": 68
   },
   {
     "City": "Kearney",
@@ -2054,7 +2186,8 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Kearney",
@@ -2070,9 +2203,10 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KGFW",
+    "haat": 50
   },
   {
     "City": "Kearney",
@@ -2088,7 +2222,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 290
+    "power": 100,
+    "haat": 367
   },
   {
     "City": "Lexington",
@@ -2104,7 +2239,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.873227,
     "cityLongitude": -99.718408,
-    "power": 50
+    "power": 50,
+    "powerNight": 50
   },
   {
     "City": "Lexington",
@@ -2120,7 +2256,8 @@ const stations = [
     "towerLongitude": -99.93927777777778,
     "cityLatitude": 40.873227,
     "cityLongitude": -99.718408,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.017
   },
   {
     "City": "Lincoln",
@@ -2136,7 +2273,8 @@ const stations = [
     "towerLongitude": -96.67502777777779,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Lincoln",
@@ -2152,9 +2290,10 @@ const stations = [
     "towerLongitude": -96.67502777777779,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KLIN"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KLIN",
+    "haat": 50
   },
   {
     "City": "McCook",
@@ -2170,7 +2309,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 287
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "McCook",
@@ -2186,7 +2326,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 230
+    "power": 50,
+    "haat": 150
   },
   {
     "City": "McCook",
@@ -2202,7 +2343,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 271
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "Nebraska City",
@@ -2218,7 +2360,8 @@ const stations = [
     "towerLongitude": -95.88583333333334,
     "cityLatitude": 40.707742,
     "cityLongitude": -95.907718,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.031
   },
   {
     "City": "Norfolk",
@@ -2234,7 +2377,8 @@ const stations = [
     "towerLongitude": -97.60644444444443,
     "cityLatitude": 42.019977,
     "cityLongitude": -97.442989,
-    "power": 234
+    "power": 100,
+    "haat": 164.2
   },
   {
     "City": "North Platte",
@@ -2250,7 +2394,8 @@ const stations = [
     "towerLongitude": -100.77347222222222,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "North Platte",
@@ -2266,7 +2411,8 @@ const stations = [
     "towerLongitude": -100.73041666666667,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 278
+    "power": 100,
+    "haat": 146
   },
   {
     "City": "North Platte",
@@ -2282,7 +2428,8 @@ const stations = [
     "towerLongitude": -100.73069444444445,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 253
+    "power": 100,
+    "haat": 113
   },
   {
     "City": "Omaha",
@@ -2299,7 +2446,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 1,
-    "role": "secondary"
+    "role": "secondary",
+    "powerNight": 0.054
   },
   {
     "City": "Omaha",
@@ -2316,7 +2464,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 5,
-    "role": "primary"
+    "role": "primary",
+    "powerNight": 5
   },
   {
     "City": "O'Neill",
@@ -2332,7 +2481,8 @@ const stations = [
     "towerLongitude": -98.56119444444444,
     "cityLatitude": 42.457,
     "cityLongitude": -98.647,
-    "power": 275
+    "power": 100,
+    "haat": 131
   },
   {
     "City": "Scottsbluff",
@@ -2348,7 +2498,8 @@ const stations = [
     "towerLongitude": -103.82694444444444,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 231
+    "power": 75,
+    "haat": 339
   },
   {
     "City": "Scottsbluff",
@@ -2364,7 +2515,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.35
   },
   {
     "City": "Sidney",
@@ -2380,7 +2532,8 @@ const stations = [
     "towerLongitude": -103.19630555555555,
     "cityLatitude": 41.220549,
     "cityLongitude": -102.995925,
-    "power": 254
+    "power": 100,
+    "haat": 117
   },
   {
     "City": "Superior",
@@ -2396,7 +2549,8 @@ const stations = [
     "towerLongitude": -98.07755555555555,
     "cityLatitude": 40.036673,
     "cityLongitude": -98.069593,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.044
   },
   {
     "City": "Superior",
@@ -2412,7 +2566,8 @@ const stations = [
     "towerLongitude": -98.10616666666667,
     "cityLatitude": 40.036673,
     "cityLongitude": -98.069593,
-    "power": 280
+    "power": 12,
+    "haat": 100
   },
   {
     "City": "Terrytown",
@@ -2428,7 +2583,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.8475,
     "cityLongitude": -103.6616,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.075
   },
   {
     "City": "Valentine",
@@ -2444,7 +2600,8 @@ const stations = [
     "towerLongitude": -100.51902777777778,
     "cityLatitude": 42.87278,
     "cityLongitude": -100.55097,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.019
   },
   {
     "City": "Valentine",
@@ -2460,7 +2617,8 @@ const stations = [
     "towerLongitude": -100.56486111111111,
     "cityLatitude": 42.87278,
     "cityLongitude": -100.55097,
-    "power": 258
+    "power": 25,
+    "haat": 87
   },
   {
     "City": "Ainsworth",
@@ -2476,7 +2634,8 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Ainsworth",
@@ -2492,7 +2651,10 @@ const stations = [
     "towerLongitude": -99.83149999999999,
     "cityLatitude": 42.542734,
     "cityLongitude": -99.852364,
-    "power": 224
+    "power": 0.25,
+    "haat": 50,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KBRB"
   },
   {
     "City": "Aurora",
@@ -2508,7 +2670,8 @@ const stations = [
     "towerLongitude": -98.09366666666666,
     "cityLatitude": 40.867,
     "cityLongitude": -98.004,
-    "power": 247
+    "power": 50,
+    "haat": 106
   },
   {
     "City": "Beatrice",
@@ -2524,7 +2687,8 @@ const stations = [
     "towerLongitude": -96.77447222222222,
     "cityLatitude": 40.313364,
     "cityLongitude": -96.693082,
-    "power": 0.53
+    "power": 0.53,
+    "powerNight": 0.53
   },
   {
     "City": "Broken Bow",
@@ -2540,7 +2704,8 @@ const stations = [
     "towerLongitude": -99.82122222222222,
     "cityLatitude": 41.451119,
     "cityLongitude": -99.621491,
-    "power": 237
+    "power": 30,
+    "haat": 174.9
   },
   {
     "City": "Chadron",
@@ -2556,7 +2721,8 @@ const stations = [
     "towerLongitude": -103.0171388888889,
     "cityLatitude": 42.774479,
     "cityLongitude": -103.138479,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.118
   },
   {
     "City": "Fairbury",
@@ -2572,7 +2738,8 @@ const stations = [
     "towerLongitude": -97.15169444444444,
     "cityLatitude": 40.175641,
     "cityLongitude": -97.171023,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.095
   },
   {
     "City": "Falls City",
@@ -2588,7 +2755,8 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 1
   },
   {
     "City": "Falls City",
@@ -2604,9 +2772,10 @@ const stations = [
     "towerLongitude": -95.61552777777777,
     "cityLatitude": 40.073908,
     "cityLongitude": -95.602053,
-    "power": 0.5,
-    "powerSource": "AM",
-    "translatorOf": "KTNC"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KTNC",
+    "haat": 50
   },
   {
     "City": "Fremont",
@@ -2622,7 +2791,8 @@ const stations = [
     "towerLongitude": -96.45475,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.25
   },
   {
     "City": "Fremont",
@@ -2638,7 +2808,8 @@ const stations = [
     "towerLongitude": -96.53169444444444,
     "cityLatitude": 41.4333,
     "cityLongitude": -96.4981,
-    "power": 288
+    "power": 1.2,
+    "haat": 137
   },
   {
     "City": "Gibbon",
@@ -2654,7 +2825,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.749,
     "cityLongitude": -98.845,
-    "power": 249
+    "power": 50,
+    "haat": 148.3
   },
   {
     "City": "Grand Island",
@@ -2670,7 +2842,8 @@ const stations = [
     "towerLongitude": -98.27444444444444,
     "cityLatitude": 40.87227,
     "cityLongitude": -98.368698,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.021
   },
   {
     "City": "Hay Springs",
@@ -2686,7 +2859,8 @@ const stations = [
     "towerLongitude": -102.69127777777778,
     "cityLatitude": 42.684,
     "cityLongitude": -102.687,
-    "power": 299
+    "power": 50,
+    "haat": 142
   },
   {
     "City": "Holdrege",
@@ -2702,9 +2876,10 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32,
-    "powerSource": "AM",
-    "translatorOf": "KUVR"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KUVR",
+    "haat": 50
   },
   {
     "City": "Holdrege",
@@ -2720,7 +2895,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.429207,
     "cityLongitude": -99.325955,
-    "power": 0.32
+    "power": 0.32,
+    "powerNight": 0.32
   },
   {
     "City": "Kearney",
@@ -2736,7 +2912,8 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "Kearney",
@@ -2752,9 +2929,10 @@ const stations = [
     "towerLongitude": -99.08147222222222,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 1,
-    "powerSource": "AM",
-    "translatorOf": "KGFW"
+    "power": 0.25,
+    "powerSource": "translator-estimate",
+    "translatorOf": "KGFW",
+    "haat": 50
   },
   {
     "City": "Kearney",
@@ -2770,7 +2948,8 @@ const stations = [
     "towerLongitude": -98.83952777777777,
     "cityLatitude": 40.7,
     "cityLongitude": -99.081,
-    "power": 290
+    "power": 100,
+    "haat": 367
   },
   {
     "City": "Lexington",
@@ -2786,7 +2965,8 @@ const stations = [
     "towerLongitude": -99.39677777777779,
     "cityLatitude": 40.873227,
     "cityLongitude": -99.718408,
-    "power": 50
+    "power": 50,
+    "powerNight": 50
   },
   {
     "City": "Lincoln",
@@ -2802,7 +2982,8 @@ const stations = [
     "towerLongitude": -96.61447222222222,
     "cityLatitude": 40.811,
     "cityLongitude": -96.6803,
-    "power": 297
+    "power": 100,
+    "haat": 168
   },
   {
     "City": "McCook",
@@ -2818,7 +2999,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 287
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "McCook",
@@ -2834,7 +3016,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 230
+    "power": 50,
+    "haat": 150
   },
   {
     "City": "McCook",
@@ -2850,7 +3033,8 @@ const stations = [
     "towerLongitude": -100.8085,
     "cityLatitude": 40.207969,
     "cityLongitude": -100.620628,
-    "power": 271
+    "power": 100,
+    "haat": 180
   },
   {
     "City": "Nebraska City",
@@ -2866,7 +3050,8 @@ const stations = [
     "towerLongitude": -95.88583333333334,
     "cityLatitude": 40.707742,
     "cityLongitude": -95.907718,
-    "power": 0.5
+    "power": 0.5,
+    "powerNight": 0.031
   },
   {
     "City": "North Platte",
@@ -2882,7 +3067,8 @@ const stations = [
     "towerLongitude": -100.77347222222222,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 1
+    "power": 1,
+    "powerNight": 1
   },
   {
     "City": "North Platte",
@@ -2898,7 +3084,8 @@ const stations = [
     "towerLongitude": -100.73041666666667,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 278
+    "power": 100,
+    "haat": 146
   },
   {
     "City": "North Platte",
@@ -2914,7 +3101,8 @@ const stations = [
     "towerLongitude": -100.73069444444445,
     "cityLatitude": 41.102555,
     "cityLongitude": -100.74907,
-    "power": 253
+    "power": 100,
+    "haat": 113
   },
   {
     "City": "Omaha",
@@ -2931,7 +3119,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 1,
-    "role": "secondary"
+    "role": "secondary",
+    "powerNight": 0.054
   },
   {
     "City": "Omaha",
@@ -2948,7 +3137,8 @@ const stations = [
     "cityLatitude": 41.2565,
     "cityLongitude": -96.0547,
     "power": 5,
-    "role": "primary"
+    "role": "primary",
+    "powerNight": 5
   },
   {
     "City": "Scottsbluff",
@@ -2964,7 +3154,8 @@ const stations = [
     "towerLongitude": -103.82694444444444,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 231
+    "power": 75,
+    "haat": 339
   },
   {
     "City": "Scottsbluff",
@@ -2980,7 +3171,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.922838,
     "cityLongitude": -103.622904,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.35
   },
   {
     "City": "Sidney",
@@ -2996,7 +3188,8 @@ const stations = [
     "towerLongitude": -103.19630555555555,
     "cityLatitude": 41.220549,
     "cityLongitude": -102.995925,
-    "power": 254
+    "power": 100,
+    "haat": 117
   },
   {
     "City": "Terrytown",
@@ -3012,7 +3205,8 @@ const stations = [
     "towerLongitude": -103.6418888888889,
     "cityLatitude": 41.8475,
     "cityLongitude": -103.6616,
-    "power": 1
+    "power": 1,
+    "powerNight": 0.075
   },
   {
     "City": "Valentine",
@@ -3028,6 +3222,7 @@ const stations = [
     "towerLongitude": -100.51902777777778,
     "cityLatitude": 42.87278,
     "cityLongitude": -100.55097,
-    "power": 5
+    "power": 5,
+    "powerNight": 0.019
   }
 ];
