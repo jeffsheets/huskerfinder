@@ -94,7 +94,9 @@ To update the station list for a new season:
 3. Run `node scripts/fetch-fcc-bulk.js` to get FCC tower data (cached in `scripts/fcc-data-cache.json`)
 4. Run `node scripts/update-stations.js` to match and update coordinates
 5. Run `node scripts/fix-unmatched.js` if needed for FM translators
-6. Review changes and test the app
+6. Run `node scripts/generate-station-table.js` to re-render the static station table in stations.html (SEO/AI crawlers don't execute JS, so the table is pre-rendered into the HTML)
+7. Update the station counts in visible copy if they changed (index.html FAQ + JSON-LD, stations.html intro, about.html FAQ, llms.txt)
+8. Review changes and test the app
 
 ### Updating FCC Tower Data
 To refresh tower coordinates and power data annually:

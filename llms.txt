@@ -1,27 +1,95 @@
 # Husker Radio Finder
 
-> Find Nebraska Huskers radio stations near your location using GPS
+> Find the closest Nebraska Huskers radio station to your location using GPS
 
 ## Overview
 
-Husker Radio Finder is a free web tool that helps Nebraska Huskers fans find AM and FM radio stations broadcasting football, volleyball, and basketball games near their current location. The app uses GPS/geolocation to calculate distances to actual FCC radio tower locations and displays results sorted by proximity.
+Husker Radio Finder is a free web tool that helps Nebraska Huskers fans find the closest AM and FM radio stations broadcasting football, volleyball, and basketball games near their current location. The app uses GPS/geolocation to calculate distances to actual FCC radio tower locations and displays results sorted by proximity.
+
+For the 2026-27 seasons, 52 Husker Radio Network stations broadcast on 61 AM/FM frequencies across Nebraska, South Dakota, and Kansas: football on 59 station frequencies, volleyball on 44, men's basketball on 49, and women's basketball on 35.
 
 ## Key Features
 
-- GPS-based station finder with automatic distance calculation
+- GPS-based finder for the closest Husker radio station to you right now
 - Interactive map showing station locations and user position
 - Signal strength estimates based on tower power and distance
 - Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
-- 179+ stations across Nebraska, South Dakota, and Kansas
+- 52 stations / 61 frequencies across Nebraska, South Dakota, and Kansas
 - No account required, completely free, privacy-focused (location stays on device)
 
-## Major Husker Radio Stations
+## Major Husker Radio Stations (2026-27)
 
-- KLIN 1400 AM - Lincoln, NE (Capital City flagship)
-- KRVN 880 AM - Lexington, NE (Rural Nebraska flagship, 50,000 watts)
-- KCRO 660 AM - Omaha, NE
-- KIBM 1490 AM - Omaha, NE
-- KFAB 1110 AM - Omaha, NE (historical flagship)
+- KLIN 1400 AM / 99.3 FM - Lincoln, NE (football flagship)
+- KRVN 880 AM - Lexington, NE (rural Nebraska flagship, 50,000 watts)
+- KIBM 1490 AM - Omaha, NE (football, volleyball, basketball)
+- KOBM 97.3 FM - Omaha, NE (football, volleyball)
+- KCRO 660 AM - Omaha, NE (volleyball, basketball)
+- KBBK 107.3 FM - Lincoln, NE (volleyball, women's basketball)
+- Inside Memorial Stadium, the Husker Radio Network feed is on 87.7 FM
+
+## Complete 2026-27 Station List
+
+- KBRB 106.3 FM - Ainsworth, NE (Football, Volleyball, MBB, WBB)
+- KBRB 1400 AM - Ainsworth, NE (Football, Volleyball, MBB, WBB)
+- KCOW 92.5 FM - Alliance, NE (Football)
+- KCOW 1400 AM - Alliance, NE (Football)
+- KRGY 97.3 FM - Aurora, NE (Football, Volleyball, MBB, WBB)
+- KWBE 1450 AM - Beatrice, NE (Football, Volleyball, MBB, WBB)
+- KBBN 95.3 FM - Broken Bow, NE (Football, Volleyball, MBB, WBB)
+- KCSR 610 AM - Chadron, NE (Football, MBB, WBB)
+- KKOT 93.5 FM - Columbus, NE (Football, Volleyball, MBB)
+- KJSK 900 AM - Columbus, NE (Football, Volleyball, MBB)
+- KGMT 1310 AM - Fairbury, NE (Football, Volleyball, MBB, WBB)
+- KTNC 107.1 FM - Falls City, NE (Football, Volleyball, MBB, WBB)
+- KTNC 1230 AM - Falls City, NE (Football, Volleyball, MBB, WBB)
+- KFMT 105.5 FM - Fremont, NE (Football, Volleyball, MBB, WBB)
+- KHUB 1340 AM - Fremont, NE (Football, Volleyball, MBB, WBB)
+- KMTY 97.7 FM - Gibbon, NE (Football, Volleyball, MBB, WBB)
+- KSDZ 95.5 FM - Gordon, NE (Football, MBB)
+- KRGI 1430 AM - Grand Island, NE (Football, Volleyball, MBB, WBB)
+- KHAS 1230 AM - Hastings, NE (Football, Volleyball, MBB)
+- KICS 1450 AM - Hastings, NE (Football, Volleyball, MBB)
+- KBPY 107.7 FM - Hay Springs, NE (Football, MBB, WBB)
+- KUVR 96.9 FM - Holdrege, NE (Football, Volleyball, MBB, WBB)
+- KUVR 1380 AM - Holdrege, NE (Football, Volleyball, MBB, WBB)
+- KADL 102.9 FM - Imperial, NE (Football, Volleyball, MBB)
+- KGFW 96.1 FM - Kearney, NE (Football, Volleyball, MBB, WBB)
+- KQKY 105.9 FM - Kearney, NE (Football, Volleyball, MBB, WBB)
+- KGFW 1340 AM - Kearney, NE (Football, Volleyball, MBB, WBB)
+- KXPN 1460 AM - Kearney, NE (Football, Volleyball, MBB)
+- KRVN 880 AM - Lexington, NE (Football, Volleyball, MBB, WBB)
+- KAMI 1580 AM - Lexington, NE (Football, MBB)
+- KFGE 98.1 FM - Lincoln, NE (Football)
+- KLIN 99.3 FM - Lincoln, NE (Football, MBB)
+- KBBK 107.3 FM - Lincoln, NE (Volleyball, WBB)
+- KLIN 1400 AM - Lincoln, NE (Football, MBB)
+- KSWN 93.9 FM - McCook, NE (Football, Volleyball, MBB, WBB)
+- KZMC 102.1 FM - McCook, NE (Football, Volleyball, MBB, WBB)
+- KIOD 105.3 FM - McCook, NE (Football, Volleyball, MBB, WBB)
+- KNCY 1600 AM - Nebraska City, NE (Football, Volleyball, MBB, WBB)
+- KNEN 94.7 FM - Norfolk, NE (Football, MBB)
+- KHAQ 98.5 FM - North Platte, NE (Football, Volleyball, MBB, WBB)
+- KXNP 103.5 FM - North Platte, NE (Football, Volleyball, MBB, WBB)
+- KODY 1240 AM - North Platte, NE (Football, Volleyball, MBB, WBB)
+- KBRX 102.9 FM - O'Neill, NE (Football, Volleyball, MBB)
+- KOBM 97.3 FM - Omaha, NE (Football, Volleyball)
+- KCRO 660 AM - Omaha, NE (Volleyball, MBB, WBB)
+- KIBM 1490 AM - Omaha, NE (Football, Volleyball, MBB, WBB)
+- KNEB 94.1 FM - Scottsbluff, NE (Football, Volleyball, MBB, WBB)
+- KNEB 960 AM - Scottsbluff, NE (Football, Volleyball, MBB, WBB)
+- KSID 98.7 FM - Sidney, NE (Football, Volleyball, MBB, WBB)
+- KRFS 103.9 FM - Superior, NE (Football, MBB)
+- KRFS 1600 AM - Superior, NE (Football, Volleyball, MBB)
+- KOLT 690 AM - Terrytown, NE (Football, Volleyball, MBB, WBB)
+- KDJL 99.5 FM - Valentine, NE (Football, MBB)
+- KVSH 940 AM - Valentine, NE (Football, Volleyball, MBB, WBB)
+- KTIC 840 AM - West Point, NE (Football, Volleyball)
+- KAWL 1370 AM - York, NE (Football)
+- KOTA 100.7 FM - Rapid City, SD (Football)
+- KOTA 1380 AM - Rapid City, SD (Football)
+- KWYR 1260 AM - Winner, SD (Football)
+- KKYA 93.1 FM - Yankton, SD (Football)
+- KFNF 101.1 FM - Oberlin, KS (Football, Volleyball)
 
 ## How It Works
 
@@ -33,17 +101,23 @@ Husker Radio Finder is a free web tool that helps Nebraska Huskers fans find AM 
 
 ## Common Questions
 
-Q: What radio station plays Nebraska Husker football near me?
-A: Use the Husker Radio Finder at huskerfinder.sheetsj.com to find stations based on your GPS location.
+Q: What radio channel is the Nebraska game on?
+A: It depends on where you are — Husker football airs on 59 stations across NE, SD, and KS. In Lincoln tune to KLIN 1400 AM or 99.3 FM; in Omaha tune to KIBM 1490 AM or KOBM 97.3 FM. Use huskerfinder.sheetsj.com to find the closest station to any location.
+
+Q: What is the closest Husker football radio station to me right now?
+A: Use the Husker Radio Finder at huskerfinder.sheetsj.com — it uses GPS to list the nearest stations sorted by actual distance to each station's FCC tower.
 
 Q: What is the flagship radio station for Nebraska Huskers?
 A: KLIN 1400 AM in Lincoln and KRVN 880 AM in Lexington are major flagship stations for the Huskers Radio Network.
 
 Q: Can I listen to Nebraska volleyball on the radio?
-A: Yes, many stations in the Huskers Radio Network broadcast volleyball games. Use the filter on the site to show only volleyball stations.
+A: Yes, 44 stations broadcast Nebraska volleyball in 2026, including KBBK 107.3 FM in Lincoln and KCRO 660 AM in Omaha.
 
 Q: How many radio stations broadcast Husker games?
-A: Over 70 unique stations (179+ frequencies including AM/FM simulcasts) broadcast Nebraska Huskers games across Nebraska, South Dakota, and Kansas.
+A: 52 stations on 61 AM/FM frequencies broadcast Nebraska Huskers games across Nebraska, South Dakota, and Kansas for the 2026-27 seasons.
+
+Q: What station is the Husker game on inside Memorial Stadium?
+A: The Husker Radio Network feed is available on 87.7 FM inside Memorial Stadium in Lincoln.
 
 ## Technical Details
 
@@ -62,4 +136,4 @@ Created by Jeff Sheets (sheetsj.com), a Nebraska graduate and Husker fan.
 
 ## Data Source
 
-Station information compiled from huskers.com/listen and FCC tower records. Updated for the 2025-26 season.
+Station information compiled from the official Husker Radio Network affiliate list at huskers.com/listen and FCC tower records. Updated August 2026 for the 2026-27 seasons.
