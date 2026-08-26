@@ -97,6 +97,21 @@ To update the station list for a new season:
 6. Run `node scripts/generate-station-table.js` to re-render the static station table in stations.html (SEO/AI crawlers don't execute JS, so the table is pre-rendered into the HTML)
 7. Update the station counts in visible copy if they changed (index.html FAQ + JSON-LD, stations.html intro, about.html FAQ, llms.txt)
 8. Review changes and test the app
+9. After the changes are deployed, ping IndexNow so Bing re-crawls (key file is committed in the site root):
+   ```bash
+   curl -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json; charset=utf-8" -d '{
+     "host": "huskerfinder.sheetsj.com",
+     "key": "63010cfcb74c85c786eb7ca2e6b1d4b8",
+     "keyLocation": "https://huskerfinder.sheetsj.com/63010cfcb74c85c786eb7ca2e6b1d4b8.txt",
+     "urlList": [
+       "https://huskerfinder.sheetsj.com/",
+       "https://huskerfinder.sheetsj.com/stations.html",
+       "https://huskerfinder.sheetsj.com/llms.txt",
+       "https://huskerfinder.sheetsj.com/sitemap.xml"
+     ]
+   }'
+   ```
+   (HTTP 200/202 = accepted.) Also update `<lastmod>` dates in sitemap.xml when pages change.
 
 ### Updating FCC Tower Data
 To refresh tower coordinates and power data annually:
