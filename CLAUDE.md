@@ -58,6 +58,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 
 **Station Filtering**:
 - Filter by sport with a single-select segmented control (All/Football/Volleyball/Men's Basketball/Women's Basketball); `updateSportFilter` derives the per-sport booleans in `currentFilters`
+- The selected sport is mirrored into the URL as `?sport=football|volleyball|mbb|wbb` (pushState, so back/forward work) so filtered views are shareable; `sportFromUrl` reads it on load and on popstate, and `all` clears the param
 - Results show **top 15 nearest stations** based on actual tower distance
 - Default sort is "Sounds best" (listening rank, see above); "Nearest" sorts by tower distance
 - Signal strength bars (▰▰▰▱) shown for reference with color coding:

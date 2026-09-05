@@ -131,14 +131,67 @@ function addStationMarkers() {
   });
 }
 
-// Update filters when the sport segmented control changes
-function updateSportFilter(sport) {
+// The selected sport is mirrored into the URL as ?sport=<slug> so a filtered
+// view can be shared (e.g. /?sport=football). Slugs are the shareable form;
+// the values on the right are the Sport names used in stations.js.
+const SPORT_SLUGS = {
+  football: 'Football',
+  volleyball: 'Volleyball',
+  mbb: "Men's Basketball",
+  wbb: "Women's Basketball"
+};
+const SPORT_SLUG_ALIASES = {
+  'mens-basketball': 'mbb',
+  'womens-basketball': 'wbb',
+  basketball: 'mbb'
+};
+
+// Read the sport from the current URL; anything unrecognized means 'all'
+function sportFromUrl() {
+  const raw = (new URLSearchParams(window.location.search).get('sport') || '').toLowerCase();
+  const slug = SPORT_SLUG_ALIASES[raw] || raw;
+  return SPORT_SLUGS[slug] || 'all';
+}
+
+function slugForSport(sport) {
+  return Object.keys(SPORT_SLUGS).find(slug => SPORT_SLUGS[slug] === sport) || null;
+}
+
+// Write the sport into the URL without reloading; 'all' clears the param
+function syncSportToUrl(sport) {
+  const url = new URL(window.location.href);
+  const slug = slugForSport(sport);
+  if (slug) {
+    url.searchParams.set('sport', slug);
+  } else {
+    url.searchParams.delete('sport');
+  }
+  if (url.href !== window.location.href) {
+    history.pushState(null, '', url);
+  }
+}
+
+// Check the matching radio in the segmented control (used when the sport comes from the URL)
+function setSportControl(sport) {
+  const input = document.querySelector(`input[name="sport"][value="${sport}"]`);
+  if (input) input.checked = true;
+}
+
+// Set the sport state without touching the map or list
+function setSportState(sport) {
   currentSport = sport;
   const all = sport === 'all';
   currentFilters.football = all || sport === 'Football';
   currentFilters.volleyball = all || sport === 'Volleyball';
   currentFilters.mensBasketball = all || sport === "Men's Basketball";
   currentFilters.womensBasketball = all || sport === "Women's Basketball";
+}
+
+// Update filters when the sport segmented control changes (or the URL does).
+// updateUrl is false when the change came from the URL itself (load / back button).
+function updateSportFilter(sport, updateUrl = true) {
+  setSportState(sport);
+  if (updateUrl) syncSportToUrl(sport);
 
   // Refresh markers
   addStationMarkers();
@@ -474,10 +527,24 @@ function openStationPopup(lat, lng) {
 
 // Initialize map when page loads
 window.addEventListener('DOMContentLoaded', () => {
+  // Honor a shared ?sport= link before the first render
+  const initialSport = sportFromUrl();
+  setSportState(initialSport);
+  setSportControl(initialSport);
+
   initMap();
 
   // Automatically try to get user location on page load
   setTimeout(() => {
     lookupByLocation();
   }, 500); // Small delay to ensure map is fully loaded
+});
+
+// Back/forward between sport views
+window.addEventListener('popstate', () => {
+  const sport = sportFromUrl();
+  if (sport !== currentSport) {
+    setSportControl(sport);
+    updateSportFilter(sport, false);
+  }
 });

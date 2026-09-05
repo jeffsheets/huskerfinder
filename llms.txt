@@ -14,6 +14,7 @@ For the 2026-27 seasons, more than 50 Husker Radio Network stations broadcast on
 - Interactive map showing station locations and user position
 - Sort by distance or by what should sound best at your location (estimated signal strength, with FM favored over AM at similar strength for its clearer audio)
 - Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
+- Shareable per-sport links: huskerfinder.sheetsj.com/?sport=football, ?sport=volleyball, ?sport=mbb (men's basketball), ?sport=wbb (women's basketball)
 - 50+ stations / 60+ frequencies across Nebraska, South Dakota, and Kansas
 - No account required, completely free, privacy-focused (location stays on device)
 
