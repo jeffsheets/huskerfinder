@@ -94,9 +94,26 @@ body {
   border-bottom-color: #d00000;
 }
 
+/* index.html: header + location line + finder/map + footer fill exactly one
+   viewport; the FAQ scrolls in below. The shell sizes the container, so the
+   header/footer can change height without breaking the math. */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.app-shell > .header,
+.app-shell > #display,
+.app-shell > .footer {
+  flex-shrink: 0;
+}
+
 .container {
   display: flex;
-  height: calc(100vh - 160px);
+  flex: 1;
+  min-height: 0;
 }
 
 #results {
@@ -702,12 +719,16 @@ a:hover {
 }
 
 
-/* FAQ Section Styles */
+/* FAQ Section Styles — sits below the footer strip on index.html so the app
+   (header, finder, map, footer) still fits the first viewport; the FAQ is
+   a centered content section on the page background underneath */
 .faq-section {
   background: white;
   padding: 1.5rem;
-  margin: 0;
-  border-top: 1px solid #e0e0e0;
+  margin: 1.5rem auto 2rem;
+  max-width: 900px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
 }
 
 .faq-section h2 {
@@ -791,8 +812,10 @@ a:hover {
 /* FAQ on about page */
 .about-faq {
   padding: 0;
-  border-top: none;
-  margin-top: 0.5rem;
+  border: none;
+  border-radius: 0;
+  max-width: none;
+  margin: 0.5rem 0 0;
 }
 
 /* Footer Styles */
@@ -872,27 +895,27 @@ a:hover {
 
   .container {
     flex-direction: column;
-    height: calc(100vh - 120px); /* Reduced from 200px to account for smaller header/footer */
   }
 
   #results {
     width: 100%;
     height: auto;
-    max-height: 280px; /* Reduced from 320px */
     border-right: none;
     border-bottom: 1px solid #ddd;
     flex-shrink: 0;
   }
 
+  /* Enough for the top three one-line cards; the rest scroll */
   #station-list {
-    max-height: 180px; /* Reduced from 200px */
+    max-height: 150px;
     overflow-y: auto;
+    padding: 0.5rem 0.6rem;
   }
 
   #map {
     flex: 1;
-    min-height: 300px; /* Increased from 250px */
-    max-height: none; /* Remove max-height restriction */
+    min-height: 200px;
+    max-height: none;
   }
 
   .controls-panel {
@@ -915,17 +938,32 @@ a:hover {
     display: none;
   }
 
+  /* One-line cards: name on the left, sports + signal + distance on the right.
+     Long names wrap the left side only; the right side never breaks. */
   .station-item {
-    padding: 0.5rem;
+    padding: 0.35rem 0.5rem;
     margin-bottom: 0.3rem;
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 0.5rem;
+    row-gap: 0.1rem;
   }
 
   .station-info {
     display: flex;
+    flex: 1 1 auto;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.4rem;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .station-backup {
+    flex-basis: 100%;
+    order: 3;
+    margin: 0 0 0 0.25rem;
+    font-size: 0.75rem;
   }
 
   .station-location {
@@ -958,14 +996,20 @@ a:hover {
   }
 
   .station-meta {
-    margin-top: 0.35rem;
+    margin-top: 0;
+    margin-left: auto;
+    flex: 0 0 auto;
     gap: 0.5rem;
   }
 
   .station-sports {
     display: flex;
-    gap: 0.2rem;
-    flex-wrap: wrap;
+    gap: 0.15rem;
+    flex-wrap: nowrap;
+  }
+
+  .station-sport-emoji {
+    font-size: 0.85rem;
   }
 
   .station-sport {
@@ -994,6 +1038,11 @@ a:hover {
     padding: 0.5rem;
     font-size: 0.7rem;
     line-height: 1.3;
+  }
+
+  .faq-section {
+    margin: 0.75rem;
+    padding: 1rem;
   }
 
   .footer-divider {
