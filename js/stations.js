@@ -734,23 +734,6 @@ const stations = [
   {
     "City": "Omaha",
     "State": "NE",
-    "latitude": 41.63913888888889,
-    "longitude": -96.2088888888889,
-    "CallSign": "KOBM",
-    "Format": "FM",
-    "Frequency": 97.3,
-    "Sport": "Football",
-    "Year": 2026,
-    "towerLatitude": 41.63913888888889,
-    "towerLongitude": -96.2088888888889,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
-    "power": 25,
-    "haat": 92
-  },
-  {
-    "City": "Omaha",
-    "State": "NE",
     "latitude": 41.31527777777777,
     "longitude": -95.99808333333333,
     "CallSign": "WOW",
@@ -1615,23 +1598,6 @@ const stations = [
     "role": "secondary",
     "secondaryOf": "WOW",
     "powerNight": 0.054
-  },
-  {
-    "City": "Omaha",
-    "State": "NE",
-    "latitude": 41.63913888888889,
-    "longitude": -96.2088888888889,
-    "CallSign": "KOBM",
-    "Format": "FM",
-    "Frequency": 97.3,
-    "Sport": "Volleyball",
-    "Year": 2026,
-    "towerLatitude": 41.63913888888889,
-    "towerLongitude": -96.2088888888889,
-    "cityLatitude": 41.2565,
-    "cityLongitude": -96.0547,
-    "power": 25,
-    "haat": 92
   },
   {
     "City": "Omaha",
