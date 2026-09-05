@@ -1,6 +1,7 @@
 let map;
 let markers = [];
 let userMarker;
+let homeView = null; // { center, zoom, popupStation } — the auto-zoomed view after a location lookup
 let currentFilters = {
   football: true,
   volleyball: true,
@@ -8,7 +9,7 @@ let currentFilters = {
   womensBasketball: true
 };
 let userLocation = null;
-let currentSortBy = 'signal'; // 'signal' or 'distance'
+let currentSortBy = 'signal'; // 'signal' (sounds best) or 'distance'
 
 // Initialize the map centered on Nebraska
 function initMap() {
@@ -109,7 +110,8 @@ function addStationMarkers() {
       popupContent += `<div style="margin-bottom: 8px;">`;
       popupContent += `<strong style="color: ${sportColor};">${sport}:</strong><br>`;
       sportStations.forEach(s => {
-        const roleTag = s.role ? ` <em style="color: #999; font-size: 0.85em;">(${s.role})</em>` : '';
+        const roleLabel = s.role === 'secondary' ? 'overflow — only when two games overlap' : s.role;
+        const roleTag = s.role ? ` <em style="color: #999; font-size: 0.85em;">(${roleLabel})</em>` : '';
         const night = nightBehavior(s);
         const nightTag = night ? ` <span class="night-flag" title="${night.title}">${night.symbol}</span>` : '';
         popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}${roleTag}${nightTag}</span><br>`;
@@ -142,7 +144,7 @@ function updateFilters() {
   }
 }
 
-// Switch between sorting by distance and by predicted signal strength
+// Switch between sorting by distance and by predicted listening quality
 function updateSortBy(mode) {
   currentSortBy = mode;
   if (userLocation) {
@@ -173,6 +175,7 @@ function sortByLocation(point, isFallback = false) {
       distance: distanceMiles,
       distanceMeters: distanceMeters,
       signalStrength: signal.strength,
+      signalRank: signal.rank,
       signalCategory: signal.category
     };
   });
@@ -196,8 +199,11 @@ function sortByLocation(point, isFallback = false) {
         power: station.power,
         powerNight: station.powerNight,
         signalStrength: station.signalStrength,
+        signalRank: station.signalRank,
         signalCategory: station.signalCategory,
         role: station.role,
+        secondaryOf: station.secondaryOf,
+        backups: [],
         sports: []
       });
     }
@@ -205,12 +211,23 @@ function sortByLocation(point, isFallback = false) {
     groupedStations.get(key).sports.push(station.Sport);
   });
 
-  // Convert to array and sort based on current sort mode
+  // Convert to array, then fold overflow stations (role "secondary" with a
+  // secondaryOf link, e.g. KCRO 660 → WOW 590) into their primary's card so
+  // the market reads as one entry instead of two competing ones
   let results = Array.from(groupedStations.values());
+  results = results.filter(entry => {
+    if (entry.role !== 'secondary' || !entry.secondaryOf) return true;
+    const primary = results.find(p => p.role === 'primary'
+      && p.CallSign === entry.secondaryOf && p.City === entry.City);
+    if (!primary) return true; // primary filtered out — show the overflow station on its own
+    primary.backups.push(entry);
+    return false;
+  });
 
   if (currentSortBy === 'signal') {
-    // Sort by signal strength (highest first), then by distance
-    results.sort((a, b) => (b.signalStrength - a.signalStrength) || (a.distance - b.distance));
+    // Sort by listening rank (signal tier, saturated at Excellent, plus an
+    // FM fidelity bonus — see listeningRank in lib.js), then by distance
+    results.sort((a, b) => (b.signalRank - a.signalRank) || (b.Format.localeCompare(a.Format)) || (a.distance - b.distance));
   } else {
     // Sort by distance (nearest first)
     results.sort((a, b) => a.distance - b.distance);
@@ -262,13 +279,31 @@ function sortByLocation(point, isFallback = false) {
     if (night) {
       html += `<span class="night-flag" title="${night.title}">${night.symbol}</span>`;
     }
-    if (station.role) {
-      const roleTitle = station.role === 'primary'
-        ? 'Primary Husker station for this market'
-        : 'Secondary station — carries games when schedules conflict';
-      html += `<span class="station-role ${station.role}" title="${roleTitle}">${station.role}</span>`;
+    // The primary role is implied by the overflow line below, so only the
+    // secondary badge is shown (when an overflow station is listed on its own)
+    if (station.role === 'secondary') {
+      html += `<span class="station-role secondary" title="Overflow station — only carries a game when two Husker games are on at the same time">${station.role}</span>`;
     }
     html += `</div>`;
+
+    // Overflow station(s) folded into this card: normally silent on Husker
+    // games, used only when two games overlap
+    station.backups.forEach(backup => {
+      const backupNight = nightBehavior(backup);
+      const backupSports = [...new Set(backup.sports)];
+      const backupTitle = `${backup.CallSign} ${backup.Frequency} ${backup.Format} is the overflow station for ${station.CallSign}: `
+        + `it carries a Husker game only when two games are on at the same time (${backupSports.join(', ')}). `
+        + `Tune ${station.Frequency} ${station.Format} first.`;
+      html += `<div class="station-backup" title="${backupTitle}">`;
+      html += `<span class="backup-arrow">↳</span> `;
+      html += `<span class="backup-freq">${backup.Frequency}${backup.Format}</span> `;
+      html += `<span class="backup-call">${backup.CallSign}</span>`;
+      if (backupNight) {
+        html += ` <span class="night-flag" title="${backupNight.title}">${backupNight.symbol}</span>`;
+      }
+      html += ` <span class="backup-note">only when two games</span>`;
+      html += `</div>`;
+    });
 
     html += `<div class="station-meta">`;
     html += `<div class="station-sports">`;
@@ -374,19 +409,30 @@ function sortByLocation(point, isFallback = false) {
       centerPoint = [point.latitude, point.longitude];
     }
 
-    map.setView(centerPoint, zoomLevel);
-
     // Automatically open popup for closest station (skip for fallback to show more context).
     // Prefer the closest football station when the football filter is on — football is the
     // flagship sport, so a nearby volleyball/basketball-only station shouldn't win the popup.
-    if (!isFallback && results.length > 0) {
-      const closestStation = (currentFilters.football &&
-        results.find(s => s.sports.includes('Football'))) || results[0];
-      // Small delay to ensure map has finished moving
-      setTimeout(() => {
-        openStationPopup(closestStation.latitude, closestStation.longitude);
-      }, 500);
-    }
+    const popupStation = isFallback ? null : ((currentFilters.football &&
+      results.find(s => s.sports.includes('Football'))) || results[0]);
+
+    // Remember this view so clicking the coordinates in the header can reset to it
+    homeView = { center: centerPoint, zoom: zoomLevel, popupStation: popupStation };
+    showHomeView();
+  }
+}
+
+// Apply the auto-zoomed "home" view: center on the user, zoom to the nearest
+// stations, and open the closest station's popup once the map settles
+function showHomeView() {
+  if (!homeView) return;
+  map.closePopup();
+  map.setView(homeView.center, homeView.zoom);
+  if (homeView.popupStation) {
+    const station = homeView.popupStation;
+    // Small delay to ensure map has finished moving
+    setTimeout(() => {
+      openStationPopup(station.latitude, station.longitude);
+    }, 500);
   }
 }
 
@@ -401,6 +447,13 @@ function focusStation(lat, lng) {
       marker.openPopup();
     }
   });
+}
+
+// Reset the map to the view shown right after the location lookup (clicking
+// the coordinates in the header): recentered on the user, re-zoomed to the
+// nearest stations
+function focusUserLocation() {
+  showHomeView();
 }
 
 // Open popup for a specific station without changing the map view

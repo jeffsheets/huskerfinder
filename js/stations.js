@@ -1613,6 +1613,7 @@ const stations = [
     "cityLongitude": -96.0547,
     "power": 1,
     "role": "secondary",
+    "secondaryOf": "WOW",
     "powerNight": 0.054
   },
   {
@@ -2463,6 +2464,7 @@ const stations = [
     "cityLongitude": -96.0547,
     "power": 1,
     "role": "secondary",
+    "secondaryOf": "WOW",
     "powerNight": 0.054
   },
   {
@@ -3140,6 +3142,7 @@ const stations = [
     "cityLongitude": -96.0547,
     "power": 1,
     "role": "secondary",
+    "secondaryOf": "WOW",
     "powerNight": 0.054
   },
   {

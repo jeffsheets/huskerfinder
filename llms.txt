@@ -12,7 +12,7 @@ For the 2026-27 seasons, more than 50 Husker Radio Network stations broadcast on
 
 - GPS-based finder for the closest Husker radio station to you right now
 - Interactive map showing station locations and user position
-- Sort by distance or by estimated signal strength at your location
+- Sort by distance or by what should sound best at your location (estimated signal strength, with FM favored over AM at similar strength for its clearer audio)
 - Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
 - 50+ stations / 60+ frequencies across Nebraska, South Dakota, and Kansas
 - No account required, completely free, privacy-focused (location stays on device)

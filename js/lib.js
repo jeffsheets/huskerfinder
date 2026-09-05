@@ -43,7 +43,9 @@ function lookupByLocation() {
   navigator.geolocation.getCurrentPosition(function({coords}) {
       sortByLocation(coords);
 
-      setDisplay(`📍 Your location: ${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`);
+      const coordsText = `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`;
+      setDisplay(`📍 Your location: <a href="#" class="location-link" title="Center the map on your location"
+        onclick="focusUserLocation(); return false;">${coordsText}</a>`);
     },
     (error) => {
       let errorMessage = 'Unable to get your location. ';
@@ -233,15 +235,39 @@ function isNightAt(latitude, longitude, date = new Date()) {
 /**
  * Listenability tier floors, chosen so the same score means the same
  * real-world reception on a car radio in either band:
- *   score 4+ Excellent (FCC city grade), 3 Good (protected service contour),
- *   2 Fair, 1 Weak-but-listenable, <1 fringe/static.
- * FM floors are dBu (47 CFR 73.211/73.315 + car radio practice);
+ *   score 4+ Excellent, 3 Good, 2 Fair, 1 Weak-but-listenable, <1 fringe/static.
+ * FM floors are dBu. The FCC's 60 dBu service contour (47 CFR 73.215) was
+ * defined for 1950s home sets with indoor antennas; a car radio with a whip
+ * antenna on flat Plains terrain is full-quieting around 50 dBu and gives
+ * clean, occasionally-fuzzy audio down to about 40, so the floors sit 10 dB
+ * below the FCC's 50/60/70 planning values.
  * AM floors are dB(mV/m) for 0.15 / 0.5 / 2 / 5 mV/m (47 CFR 73.24/73.182).
  */
 const SIGNAL_TIER_FLOORS = {
-  FM: [40, 50, 60, 70],
+  FM: [30, 40, 50, 60],
   AM: [-16.5, -6, 6, 14]
 };
+
+/**
+ * Sort key for the "Sounds best" ranking. Signal strength alone is not
+ * what the listener hears: past the Excellent floor extra field strength
+ * makes no audible difference, and at equal strength FM sounds better than
+ * AM (15 kHz audio vs 5 kHz, and no static from power lines, ignition, or
+ * lightning). So the rank saturates at Excellent for both bands, and FM
+ * earns a one-tier fidelity bonus once it is at least Fair (fading in
+ * across the Weak tier, so a fuzzy FM never outranks a clean AM).
+ * Net effect: a Good FM outranks a strong local AM; a Weak FM does not.
+ *
+ * @param {object} station - Station record (Format)
+ * @param {number} score - Cross-band tier score from estimateSignal
+ * @returns {number} Sort key, higher = better listening
+ */
+function listeningRank(station, score) {
+  if (score <= -50) return score; // off air / unknown
+  const saturated = Math.min(score, 4);
+  const fmBonus = station.Format === 'FM' ? Math.min(Math.max(score - 1, 0), 1) : 0;
+  return saturated + fmBonus;
+}
 
 /**
  * Describe an AM station's nighttime behavior so users searching in the
@@ -275,13 +301,14 @@ function nightBehavior(station) {
  *
  * @param {object} station - Station record (power, haat, powerNight, Format, Frequency, coords)
  * @param {number} distanceMeters - Distance from listener to tower
- * @returns {object} { strength, category } - strength is a cross-band
- *   comparable score (equal score = comparable listenability), category
- *   holds the display info (bars, color, description)
+ * @returns {object} { strength, rank, category } - strength is a cross-band
+ *   comparable signal score (drives the bars), rank is the sort key from
+ *   listeningRank (adds the FM fidelity preference), category holds the
+ *   display info (bars, color, description)
  */
 function estimateSignal(station, distanceMeters) {
   if (!station.power || !distanceMeters || distanceMeters <= 0) {
-    return { strength: -99, category: getSignalCategory(-99) };
+    return { strength: -99, rank: -99, category: getSignalCategory(-99) };
   }
 
   const distanceKm = metersToKm(distanceMeters);
@@ -297,6 +324,7 @@ function estimateSignal(station, distanceMeters) {
         // Daytime-only license: the station signs off at sunset
         return {
           strength: -99,
+          rank: -99,
           category: { label: 'Off air', emoji: '🌙', bars: '▱▱▱▱', color: '#999',
             description: 'Daytime-only AM station — off the air from sunset to sunrise' }
         };
@@ -323,7 +351,7 @@ function estimateSignal(station, distanceMeters) {
   }
 
   const category = getSignalCategory(score, nightNote);
-  return { strength: score, category: category };
+  return { strength: score, rank: listeningRank(station, score), category: category };
 }
 
 /**
@@ -376,6 +404,7 @@ function sortByLocation(point, sortBy = 'signal') {
       distance: distanceMiles,
       distanceMeters: distanceMeters,
       signalStrength: signal.strength,
+      signalRank: signal.rank,
       signalCategory: signal.category
     };
   });
@@ -384,10 +413,10 @@ function sortByLocation(point, sortBy = 'signal') {
   const filtered = stationsWithData.filter(it => it.distance < 150);
   const results = filtered.length > 0 ? filtered : stationsWithData.slice(0, 15);
 
-  // Sort by distance or signal strength
+  // Sort by distance or predicted listening quality
   if (sortBy === 'signal') {
-    // Sort by signal strength (highest first), then by distance
-    results.sort((a, b) => (b.signalStrength - a.signalStrength) || (a.distance - b.distance));
+    // Sort by listening rank (signal + FM fidelity bonus), then by distance
+    results.sort((a, b) => (b.signalRank - a.signalRank) || (b.Format.localeCompare(a.Format)) || (a.distance - b.distance));
   } else {
     // Sort by distance (nearest first), then by format (FM before AM)
     results.sort((a, b) => (a.distance - b.distance) || (b.Format.localeCompare(a.Format)));

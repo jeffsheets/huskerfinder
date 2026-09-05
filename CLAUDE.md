@@ -40,7 +40,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 
 **Distance Calculation**: Uses haversine formula (modeled after geolib) in `js/lib.js`. Calculates great-circle distance between user location and **actual FCC tower coordinates**. Returns distance in meters, converted to miles for display.
 
-**Signal Strength Estimation**: Calculates estimated signal quality using transmitter power and RF propagation models. AM stations use inverse 1.5 power model (ground wave), FM stations use inverse square law (line-of-sight). Signal bars (▰▰▰▱) are visual indicators only - sorting is by distance.
+**Signal Strength Estimation**: `estimateSignal` in `js/lib.js` predicts field strength from FCC license data — FM via the FCC F(50,50) curves (ERP + HAAT), AM via a Norton groundwave model (day or night power by local sunset). Field strength maps to a cross-band tier score (Weak/Fair/Good/Excellent) using floors calibrated for a car radio (FM floors are 10 dB below the FCC planning contours). `listeningRank` turns that into the default "Sounds best" sort key: the score saturates at Excellent and FM gets a one-tier fidelity bonus once it is at least Fair, so a Good FM outranks a strong AM but a fuzzy FM does not. The bars show the raw signal tier; only the ordering applies the FM preference.
 
 **Data Structure**: Each station object in `stations.js` contains:
 - `City`, `State` - Location information
@@ -59,7 +59,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 **Station Filtering**:
 - Filter by sport using checkboxes (Football/Volleyball/Men's Basketball/Women's Basketball)
 - Results show **top 15 nearest stations** based on actual tower distance
-- Stations sorted by distance (not signal strength - distance is more reliable)
+- Default sort is "Sounds best" (listening rank, see above); "Nearest" sorts by tower distance
 - Signal strength bars (▰▰▰▱) shown for reference with color coding:
   - Green: Excellent/Good signal
   - Orange: Fair signal

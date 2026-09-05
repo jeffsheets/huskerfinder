@@ -29,7 +29,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-08-26c">
+  <link rel="stylesheet" href="styles.css?v=2026-09-05">
 </head>
 <body class="about-page">
 
@@ -61,12 +61,17 @@
   </div>
 
   <h3 id="signal-strength">How Signal Strength Is Estimated</h3>
-  <p>Each station's signal bars (▰▰▰▱) and the "Strongest signal" sort are calculated from the station's FCC license data and your distance from its tower:</p>
+  <p>Each station's signal bars (▰▰▰▱) and the "Sounds best" sort start from the station's FCC license data and your distance from its tower:</p>
   <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
     <li><strong>FM stations</strong> are rated using the FCC's own F(50,50) propagation curves — the same curves the FCC uses to draw official coverage maps — based on the station's licensed effective radiated power (ERP) and antenna height above average terrain (HAAT). A 100,000-watt antenna on a 1,000-foot tower reaches much farther than the same power on a short one.</li>
     <li><strong>AM stations</strong> are rated with a groundwave propagation model using the station's licensed transmitter power and frequency. AM signals hug the ground, and the Great Plains has some of the best soil conductivity in the country — that's why a 50,000-watt station like KRVN 880 is listenable across most of Nebraska in the daytime, and why lower AM frequencies (590, 660, 880) carry much farther than higher ones (1400+).</li>
     <li><strong>FM translators</strong> (low-power FM repeaters of AM stations, like KLIN 99.3 FM) are capped by the FCC at 250 watts, so they're only rated strong within roughly 5–15 miles of their town — that's real, not a bug.</li>
   </ul>
+
+  <p>The bars are calibrated for a car radio, not the FCC's official coverage maps. The FCC's FM coverage contour was defined decades ago for home sets with indoor antennas; a car radio with a whip antenna on flat Plains terrain sounds clean well outside it. So a 100,000-watt FM like KFGE 98.1 rates "Fair" 75 miles from its tower — clear most days, occasionally fuzzy — rather than "Weak".</p>
+
+  <h4>Why the "Sounds best" sort favors FM</h4>
+  <p>Signal strength is not the whole story. Once a station is "Excellent", more signal doesn't make it sound any better, and at equal strength FM simply sounds clearer than AM: three times the audio bandwidth, and no static from power lines, engine ignition, or distant lightning. So the "Sounds best" sort gives FM stations a one-tier edge once they're at least "Fair", which puts a Good FM ahead of a strong local AM but keeps a fuzzy FM below a clean AM. The signal bars always show the raw signal estimate; only the ordering applies the preference. If you'd rather see raw strength or proximity, use the "Nearest" sort.</p>
 
   <h4>Why AM stations get weaker at night</h4>
   <p>At night, AM signals bounce off the ionosphere and can travel hundreds of miles ("skywave"). To keep thousands of stations from interfering with each other, the FCC licenses most AM stations with a <strong>mandatory lower nighttime power</strong>, in effect from local sunset to local sunrise. This isn't optional and can't be waived for a game broadcast — for example, KICS in Hastings runs 500 watts during the day but must drop to just 27 watts at night, while KRVN 880, KFAB 1110, and WOW 590 are engineered to keep full power around the clock (usually with directional antennas). A few stations (KTIC 840 in West Point, KUVR 1380 in Holdrege) hold daytime-only licenses and sign off completely at sunset. This app checks whether the sun is down at each station's tower and automatically uses the nighttime power — or marks daytimers "off air" — so for a 7pm kickoff, the rankings reflect what you'll actually be able to hear.</p>
@@ -126,7 +131,7 @@
 
     <details>
       <summary>How accurate are the signal strength bars?</summary>
-      <p>They're estimates built from each station's FCC license: FM uses the FCC's official F(50,50) coverage curves (power + antenna height), and AM uses a groundwave model tuned for Great Plains soil. They're good enough to rank stations against each other, which is what the "Strongest signal" sort does. Real-world reception still varies with terrain, buildings, weather, and your radio — see <a href="#signal-strength">"How Signal Strength Is Estimated"</a> above for the full story.</p>
+      <p>They're estimates built from each station's FCC license: FM uses the FCC's official F(50,50) coverage curves (power + antenna height), and AM uses a groundwave model tuned for Great Plains soil. They're good enough to rank stations against each other, which is what the "Sounds best" sort does (with FM favored over AM at similar strength, since it sounds clearer). Real-world reception still varies with terrain, buildings, weather, and your radio — see <a href="#signal-strength">"How Signal Strength Is Estimated"</a> above for the full story.</p>
     </details>
 
     <details>

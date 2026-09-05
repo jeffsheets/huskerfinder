@@ -54,7 +54,7 @@
       "Automatic distance calculation",
       "Filter by sport (Football, Volleyball, Men's Basketball, Women's Basketball)",
       "Real-time location-based search",
-      "Signal strength estimation and sorting using FCC propagation curves",
+      "Signal strength estimation and \"sounds best\" sorting using FCC propagation curves",
       "50+ Husker Radio Network stations on 60+ AM/FM frequencies across Nebraska, South Dakota, and Kansas"
     ],
     "author": {
@@ -93,7 +93,7 @@
         "name": "What is the closest Husker radio station to me?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Husker Radio Finder answers this instantly: allow location access and it calculates the distance from you to the actual FCC radio tower of every Husker Radio Network station, then lists the 15 best stations sorted by estimated signal strength at your location (or by distance if you prefer)."
+          "text": "The Husker Radio Finder answers this instantly: allow location access and it calculates the distance from you to the actual FCC radio tower of every Husker Radio Network station, then lists the 15 best stations sorted by how good they should sound at your location — estimated signal strength, with FM favored over AM at similar strength for its clearer audio (or by distance if you prefer)."
         }
       },
       {
@@ -133,7 +133,7 @@
         "name": "How does the Husker Radio Finder work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Husker Radio Finder uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by estimated signal strength - signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, and even account for AM stations' mandatory nighttime power reductions. Simply click 'Find Nearest Stations' and allow location access to get started."
+          "text": "The Husker Radio Finder uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by what should sound best - signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, and even account for AM stations' mandatory nighttime power reductions. Simply click 'Find Nearest Stations' and allow location access to get started."
         }
       },
       {
@@ -156,7 +156,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-08-26c">
+  <link rel="stylesheet" href="styles.css?v=2026-09-05">
 </head>
 <body>
 
@@ -206,7 +206,7 @@
         <span class="sort-label">Sort by:</span>
         <label>
           <input type="radio" name="sortBy" value="signal" checked onchange="updateSortBy(this.value)">
-          <span>📶 Strongest signal</span>
+          <span>📶 Sounds best</span>
         </label>
         <label>
           <input type="radio" name="sortBy" value="distance" onchange="updateSortBy(this.value)">
@@ -278,7 +278,7 @@
 
   <details>
     <summary>What is the closest Husker radio station to me?</summary>
-    <p>This finder answers that instantly: allow location access and it calculates the distance from you to the actual FCC radio tower of every Husker Radio Network station, then lists the 15 best stations sorted by estimated signal strength at your location (or by distance if you prefer).</p>
+    <p>This finder answers that instantly: allow location access and it calculates the distance from you to the actual FCC radio tower of every Husker Radio Network station, then lists the 15 best stations sorted by how good they should sound at your location — estimated signal strength, with FM favored over AM at similar strength for its clearer audio (or by distance if you prefer).</p>
   </details>
 
   <details>
@@ -303,7 +303,7 @@
 
   <details>
     <summary>How does the Husker Radio Finder work?</summary>
-    <p>It uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by estimated signal strength — signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, and account for AM stations' mandatory nighttime power cuts (<a href="about.html#signal-strength">how it works</a>). Your location stays on your device and is never sent to a server.</p>
+    <p>It uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by what should sound best — signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, account for AM stations' mandatory nighttime power cuts, and favor FM over AM at similar strength for its clearer audio (<a href="about.html#signal-strength">how it works</a>). Your location stays on your device and is never sent to a server.</p>
   </details>
 
   <details>
@@ -327,8 +327,8 @@
   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
   crossorigin=""></script>
 
-<script src="js/stations.js?v=2026-08-26c" lang="js"></script>
-<script src="js/lib.js?v=2026-08-26c" lang="js"></script>
-<script src="js/map.js?v=2026-08-26c" lang="js"></script>
+<script src="js/stations.js?v=2026-09-05" lang="js"></script>
+<script src="js/lib.js?v=2026-09-05" lang="js"></script>
+<script src="js/map.js?v=2026-09-05" lang="js"></script>
 </body>
 </html>
