@@ -283,6 +283,50 @@ p.night-legend {
   margin: 0.75rem 0;
 }
 
+/* Footnote citations on stations.html: [1] in the text, sources listed below the table */
+.fn-ref {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  margin-left: 0.1em;
+}
+
+.fn-ref a {
+  color: #d00000;
+  text-decoration: none;
+}
+
+.fn-ref a:hover,
+.footnotes .fn-back:hover {
+  text-decoration: underline;
+}
+
+.footnotes {
+  margin: 1.5rem 0 0 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0e0e0;
+  color: #777;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.footnotes li {
+  margin-bottom: 0.4rem;
+}
+
+.footnotes li:target {
+  background: #fff3f3;
+}
+
+.footnotes a {
+  color: #d00000;
+  text-decoration: none;
+}
+
+.footnotes .fn-back {
+  margin-left: 0.25em;
+}
+
 #map {
   flex: 1;
   height: 100%;
