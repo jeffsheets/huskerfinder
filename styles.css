@@ -135,29 +135,68 @@ body {
   background: #900000;
 }
 
-.filter-group {
+/* Sport filter: single-select segmented control (radios styled as pills).
+   Kept to one row; text labels drop out on narrow screens leaving emoji. */
+.sport-filter {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  padding-left: 0.25rem;
+  flex-wrap: nowrap;
+  width: 100%;
+  border: 1px solid #d00000;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
 }
 
-.filter-group label {
-  color: #333;
+.sport-filter label {
+  flex: 1 1 0;
   display: flex;
   align-items: center;
-  gap: 0.2rem;
-  cursor: pointer;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.4rem 0.2rem;
+  min-height: 2.1rem;
+  color: #333;
   font-size: 0.85rem;
+  font-weight: 600;
   white-space: nowrap;
+  cursor: pointer;
+  border-left: 1px solid #f0c8c8;
+  transition: background 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
-.filter-group input[type="checkbox"] {
-  width: 1.1rem;
-  height: 1.1rem;
-  cursor: pointer;
-  flex-shrink: 0;
+.sport-filter label:first-child {
+  border-left: none;
+}
+
+.sport-filter label:hover {
+  background: #fff3f3;
+}
+
+.sport-filter input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.sport-filter label:has(input:checked) {
+  background: #d00000;
+  color: #fff;
+}
+
+.sport-filter label:has(input:focus-visible) {
+  outline: 2px solid #333;
+  outline-offset: -2px;
+}
+
+.sport-filter sup {
+  font-size: 0.6em;
+  font-weight: 700;
+  margin-left: -0.1em;
 }
 
 .sort-group {
@@ -866,8 +905,14 @@ a:hover {
     margin-bottom: 0.75rem;
   }
 
-  .filter-group {
-    flex-wrap: wrap;
+  .sport-filter label {
+    font-size: 0.95rem;
+    padding: 0.45rem 0.1rem;
+  }
+
+  /* Emoji-only pills on phones so the row never wraps */
+  .sport-filter .sport-text {
+    display: none;
   }
 
   .station-item {

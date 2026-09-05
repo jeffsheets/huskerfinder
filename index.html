@@ -184,22 +184,26 @@
       <button class="find-button" onclick="lookupByLocation()">
         📍 Find Nearest Stations
       </button>
-      <div class="filter-group">
+      <div class="sport-filter" role="radiogroup" aria-label="Sport">
         <label>
-          <input type="checkbox" id="showFootball" checked onchange="updateFilters()">
-          <span>🏈 FB</span>
+          <input type="radio" name="sport" value="all" checked onchange="updateSportFilter(this.value)">
+          <span>All</span>
         </label>
-        <label>
-          <input type="checkbox" id="showVolleyball" checked onchange="updateFilters()">
-          <span>🏐 VB</span>
+        <label title="Football">
+          <input type="radio" name="sport" value="Football" onchange="updateSportFilter(this.value)">
+          <span>🏈<span class="sport-text"> FB</span></span>
         </label>
-        <label>
-          <input type="checkbox" id="showMensBasketball" checked onchange="updateFilters()">
-          <span>🏀 MBB</span>
+        <label title="Volleyball">
+          <input type="radio" name="sport" value="Volleyball" onchange="updateSportFilter(this.value)">
+          <span>🏐<span class="sport-text"> VB</span></span>
         </label>
-        <label>
-          <input type="checkbox" id="showWomensBasketball" checked onchange="updateFilters()">
-          <span>🏀 WBB</span>
+        <label title="Men's Basketball">
+          <input type="radio" name="sport" value="Men's Basketball" onchange="updateSportFilter(this.value)">
+          <span>🏀<sup>M</sup><span class="sport-text"> MBB</span></span>
+        </label>
+        <label title="Women's Basketball">
+          <input type="radio" name="sport" value="Women's Basketball" onchange="updateSportFilter(this.value)">
+          <span>🏀<sup>W</sup><span class="sport-text"> WBB</span></span>
         </label>
       </div>
       <div class="sort-group">

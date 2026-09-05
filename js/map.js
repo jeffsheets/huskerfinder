@@ -2,6 +2,9 @@ let map;
 let markers = [];
 let userMarker;
 let homeView = null; // { center, zoom, popupStation } — the auto-zoomed view after a location lookup
+// Sport filter is single-select: 'all' or one Sport name. currentFilters is
+// derived from it so the marker/list filtering can stay boolean per sport.
+let currentSport = 'all';
 let currentFilters = {
   football: true,
   volleyball: true,
@@ -128,12 +131,14 @@ function addStationMarkers() {
   });
 }
 
-// Update filters when checkboxes change
-function updateFilters() {
-  currentFilters.football = document.getElementById('showFootball').checked;
-  currentFilters.volleyball = document.getElementById('showVolleyball').checked;
-  currentFilters.mensBasketball = document.getElementById('showMensBasketball').checked;
-  currentFilters.womensBasketball = document.getElementById('showWomensBasketball').checked;
+// Update filters when the sport segmented control changes
+function updateSportFilter(sport) {
+  currentSport = sport;
+  const all = sport === 'all';
+  currentFilters.football = all || sport === 'Football';
+  currentFilters.volleyball = all || sport === 'Volleyball';
+  currentFilters.mensBasketball = all || sport === "Men's Basketball";
+  currentFilters.womensBasketball = all || sport === "Women's Basketball";
 
   // Refresh markers
   addStationMarkers();

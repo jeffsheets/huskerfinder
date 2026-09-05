@@ -57,7 +57,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 - `Year` - Broadcasting year (currently 2025)
 
 **Station Filtering**:
-- Filter by sport using checkboxes (Football/Volleyball/Men's Basketball/Women's Basketball)
+- Filter by sport with a single-select segmented control (All/Football/Volleyball/Men's Basketball/Women's Basketball); `updateSportFilter` derives the per-sport booleans in `currentFilters`
 - Results show **top 15 nearest stations** based on actual tower distance
 - Default sort is "Sounds best" (listening rank, see above); "Nearest" sorts by tower distance
 - Signal strength bars (▰▰▰▱) shown for reference with color coding:
