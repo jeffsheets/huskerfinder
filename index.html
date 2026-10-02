@@ -172,7 +172,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11" data-domains="huskerfinder.sheetsj.com"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-10-01b">
+  <link rel="stylesheet" href="styles.css?v=2026-10-01c">
 </head>
 <body>
 
@@ -193,7 +193,7 @@
   </nav>
 </div>
 
-<div id="display">🔍 Finding your location...</div>
+<div id="display" aria-live="polite">🔍 Finding your location...</div>
 
 <div class="container">
   <div id="results">
@@ -207,24 +207,24 @@
           <span>All</span>
         </label>
         <label title="Football">
-          <input type="radio" name="sport" value="Football" onchange="updateSportFilter(this.value)">
+          <input type="radio" name="sport" value="Football" aria-label="Football" onchange="updateSportFilter(this.value)">
           <span>🏈<span class="sport-text"> FB</span></span>
         </label>
         <label title="Volleyball">
-          <input type="radio" name="sport" value="Volleyball" onchange="updateSportFilter(this.value)">
+          <input type="radio" name="sport" value="Volleyball" aria-label="Volleyball" onchange="updateSportFilter(this.value)">
           <span>🏐<span class="sport-text"> VB</span></span>
         </label>
         <label title="Men's Basketball">
-          <input type="radio" name="sport" value="Men's Basketball" onchange="updateSportFilter(this.value)">
+          <input type="radio" name="sport" value="Men's Basketball" aria-label="Men's Basketball" onchange="updateSportFilter(this.value)">
           <span>🏀<sup>M</sup><span class="sport-text"> MBB</span></span>
         </label>
         <label title="Women's Basketball">
-          <input type="radio" name="sport" value="Women's Basketball" onchange="updateSportFilter(this.value)">
+          <input type="radio" name="sport" value="Women's Basketball" aria-label="Women's Basketball" onchange="updateSportFilter(this.value)">
           <span>🏀<sup>W</sup><span class="sport-text"> WBB</span></span>
         </label>
       </div>
-      <div class="sort-group">
-        <span class="sort-label">Sort by:</span>
+      <div class="sort-group" role="radiogroup" aria-labelledby="sortLabel">
+        <span class="sort-label" id="sortLabel">Sort by:</span>
         <label>
           <input type="radio" name="sortBy" value="signal" checked onchange="updateSortBy(this.value)">
           <span>📶 Sounds best</span>
@@ -237,7 +237,7 @@
       <a id="nightLegend" class="night-legend" href="about.html#signal-strength" style="display: none;"
          title="AM stations must follow FCC daytime/nighttime power rules — tap to learn more"></a>
     </div>
-    <div id="station-list">
+    <div id="station-list" role="region" aria-label="Nearest stations">
       <div style="color: #666; padding: 1rem;">
         <p><strong>Nebraska Huskers Radio Finder</strong></p>
         <p>Nebraska Husker football is broadcast on about 60 Husker Radio Network stations across Nebraska, South Dakota, and Kansas for the 2026 season — plus volleyball on about 45 stations and basketball on about 50. This free tool finds the closest Husker radio station to you right now.</p>
@@ -362,6 +362,6 @@
 
 <script src="js/stations.js?v=2026-09-05d" lang="js"></script>
 <script src="js/lib.js?v=2026-10-01c" lang="js"></script>
-<script src="js/map.js?v=2026-10-01d" lang="js"></script>
+<script src="js/map.js?v=2026-10-01e" lang="js"></script>
 </body>
 </html>

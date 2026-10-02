@@ -152,6 +152,12 @@ body {
   background: #900000;
 }
 
+.find-button:focus-visible,
+.station-item:focus-visible {
+  outline: 2px solid #d00000;
+  outline-offset: 2px;
+}
+
 /* Sport filter: single-select segmented control (radios styled as pills).
    Kept to one row; text labels drop out on narrow screens leaving emoji. */
 .sport-filter {

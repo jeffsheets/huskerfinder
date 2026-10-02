@@ -173,12 +173,12 @@ function addStationMarkers() {
 
     byFreq.forEach(({ station: s, sports }, key) => {
       const emojis = [...sports].map(sport =>
-        `<span class="station-sport-emoji" title="${sport}">${SPORT_EMOJI[sport] || sport}</span>`).join('');
+        `<span class="station-sport-emoji" role="img" title="${sport}" aria-label="${sport}">${SPORT_EMOJI[sport] || sport}</span>`).join('');
       const roleTag = s.role === 'secondary'
         ? ` <em class="popup-role" title="Overflow station — only carries a game when two Husker games are on at the same time">overflow</em>`
         : '';
       const night = nightBehavior(s);
-      const nightTag = night ? ` <span class="night-flag" title="${night.title}">${night.symbol}</span>` : '';
+      const nightTag = night ? ` <span class="night-flag" role="img" title="${night.title}" aria-label="${night.title}">${night.symbol}</span>` : '';
       popupContent += `<div class="popup-station"><strong>${key}</strong> ${s.CallSign} ${emojis}${roleTag}${nightTag}</div>`;
     });
 
@@ -384,20 +384,34 @@ function sortByLocation(point, isFallback = false) {
     const isNearest = index < 3;
     const uniqueSports = [...new Set(station.sports)];
 
-    // Signal strength indicator
+    // Signal strength indicator (decorative glyphs; the card's aria-label
+    // carries the tier in words)
     const signalIndicator = station.signalStrength > 0
-      ? `<span class="signal-indicator" style="color: ${station.signalCategory.color};" title="${station.signalCategory.description}">
+      ? `<span class="signal-indicator" style="color: ${station.signalCategory.color};" title="${station.signalCategory.description}" aria-hidden="true">
            ${station.signalCategory.bars}
          </span>`
       : '';
 
-    html += `<div class="station-item ${isNearest ? 'nearest' : ''}"
-                  onclick="focusStation(${station.latitude}, ${station.longitude})">`;
+    // Spoken name for the card: emoji, bars and the ↳ overflow line are noise
+    // to a screen reader, so say the whole thing in words instead
+    const night = nightBehavior(station);
+    const ariaParts = [
+      `${station.City}, ${station.Frequency} ${station.Format} ${station.CallSign}`,
+      uniqueSports.length === Object.keys(SPORT_EMOJI).length ? 'all sports' : uniqueSports.join(' and '),
+      station.signalStrength > 0 ? `${station.signalCategory.label} signal` : '',
+      `${station.distance} miles`,
+      night ? (night.symbol === '☀️' ? 'off air after sunset' : 'weaker at night') : '',
+      station.role === 'secondary' ? 'overflow station' : ''
+    ].filter(Boolean);
+
+    html += `<div class="station-item ${isNearest ? 'nearest' : ''}" role="button" tabindex="0"
+                  aria-label="${ariaParts.join(', ')}. Show on map"
+                  onclick="focusStation(${station.latitude}, ${station.longitude})"
+                  onkeydown="activateOnKey(event)">`;
     html += `<div class="station-info">`;
     html += `<span class="station-location">${station.City}</span>`;
     html += `<span class="station-freq">${station.Frequency}${station.Format}</span>`;
     html += `<span class="station-call">${station.CallSign}</span>`;
-    const night = nightBehavior(station);
     if (night) {
       html += `<span class="night-flag" title="${night.title}">${night.symbol}</span>`;
     }
@@ -550,6 +564,15 @@ function showHomeView() {
       popupSource = 'auto';
       openStationPopup(station.latitude, station.longitude);
     }, 500);
+  }
+}
+
+// Enter / Space on a station card acts like a click (cards are divs with
+// role="button", so the browser doesn't do this for us)
+function activateOnKey(event) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    event.currentTarget.click();
   }
 }
 
