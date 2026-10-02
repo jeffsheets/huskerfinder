@@ -28,7 +28,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 - **about.html** - About page
 - **stations.html** - Complete station list page
 - **styles.css** - Global styles
-- **js/stations.js** - Station data array (~179 entries with FCC tower coordinates, power, frequency, sport)
+- **js/stations.js** - Station data array (185 entries with FCC tower coordinates, power, frequency, sport)
 - **js/lib.js** - Core utilities: geolocation, distance calculations, signal strength estimation
 - **js/map.js** - Leaflet map initialization, markers, filtering, user interaction
 - **scripts/** - FCC data fetching and station updating scripts

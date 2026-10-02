@@ -550,13 +550,16 @@ function focusStation(lat, lng) {
   });
 
   // Zoom to fit the station's Fair ring (and the user, if located) so the
-  // whole estimated reach is visible; fixed zoom if there is nothing to draw
+  // estimated reach is visible; fixed zoom if there is nothing to draw. Never
+  // zoom out past the state-wide view (7) — a 50 kW AM's Fair ring spans four
+  // states and fitting it would lose all local context
   const fairMeters = marker ? Math.max(0, ...marker.stationData
     .map(s => coverageRadii(s)).filter(Boolean).map(r => r.fairMeters)) : 0;
   if (fairMeters > 0) {
     const bounds = L.latLng(lat, lng).toBounds(fairMeters * 2);
     if (userLocation) bounds.extend([userLocation.latitude, userLocation.longitude]);
-    map.fitBounds(bounds, { padding: [20, 20], maxZoom: 11 });
+    const zoom = Math.max(7, Math.min(11, map.getBoundsZoom(bounds.pad(0.05))));
+    map.setView(bounds.getCenter(), zoom);
   } else {
     map.setView([lat, lng], 10);
   }
