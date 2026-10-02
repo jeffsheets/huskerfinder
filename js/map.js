@@ -1,6 +1,7 @@
 let map;
 let markers = [];
 let userMarker;
+let coverageLayer; // estimated Good/Fair rings for the station whose popup is open
 let homeView = null; // { center, zoom, popupStation } — the auto-zoomed view after a location lookup
 // Sport filter is single-select: 'all' or one Sport name. currentFilters is
 // derived from it so the marker/list filtering can stay boolean per sport.
@@ -14,6 +15,14 @@ let currentFilters = {
 let userLocation = null;
 let currentSortBy = 'signal'; // 'signal' (sounds best) or 'distance'
 
+// Sport emojis for list cards and map popups (🏀 disambiguated with M/W)
+const SPORT_EMOJI = {
+  'Football': '🏈',
+  'Volleyball': '🏐',
+  "Men's Basketball": '🏀<sup>M</sup>',
+  "Women's Basketball": '🏀<sup>W</sup>'
+};
+
 // Initialize the map centered on Nebraska
 function initMap() {
   map = L.map('map').setView([41.5, -99.8], 7);
@@ -24,8 +33,61 @@ function initMap() {
     maxZoom: 19
   }).addTo(map);
 
+  // Coverage rings sit under the markers and follow whichever popup is open —
+  // marker click, list click, and the auto-opened nearest station all route
+  // through popupopen, so this one hook covers every entry point
+  coverageLayer = L.layerGroup().addTo(map);
+  map.on('popupopen', e => {
+    const stationList = e.popup._source && e.popup._source.stationData;
+    showCoverage(stationList || []);
+  });
+  map.on('popupclose', () => coverageLayer.clearLayers());
+
   // Add all station markers
   addStationMarkers();
+}
+
+// Popup footer explaining the rings: estimated Good / Fair range per distinct
+// frequency at this tower. Matches what showCoverage draws.
+function coverageFooter(stationList) {
+  const seen = new Set();
+  const lines = [];
+  stationList.forEach(station => {
+    const key = `${station.Frequency}${station.Format}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const radii = coverageRadii(station);
+    if (!radii) return;
+    const mi = m => Math.round(metersToMiles(m));
+    lines.push({ key, text: `<span class="coverage-good">good</span> ~${mi(radii.goodMeters)} mi · `
+      + `<span class="coverage-fair">fair</span> ~${mi(radii.fairMeters)} mi` });
+  });
+  if (lines.length === 0) return '';
+  // Single frequency: one line. Several: label line, then one per frequency.
+  const body = lines.length === 1
+    ? `Est. range: ${lines[0].text}`
+    : `Est. range<br>${lines.map(l => `<strong>${l.key}</strong> ${l.text}`).join('<br>')}`;
+  return `<div class="coverage-legend" title="Rings on the map. Estimated from FCC license data; terrain and buildings will vary it">${body}</div>`;
+}
+
+// Draw estimated Good (inner) and Fair (outer) rings for each distinct
+// frequency at a tower. Colors match the signal bars in the list.
+function showCoverage(stationList) {
+  coverageLayer.clearLayers();
+  const seen = new Set();
+  stationList.forEach(station => {
+    const key = `${station.Frequency}${station.Format}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const radii = coverageRadii(station);
+    if (!radii) return; // off air or no license data
+    const center = [station.latitude, station.longitude];
+    const dash = station.Format === 'AM' ? '6 6' : null;
+    L.circle(center, { radius: radii.fairMeters, color: '#FFA500', weight: 1.5, dashArray: dash,
+      fillColor: '#FFA500', fillOpacity: 0.08, interactive: false }).addTo(coverageLayer);
+    L.circle(center, { radius: radii.goodMeters, color: '#4CAF50', weight: 1.5, dashArray: dash,
+      fillColor: '#4CAF50', fillOpacity: 0.12, interactive: false }).addTo(coverageLayer);
+  });
 }
 
 // Create custom icons for different sports
@@ -91,40 +153,32 @@ function addStationMarkers() {
     );
 
     // Create popup content
-    let popupContent = `<div style="min-width: 200px;">`;
-    popupContent += `<h3 style="margin: 0 0 8px 0; color: #333;">${firstStation.City}, ${firstStation.State || ''}</h3>`;
+    let popupContent = `<div class="station-popup">`;
+    popupContent += `<h3>${firstStation.City}, ${firstStation.State || ''}</h3>`;
 
-    // Group by sport
-    const bySport = {};
+    // One line per frequency, with the sports it carries as emojis (same
+    // forms as the list cards) — a station on all four sports is one line
+    const byFreq = new Map();
     stationList.forEach(s => {
-      if (!bySport[s.Sport]) bySport[s.Sport] = [];
-      bySport[s.Sport].push(s);
+      const key = `${s.Frequency}${s.Format}`;
+      if (!byFreq.has(key)) byFreq.set(key, { station: s, sports: new Set() });
+      byFreq.get(key).sports.add(s.Sport);
     });
 
-    Object.keys(bySport).forEach(sport => {
-      const sportStations = bySport[sport];
-      const sportColors = {
-        'Football': '#d00000',
-        'Volleyball': '#333',
-        "Men's Basketball": '#8B7355',
-        "Women's Basketball": '#FF69B4'
-      };
-      const sportColor = sportColors[sport] || '#666';
-      popupContent += `<div style="margin-bottom: 8px;">`;
-      popupContent += `<strong style="color: ${sportColor};">${sport}:</strong><br>`;
-      sportStations.forEach(s => {
-        const roleLabel = s.role === 'secondary' ? 'overflow — only when two games overlap' : s.role;
-        const roleTag = s.role ? ` <em style="color: #999; font-size: 0.85em;">(${roleLabel})</em>` : '';
-        const night = nightBehavior(s);
-        const nightTag = night ? ` <span class="night-flag" title="${night.title}">${night.symbol}</span>` : '';
-        popupContent += `<span style="margin-left: 10px;"><strong>${s.Frequency}${s.Format}</strong> - ${s.CallSign}${roleTag}${nightTag}</span><br>`;
-      });
-      popupContent += `</div>`;
+    byFreq.forEach(({ station: s, sports }, key) => {
+      const emojis = [...sports].map(sport =>
+        `<span class="station-sport-emoji" title="${sport}">${SPORT_EMOJI[sport] || sport}</span>`).join('');
+      const roleTag = s.role === 'secondary'
+        ? ` <em class="popup-role" title="Overflow station — only carries a game when two Husker games are on at the same time">overflow</em>`
+        : '';
+      const night = nightBehavior(s);
+      const nightTag = night ? ` <span class="night-flag" title="${night.title}">${night.symbol}</span>` : '';
+      popupContent += `<div class="popup-station"><strong>${key}</strong> ${s.CallSign} ${emojis}${roleTag}${nightTag}</div>`;
     });
 
-    popupContent += `</div>`;
-
-    marker.bindPopup(popupContent);
+    // Range footer is built at open time so AM night-power rings and text
+    // reflect the current hour, not the hour the page loaded
+    marker.bindPopup(() => popupContent + coverageFooter(stationList) + `</div>`);
     marker.stationData = stationList;
     marker.addTo(map);
     markers.push(marker);
@@ -367,14 +421,8 @@ function sortByLocation(point, isFallback = false) {
     html += `<div class="station-sports">`;
     // Show all sports this station broadcasts (🏀 disambiguated with M/W)
     uniqueSports.forEach(sport => {
-      const emojiForms = {
-        'Football': '🏈',
-        'Volleyball': '🏐',
-        "Men's Basketball": '🏀<sup>M</sup>',
-        "Women's Basketball": '🏀<sup>W</sup>'
-      };
       html += `<span class="station-sport-emoji" title="${sport}">`;
-      html += `${emojiForms[sport] || sport}`;
+      html += `${SPORT_EMOJI[sport] || sport}`;
       html += `</span>`;
     });
     html += `</div>`;
@@ -496,15 +544,24 @@ function showHomeView() {
 
 // Focus on a specific station when clicked in the list
 function focusStation(lat, lng) {
-  map.setView([lat, lng], 10);
-
-  // Find and open the popup for this station
-  markers.forEach(marker => {
-    const markerLatLng = marker.getLatLng();
-    if (Math.abs(markerLatLng.lat - lat) < 0.001 && Math.abs(markerLatLng.lng - lng) < 0.001) {
-      marker.openPopup();
-    }
+  const marker = markers.find(m => {
+    const p = m.getLatLng();
+    return Math.abs(p.lat - lat) < 0.001 && Math.abs(p.lng - lng) < 0.001;
   });
+
+  // Zoom to fit the station's Fair ring (and the user, if located) so the
+  // whole estimated reach is visible; fixed zoom if there is nothing to draw
+  const fairMeters = marker ? Math.max(0, ...marker.stationData
+    .map(s => coverageRadii(s)).filter(Boolean).map(r => r.fairMeters)) : 0;
+  if (fairMeters > 0) {
+    const bounds = L.latLng(lat, lng).toBounds(fairMeters * 2);
+    if (userLocation) bounds.extend([userLocation.latitude, userLocation.longitude]);
+    map.fitBounds(bounds, { padding: [20, 20], maxZoom: 11 });
+  } else {
+    map.setView([lat, lng], 10);
+  }
+
+  if (marker) marker.openPopup();
 }
 
 // Reset the map to the view shown right after the location lookup (clicking

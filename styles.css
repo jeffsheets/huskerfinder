@@ -258,6 +258,48 @@ body {
   text-align: center;
 }
 
+/* Map popup: city heading, one line per frequency, estimated range footer */
+.station-popup h3 {
+  margin: 0 0 4px 0;
+  font-size: 1em;
+  color: #333;
+}
+
+.popup-station {
+  white-space: nowrap;
+  line-height: 1.6;
+}
+
+.popup-station .station-sport-emoji {
+  margin-left: 2px;
+}
+
+.popup-role {
+  color: #999;
+  font-size: 0.85em;
+  cursor: help;
+}
+
+/* Estimated coverage range footer (rings drawn by showCoverage) */
+.coverage-legend {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid #eee;
+  color: #777;
+  font-size: 0.78em;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: help;
+}
+
+.coverage-good,
+.coverage-fair {
+  font-weight: 600;
+}
+
+.coverage-good { color: #4CAF50; }
+.coverage-fair { color: #FFA500; }
+
 /* Compact one-line legend pill in the controls panel, faded Husker red */
 a.night-legend {
   padding: 0.3rem 0.6rem;

@@ -65,15 +65,16 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
   - Green: Excellent/Good signal
   - Orange: Fair signal
   - Red: Weak signal
-- Map markers color-coded: Football (red #d00000), Volleyball (black #333), Basketball (tan/pink)
+- Map markers are all Husker red (unified deliberately); sport colors appear only in popup headings
 - Stations at same location are grouped in map popups
 
 **Map Integration** (`js/map.js`):
 - Leaflet.js with OpenStreetMap tiles
 - Custom markers for stations and user location
 - Auto-zoom logic based on nearest station distances (lines 244-268)
-- Clicking a station in the list focuses it on the map
+- Clicking a station in the list fits the map to its Fair coverage ring (plus the user) and opens its popup
 - Popup opens automatically for closest station after location lookup
+- **Coverage rings**: whenever a station popup is open, `showCoverage` draws estimated Good (green, inner) and Fair (orange, outer) rings per distinct frequency at that tower, dashed for AM; `coverageRadii` in `js/lib.js` bisects `signalScoreAt` for the distance where the tier score crosses 3 and 2. AM rings use night power after local sunset (daytimers draw nothing). The popup footer lists the same ranges in miles, built at open time so it stays current
 
 **Geolocation Flow**:
 1. Page loads → map initializes → auto-requests user location (500ms delay)

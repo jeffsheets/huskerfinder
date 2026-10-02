@@ -311,7 +311,31 @@ function estimateSignal(station, distanceMeters) {
     return { strength: -99, rank: -99, category: getSignalCategory(-99) };
   }
 
-  const distanceKm = metersToKm(distanceMeters);
+  const at = signalScoreAt(station, metersToKm(distanceMeters));
+  if (!at) {
+    // Daytime-only license: the station signs off at sunset
+    return {
+      strength: -99,
+      rank: -99,
+      category: { label: 'Off air', emoji: '🌙', bars: '▱▱▱▱', color: '#999',
+        description: 'Daytime-only AM station — off the air from sunset to sunrise' }
+    };
+  }
+
+  const category = getSignalCategory(at.score, at.nightNote);
+  return { strength: at.score, rank: listeningRank(station, at.score), category: category };
+}
+
+/**
+ * Tier score for one station at a distance, right now (AM uses night power
+ * after local sunset). Shared by estimateSignal (score at the listener) and
+ * coverageRadii (distance at which the score crosses a tier floor).
+ *
+ * @param {object} station - Station record
+ * @param {number} distanceKm - Distance from tower in km
+ * @returns {object|null} { score, nightNote }, or null when the station is off air
+ */
+function signalScoreAt(station, distanceKm) {
   let level; // dBu for FM, dB(mV/m) for AM
   let nightNote = '';
 
@@ -320,15 +344,7 @@ function estimateSignal(station, distanceMeters) {
     if (station.powerNight != null && station.powerNight < station.power
         && isNightAt(station.latitude, station.longitude)) {
       power = station.powerNight;
-      if (power <= 0) {
-        // Daytime-only license: the station signs off at sunset
-        return {
-          strength: -99,
-          rank: -99,
-          category: { label: 'Off air', emoji: '🌙', bars: '▱▱▱▱', color: '#999',
-            description: 'Daytime-only AM station — off the air from sunset to sunrise' }
-        };
-      }
+      if (power <= 0) return null;
       nightNote = ` (reduced nighttime power: ${power >= 1 ? power + ' kW' : (power * 1000) + ' watts'})`;
     }
     level = 20 * Math.log10(amFieldStrengthMvm(power, station.Frequency, distanceKm));
@@ -350,8 +366,40 @@ function estimateSignal(station, distanceMeters) {
     score = 1 + k + (level - floors[k]) / (floors[k + 1] - floors[k]);
   }
 
-  const category = getSignalCategory(score, nightNote);
-  return { strength: score, rank: listeningRank(station, score), category: category };
+  return { score: score, nightNote: nightNote };
+}
+
+/**
+ * Estimated coverage rings for a station: how far out the signal stays at
+ * least Good (score 3) and at least Fair (score 2). Field strength falls
+ * monotonically with distance in both models, so a bisection on
+ * signalScoreAt finds each crossing. Reflects the current time of day for
+ * AM, so night rings shrink after sunset.
+ *
+ * @param {object} station - Station record
+ * @returns {object|null} { goodMeters, fairMeters }, or null when off air / no license data
+ */
+function coverageRadii(station) {
+  if (!station.power) return null;
+  const MIN_KM = 0.5;
+  const MAX_KM = 400; // past the end of the F(50,50) table; nothing listenable this far
+
+  const radiusKm = targetScore => {
+    const atMax = signalScoreAt(station, MAX_KM);
+    if (!atMax) return null;
+    if (atMax.score >= targetScore) return MAX_KM;
+    if (signalScoreAt(station, MIN_KM).score < targetScore) return 0;
+    let lo = MIN_KM, hi = MAX_KM;
+    for (let i = 0; i < 40 && hi - lo > 0.1; i++) {
+      const mid = (lo + hi) / 2;
+      if (signalScoreAt(station, mid).score >= targetScore) lo = mid; else hi = mid;
+    }
+    return lo;
+  };
+
+  const goodKm = radiusKm(3);
+  if (goodKm == null) return null;
+  return { goodMeters: goodKm * 1000, fairMeters: radiusKm(2) * 1000 };
 }
 
 /**
