@@ -84,7 +84,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 
 ### Privacy & Analytics
 - Location data stays client-side, never sent to servers
-- Umami analytics configured (script in index.html:32)
+- Umami analytics configured (script in index.html:32). Custom events via `track()` in `js/lib.js` (no-op when blocked): `locate` {result: ok|denied|unavailable|timeout|unsupported}, `find-click`, `sport-filter` {sport slug}, `sort-by` {mode}, `station-popup` {station, source: list|marker|auto}. Payloads are UI state only — never coordinates
 - No cookies or other tracking
 
 ## Modifying Station Data

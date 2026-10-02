@@ -30,17 +30,29 @@ const getDistance = (from, to, accuracy = 1) => {
   return Math.round(distance / accuracy) * accuracy;
 };
 
+/**
+ * Umami custom event. No-op when the analytics script is blocked or not yet
+ * loaded. Payload is small, non-identifying UI state only — never coordinates.
+ */
+function track(name, data) {
+  if (window.umami && typeof window.umami.track === 'function') {
+    window.umami.track(name, data);
+  }
+}
+
 function lookupByLocation() {
   setDisplay('🔍 Finding your location...');
   setResults('<div style="text-align: center; color: #999; padding: 2rem;">Loading...</div>');
 
   // Check if geolocation is available
   if (!navigator.geolocation) {
+    track('locate', { result: 'unsupported' });
     showFallbackStations();
     return;
   }
 
   navigator.geolocation.getCurrentPosition(function({coords}) {
+      track('locate', { result: 'ok' });
       sortByLocation(coords);
 
       const coordsText = `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`;
@@ -48,6 +60,8 @@ function lookupByLocation() {
         onclick="focusUserLocation(); return false;">${coordsText}</a>`);
     },
     (error) => {
+      const reasons = { [error.PERMISSION_DENIED]: 'denied', [error.POSITION_UNAVAILABLE]: 'unavailable', [error.TIMEOUT]: 'timeout' };
+      track('locate', { result: reasons[error.code] || 'error' });
       let errorMessage = 'Unable to get your location. ';
       switch(error.code) {
         case error.PERMISSION_DENIED:

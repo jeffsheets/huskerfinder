@@ -2,6 +2,7 @@ let map;
 let markers = [];
 let userMarker;
 let coverageLayer; // estimated Good/Fair rings for the station whose popup is open
+let popupSource = 'marker'; // how the next popup was opened, for analytics: 'marker' | 'list' | 'auto'
 let homeView = null; // { center, zoom, popupStation } — the auto-zoomed view after a location lookup
 // Sport filter is single-select: 'all' or one Sport name. currentFilters is
 // derived from it so the marker/list filtering can stay boolean per sport.
@@ -40,6 +41,11 @@ function initMap() {
   map.on('popupopen', e => {
     const stationList = e.popup._source && e.popup._source.stationData;
     showCoverage(stationList || []);
+    if (stationList) {
+      const s = stationList[0];
+      track('station-popup', { station: `${s.Frequency}${s.Format} ${s.CallSign}`, source: popupSource });
+    }
+    popupSource = 'marker';
   });
   map.on('popupclose', () => coverageLayer.clearLayers());
 
@@ -245,7 +251,10 @@ function setSportState(sport) {
 // updateUrl is false when the change came from the URL itself (load / back button).
 function updateSportFilter(sport, updateUrl = true) {
   setSportState(sport);
-  if (updateUrl) syncSportToUrl(sport);
+  if (updateUrl) {
+    syncSportToUrl(sport);
+    track('sport-filter', { sport: slugForSport(sport) || 'all' });
+  }
 
   // Refresh markers
   addStationMarkers();
@@ -259,6 +268,7 @@ function updateSportFilter(sport, updateUrl = true) {
 // Switch between sorting by distance and by predicted listening quality
 function updateSortBy(mode) {
   currentSortBy = mode;
+  track('sort-by', { mode: mode });
   if (userLocation) {
     sortByLocation(userLocation);
   }
@@ -537,6 +547,7 @@ function showHomeView() {
     const station = homeView.popupStation;
     // Small delay to ensure map has finished moving
     setTimeout(() => {
+      popupSource = 'auto';
       openStationPopup(station.latitude, station.longitude);
     }, 500);
   }
@@ -564,7 +575,10 @@ function focusStation(lat, lng) {
     map.setView([lat, lng], 10);
   }
 
-  if (marker) marker.openPopup();
+  if (marker) {
+    popupSource = 'list';
+    marker.openPopup();
+  }
 }
 
 // Reset the map to the view shown right after the location lookup (clicking
