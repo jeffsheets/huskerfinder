@@ -70,9 +70,57 @@ function initMap() {
     pinSpot(e.latlng, 'pick');
   });
   addPickControl();
+  addFullscreenControl();
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && pickingSpot) setPickMode(false);
+    if (e.key !== 'Escape') return;
+    if (pickingSpot) setPickMode(false);
+    else if (mapFullscreen) setMapFullscreen(false);
   });
+}
+
+// ⛶ button (top-right) that expands the map to fill the screen. Done with a
+// fixed-position class rather than the Fullscreen API so it works in iOS Safari.
+let mapFullscreen = false;
+let fullscreenButton = null;
+
+function addFullscreenControl() {
+  const FullscreenControl = L.Control.extend({
+    onAdd() {
+      const div = L.DomUtil.create('div', 'leaflet-bar fullscreen-control');
+      const a = L.DomUtil.create('a', '', div);
+      a.href = '#';
+      a.setAttribute('role', 'button');
+      L.DomEvent.disableClickPropagation(div);
+      L.DomEvent.on(a, 'click', e => {
+        L.DomEvent.preventDefault(e);
+        setMapFullscreen(!mapFullscreen);
+      });
+      fullscreenButton = a;
+      renderFullscreenButton();
+      return div;
+    }
+  });
+  new FullscreenControl({ position: 'topright' }).addTo(map);
+}
+
+function renderFullscreenButton() {
+  const label = mapFullscreen ? 'Exit full-screen map' : 'Full-screen map';
+  fullscreenButton.innerHTML = mapFullscreen ? '✕' : '⛶';
+  fullscreenButton.title = label;
+  fullscreenButton.setAttribute('aria-label', label);
+  fullscreenButton.setAttribute('aria-pressed', String(mapFullscreen));
+}
+
+function setMapFullscreen(on) {
+  if (on === mapFullscreen) return;
+  mapFullscreen = on;
+  track('map-fullscreen', { on: on ? 'on' : 'off' });
+  document.body.classList.toggle('map-fullscreen', on);
+  renderFullscreenButton();
+  // The container's size changed under Leaflet; recompute, keeping the center
+  const center = map.getCenter();
+  map.invalidateSize({ animate: false });
+  map.setView(center, map.getZoom(), { animate: false });
 }
 
 // 📌 button under the zoom control that arms pick mode

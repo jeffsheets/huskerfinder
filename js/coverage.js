@@ -143,10 +143,10 @@ function coverageLegendHtml() {
   const rows = [...COVERAGE_TIERS].reverse().map(t =>
     `<div><span class="coverage-swatch" style="background: rgba(${t.rgba[0]}, ${t.rgba[1]}, ${t.rgba[2]}, ${(t.rgba[3] / 255).toFixed(2)})"></span>${t.label}</div>`
   ).join('');
-  const amNote = coverageIsNight()
-    ? '🌙 AM stations at nighttime power'
-    : '☀️ AM stations at daytime power';
-  return `<strong>Estimated reception</strong>${rows}<div class="coverage-note">${amNote}</div>`;
+  const night = coverageIsNight();
+  const noteText = night ? 'AM stations at nighttime power' : 'AM stations at daytime power';
+  return `<strong>Estimated reception</strong>${rows}`
+    + `<div class="coverage-note" title="${noteText}">${night ? '🌙' : '☀️'}<span class="coverage-note-text"> ${noteText}</span></div>`;
 }
 
 // Draw (or redraw) the overlay for the current sport filter

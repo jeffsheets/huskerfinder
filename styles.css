@@ -301,6 +301,27 @@ body {
   cursor: grab;
 }
 
+/* Full-screen map: the map pane covers the viewport; the rest of the page stays put underneath */
+.fullscreen-control a {
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+body.map-fullscreen {
+  overflow: hidden; /* no page scroll behind the map */
+}
+
+body.map-fullscreen #map {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  height: 100vh;
+  height: 100dvh;
+  max-height: none;
+}
+
 /* Keep the raster crisp instead of blurring cell edges when zoomed in */
 .coverage-raster {
   image-rendering: pixelated;
@@ -463,6 +484,9 @@ p.night-legend {
 #map {
   flex: 1;
   height: 100%;
+  /* Set explicitly so Leaflet doesn't write an inline position (which would
+     override the full-screen rule below) */
+  position: relative;
 }
 
 #station-list {
@@ -1091,8 +1115,33 @@ a:hover {
 
   #map {
     flex: 1;
-    min-height: 200px;
+    min-height: 260px;
     max-height: none;
+  }
+
+  /* Coverage legend collapses to one row of swatches on phones so it doesn't
+     cover a third of the map; the AM note keeps only its icon (tap for text) */
+  .coverage-map-legend {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .coverage-map-legend strong,
+  .coverage-map-legend .coverage-note-text {
+    display: none;
+  }
+
+  .coverage-map-legend .coverage-swatch {
+    margin-right: 0.25em;
+  }
+
+  .coverage-map-legend .coverage-note {
+    margin-top: 0;
+    font-size: 0.85rem;
   }
 
   .controls-panel {
