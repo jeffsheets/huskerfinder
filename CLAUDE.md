@@ -31,6 +31,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 - **js/stations.js** - Station data array (185 entries with FCC tower coordinates, power, frequency, sport)
 - **js/lib.js** - Core utilities: geolocation, distance calculations, signal strength estimation
 - **js/map.js** - Leaflet map initialization, markers, filtering, user interaction
+- **js/coverage.js** - Network-wide coverage map overlay (raster of every station's Excellent/Good/Fair reach)
 - **scripts/** - FCC data fetching and station updating scripts
   - **fetch-fcc-bulk.js** - Fetch fresh FCC tower data
   - **update-stations.js** - Match and update station coordinates
@@ -74,6 +75,8 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 - Auto-zoom logic based on nearest station distances (lines 244-268)
 - Clicking a station in the list fits the map to its Fair coverage ring (plus the user) and opens its popup
 - Popup opens automatically for closest station after location lookup
+- **Pick a spot**: right-click (desktop) or long-press (touch) anywhere on the map, or arm the 📌 control under the zoom buttons and tap once, to rank the list for that point instead of the GPS fix (e.g. the venue you're heading to). `pinSpot` in `js/map.js` calls `sortByLocation(point, false, { pinned: true })`, which draws a blue teardrop `pin-marker` (draggable; `dragend` re-ranks with `keepView` so the map doesn't jump) instead of the round GPS dot, and the header gains a "Use my location instead" link (`clearPin`, which reuses the stored `geoCoords` so there is no second permission prompt). Plain map clicks never pin (they close popups, and stray taps while panning are common). **The pinned point is intentionally never written to the URL, stored, or sent to analytics** — the `pin-spot` event carries only the gesture (press/pick/drag)
+- **Network coverage map**: the "Show network coverage map" checkbox in the controls panel calls `toggleCoverageMap` in `js/coverage.js`. It bisects each station's Excellent/Good/Fair radius (same `signalScoreAt` model as the rings), paints the discs onto a canvas whose rows are spaced in Web Mercator so it lines up with the tiles, and shows it as an `L.imageOverlay` with a bottom-left legend. Each cell keeps the best tier of any station reaching it. Follows the sport filter and the current AM day/night power; rasters are cached per sport + day/night. Turning it on fits the map to the whole network
 - **Coverage rings**: whenever a station popup is open, `showCoverage` draws estimated Good (green, inner) and Fair (orange, outer) rings per distinct frequency at that tower, dashed for AM; `coverageRadii` in `js/lib.js` bisects `signalScoreAt` for the distance where the tier score crosses 3 and 2. AM rings use night power after local sunset (daytimers draw nothing). The popup footer lists the same ranges in miles, built at open time so it stays current
 
 **Geolocation Flow**:
@@ -84,7 +87,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 
 ### Privacy & Analytics
 - Location data stays client-side, never sent to servers
-- Umami analytics configured (script in index.html:32). Custom events via `track()` in `js/lib.js` (no-op when blocked): `locate` {result: ok|denied|unavailable|timeout|unsupported}, `find-click`, `sport-filter` {sport slug}, `sort-by` {mode}, `station-popup` {station, source: list|marker|auto}. Payloads are UI state only — never coordinates
+- Umami analytics configured (script in index.html:32). Custom events via `track()` in `js/lib.js` (no-op when blocked): `locate` {result: ok|denied|unavailable|timeout|unsupported}, `find-click`, `sport-filter` {sport slug}, `sort-by` {mode}, `station-popup` {station, source: list|marker|auto}, `coverage-map` {on: on|off}, `pick-spot` {action: start}, `pin-spot` {source: press|pick|drag}. Payloads are UI state only — never coordinates, for the GPS fix or for pinned spots
 - No cookies or other tracking
 
 ## Modifying Station Data
@@ -99,7 +102,7 @@ To update the station list for a new season:
 6. Run `node scripts/update-signal-data.js` to set corrected power (FM ERP kW / AM day kW), `powerNight` (AM), and `haat` (FM antenna height, meters) from the FCC cache — these feed the signal-strength estimates
 7. Run `node scripts/generate-station-table.js` to re-render the static station table in stations.html (SEO/AI crawlers don't execute JS, so the table is pre-rendered into the HTML)
 8. Update the station counts in visible copy if they changed (index.html FAQ + JSON-LD, stations.html intro, about.html FAQ, llms.txt)
-9. **Bump the `?v=` cache-busting query params** on every changed JS/CSS reference (`js/stations.js`, `js/lib.js`, `js/map.js` in index.html; `js/stations.js` in stations.html; `styles.css` in all three pages). Use the current date, e.g. `?v=2026-08-26`. GitHub Pages serves JS/CSS with `max-age=14400` (4 hours), so browsers keep the old file until the URL changes.
+9. **Bump the `?v=` cache-busting query params** on every changed JS/CSS reference (`js/stations.js`, `js/lib.js`, `js/coverage.js`, `js/map.js` in index.html; `js/stations.js` in stations.html; `styles.css` in all three pages). Use the current date, e.g. `?v=2026-08-26`. GitHub Pages serves JS/CSS with `max-age=14400` (4 hours), so browsers keep the old file until the URL changes.
 10. Review changes and test the app
 11. After the changes are deployed, ping IndexNow so Bing re-crawls (key file is committed in the site root):
    ```bash
@@ -145,7 +148,7 @@ To refresh tower coordinates and power data annually:
 
 - This is a **static site** - no build process, no backend, no bundler
 - All JavaScript is vanilla ES6 - no framework dependencies
-- Scripts load in order: stations.js → lib.js → map.js (see index.html)
+- Scripts load in order: stations.js → lib.js → coverage.js → map.js (see index.html)
 - Distance calculations use **actual FCC tower coordinates** for accuracy
 - Signal strength indicators are estimates - real reception depends on terrain, buildings, weather
 - Station data includes NE, SD, and KS stations broadcasting Husker games

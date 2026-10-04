@@ -252,6 +252,91 @@ body {
   flex-shrink: 0;
 }
 
+/* Network coverage map toggle (below the sort row) */
+.coverage-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  padding-left: 0.25rem;
+  color: #333;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.coverage-toggle input[type="checkbox"] {
+  cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* Pick-a-spot: 📌 control under the zoom buttons, crosshair while armed */
+.pick-spot-control a {
+  font-size: 17px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pick-spot-control a.active {
+  background: #d00000;
+  color: #fff;
+}
+
+.leaflet-container.picking-spot {
+  cursor: crosshair;
+}
+
+/* Blue teardrop for a pinned listening spot (the GPS dot stays round) */
+.pin-marker .pin-head {
+  width: 22px;
+  height: 22px;
+  margin: 2px 0 0 4px;
+  background: #4285F4;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  cursor: grab;
+}
+
+/* Keep the raster crisp instead of blurring cell edges when zoomed in */
+.coverage-raster {
+  image-rendering: pixelated;
+}
+
+.coverage-map-legend {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.coverage-map-legend strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.coverage-swatch {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 2px;
+  margin-right: 0.4em;
+  vertical-align: -0.1em;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.coverage-note {
+  color: #777;
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+}
+
 .night-flag {
   cursor: help;
   font-size: 0.85em;

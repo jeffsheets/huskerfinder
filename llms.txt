@@ -14,6 +14,8 @@ For the 2026-27 seasons, more than 50 Husker Radio Network stations broadcast on
 - Interactive map showing station locations and user position
 - Sort by distance or by what should sound best at your location (estimated signal strength, with FM favored over AM at similar strength for its clearer audio)
 - Filter by sport: Football, Volleyball, Men's Basketball, Women's Basketball
+- Pick any spot on the map (right-click, long-press, or the pin button) to rank stations for a place you're heading to instead of where you are
+- Network coverage map: shade the whole region by estimated reception (Excellent / Good / Fair) from any station, per sport, reflecting AM day/night power
 - Shareable per-sport links: huskerfinder.sheetsj.com/?sport=football, ?sport=volleyball, ?sport=mbb (men's basketball), ?sport=wbb (women's basketball)
 - 50+ stations / 60+ frequencies across Nebraska, South Dakota, and Kansas
 - No account required, completely free, privacy-focused (location stays on device)
@@ -97,6 +99,7 @@ For the 2026-27 seasons, more than 50 Husker Radio Network stations broadcast on
 3. App calculates distance from user to each radio tower using haversine formula
 4. Results display the 15 nearest stations sorted by distance
 5. Interactive map shows station markers and auto-zooms to relevant area
+6. Optionally, the user pins a different spot on the map and the list re-ranks for it (the pin is never stored, shared in the URL, or reported)
 
 ## Common Questions
 

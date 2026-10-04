@@ -15,6 +15,13 @@ let currentFilters = {
 };
 let userLocation = null;
 let currentSortBy = 'signal'; // 'signal' (sounds best) or 'distance'
+// A spot the user chose on the map (right-click / long-press / pick mode)
+// instead of their GPS position. Deliberately never written to the URL or
+// sent anywhere: it stays in this tab. null while the list is ranked for the GPS fix.
+let pinnedLocation = null;
+let pickingSpot = false; // pick mode: the next map tap drops the pin
+let pickButton = null;   // the 📌 control's anchor element
+let displayBeforePick = null; // header HTML to restore if pick mode is cancelled
 
 // Sport emojis for list cards and map popups (🏀 disambiguated with M/W)
 const SPORT_EMOJI = {
@@ -51,6 +58,85 @@ function initMap() {
 
   // Add all station markers
   addStationMarkers();
+
+  // Choose a listening spot on the map. Right-click (desktop) and long-press
+  // (touch) both arrive as Leaflet's contextmenu event, so neither interferes
+  // with drag or pinch-zoom. A plain click only pins while pick mode is on,
+  // because click already closes popups and stray taps while panning are common.
+  map.on('contextmenu', e => pinSpot(e.latlng, 'press'));
+  map.on('click', e => {
+    if (!pickingSpot) return;
+    setPickMode(false);
+    pinSpot(e.latlng, 'pick');
+  });
+  addPickControl();
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && pickingSpot) setPickMode(false);
+  });
+}
+
+// 📌 button under the zoom control that arms pick mode
+function addPickControl() {
+  const PickControl = L.Control.extend({
+    onAdd() {
+      const div = L.DomUtil.create('div', 'leaflet-bar pick-spot-control');
+      const a = L.DomUtil.create('a', '', div);
+      a.href = '#';
+      a.innerHTML = '📌';
+      a.title = 'Pick a spot on the map to find stations near it (or right-click / long-press the map)';
+      a.setAttribute('role', 'button');
+      a.setAttribute('aria-label', 'Pick a spot on the map to find stations near it');
+      a.setAttribute('aria-pressed', 'false');
+      L.DomEvent.disableClickPropagation(div);
+      L.DomEvent.on(a, 'click', e => {
+        L.DomEvent.preventDefault(e);
+        setPickMode(!pickingSpot);
+      });
+      pickButton = a;
+      return div;
+    }
+  });
+  new PickControl({ position: 'topleft' }).addTo(map);
+}
+
+function setPickMode(on) {
+  if (on === pickingSpot) return;
+  pickingSpot = on;
+  pickButton.setAttribute('aria-pressed', String(on));
+  const toggle = on ? 'addClass' : 'removeClass';
+  L.DomUtil[toggle](map.getContainer(), 'picking-spot');
+  L.DomUtil[toggle](pickButton, 'active');
+  if (on) {
+    track('pick-spot', { action: 'start' });
+    displayBeforePick = document.getElementById('display').innerHTML;
+    setDisplay('📌 Tap the map where you want to listen · <a href="#" class="location-link" onclick="setPickMode(false); return false;">Cancel</a>');
+  } else if (displayBeforePick != null) {
+    setDisplay(displayBeforePick);
+    displayBeforePick = null;
+  }
+}
+
+// Rank the list for a chosen spot and mark it with a draggable pin.
+// source: 'press' | 'pick' | 'drag' — analytics gets only this word, never the point
+function pinSpot(latlng, source, opts = {}) {
+  const point = { latitude: latlng.lat, longitude: latlng.lng };
+  track('pin-spot', { source: source });
+  sortByLocation(point, false, { pinned: true, keepView: opts.keepView });
+  const coordsText = `${point.latitude.toFixed(4)}, ${point.longitude.toFixed(4)}`;
+  setDisplay(`📌 Stations near pinned spot: <a href="#" class="location-link" title="Center the map on the pin"
+    onclick="focusUserLocation(); return false;">${coordsText}</a>
+    · <a href="#" class="location-link" onclick="clearPin(); return false;">Use my location instead</a>`);
+}
+
+// Drop the pin and go back to ranking for the GPS position
+function clearPin() {
+  pinnedLocation = null;
+  if (geoCoords) {
+    sortByLocation(geoCoords);
+    showLocationHeader(geoCoords);
+  } else {
+    lookupByLocation();
+  }
 }
 
 // Popup footer explaining the rings: estimated Good / Fair range per distinct
@@ -259,6 +345,11 @@ function updateSportFilter(sport, updateUrl = true) {
   // Refresh markers
   addStationMarkers();
 
+  // Redraw the network coverage map for the new sport, if it is showing
+  if (coverageMapVisible()) {
+    showCoverageMap();
+  }
+
   // Refresh results if we have a location
   if (userLocation) {
     sortByLocation(userLocation);
@@ -274,8 +365,12 @@ function updateSortBy(mode) {
   }
 }
 
-function sortByLocation(point, isFallback = false) {
+// opts.pinned: point was chosen on the map rather than from GPS (pin marker,
+// pinnedLocation set). opts.keepView: don't re-zoom or auto-open a popup
+// (used while dragging the pin).
+function sortByLocation(point, isFallback = false, opts = {}) {
   userLocation = point;
+  pinnedLocation = opts.pinned ? point : null;
 
   // Filter stations based on current sport filters
   let filteredStations = stations.filter(station =>
@@ -466,6 +561,23 @@ function sortByLocation(point, isFallback = false) {
     map.removeLayer(userMarker);
   }
 
+  if (opts.pinned) {
+    // Draggable pin for a chosen spot; dragging re-ranks without moving the map
+    userMarker = L.marker([point.latitude, point.longitude], {
+      draggable: true,
+      autoPan: true,
+      title: 'Pinned spot — drag to move',
+      icon: L.divIcon({
+        className: 'pin-marker',
+        html: '<div class="pin-head"></div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 29],
+        popupAnchor: [0, -26]
+      })
+    });
+    userMarker.on('dragend', () => pinSpot(userMarker.getLatLng(), 'drag', { keepView: true }));
+    userMarker.bindPopup('<b>Pinned spot</b><br><small>Drag to move it</small>').addTo(map);
+  } else {
   userMarker = L.marker([point.latitude, point.longitude], {
     icon: L.divIcon({
       className: 'user-marker',
@@ -496,6 +608,7 @@ function sortByLocation(point, isFallback = false) {
   });
 
   userMarker.bindPopup('<b>Your Location</b>').addTo(map);
+  }
 
   // Center on user location and zoom to show nearest stations
   if (results.length > 0) {
@@ -547,7 +660,12 @@ function sortByLocation(point, isFallback = false) {
 
     // Remember this view so clicking the coordinates in the header can reset to it
     homeView = { center: centerPoint, zoom: zoomLevel, popupStation: popupStation };
-    showHomeView();
+    // While the network coverage map is showing, leave the map where it is and
+    // don't auto-open a station: the user is looking at the whole network, not
+    // their nearest station. The coordinates link still jumps to the home view.
+    if (!coverageMapVisible() && !opts.keepView) {
+      showHomeView();
+    }
   }
 }
 

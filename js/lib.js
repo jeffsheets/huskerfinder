@@ -40,6 +40,15 @@ function track(name, data) {
   }
 }
 
+let geoCoords = null; // last GPS fix, so "Use my location" after a pin needs no new prompt
+
+// Header line for a GPS location; the coordinates re-center the map
+function showLocationHeader(coords) {
+  const coordsText = `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`;
+  setDisplay(`📍 Your location: <a href="#" class="location-link" title="Center the map on your location"
+    onclick="focusUserLocation(); return false;">${coordsText}</a>`);
+}
+
 function lookupByLocation() {
   setDisplay('🔍 Finding your location...');
   setResults('<div style="text-align: center; color: #999; padding: 2rem;">Loading...</div>');
@@ -53,11 +62,9 @@ function lookupByLocation() {
 
   navigator.geolocation.getCurrentPosition(function({coords}) {
       track('locate', { result: 'ok' });
+      geoCoords = coords;
       sortByLocation(coords);
-
-      const coordsText = `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`;
-      setDisplay(`📍 Your location: <a href="#" class="location-link" title="Center the map on your location"
-        onclick="focusUserLocation(); return false;">${coordsText}</a>`);
+      showLocationHeader(coords);
     },
     (error) => {
       const reasons = { [error.PERMISSION_DENIED]: 'denied', [error.POSITION_UNAVAILABLE]: 'unavailable', [error.TIMEOUT]: 'timeout' };

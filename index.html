@@ -146,10 +146,18 @@
       },
       {
         "@type": "Question",
+        "name": "How far away can you hear Husker games on the radio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Husker football is within radio reach of nearly all of Nebraska plus neighboring parts of South Dakota, Kansas, Iowa, Colorado, and Wyoming. The big AM signals carry farthest: WOW 590 in Omaha and KRVN 880 in Lexington are listenable well over 100 miles from their towers in daylight. Volleyball and basketball air on fewer stations, so coverage is thinner in the Sandhills and Panhandle. Turn on the Husker Radio Finder's network coverage map to see the estimated reach shaded by sport, or pin a spot on the map to check what you'll hear there."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "How does the Husker Radio Finder work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Husker Radio Finder uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by what should sound best - signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, and even account for AM stations' mandatory nighttime power reductions. Simply click 'Find Nearest Stations' and allow location access to get started."
+          "text": "The Husker Radio Finder uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by what should sound best - signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, and even account for AM stations' mandatory nighttime power reductions. You can also right-click or press and hold anywhere on the map to rank stations for that spot instead of where you are. Simply click 'Find Nearest Stations' and allow location access to get started."
         }
       },
       {
@@ -172,7 +180,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11" data-domains="huskerfinder.sheetsj.com"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-10-01c">
+  <link rel="stylesheet" href="styles.css?v=2026-10-04">
 </head>
 <body>
 
@@ -234,6 +242,10 @@
           <span>📏 Nearest</span>
         </label>
       </div>
+      <label class="coverage-toggle" title="Shade the map by estimated reception from every station in the network">
+        <input type="checkbox" id="coverageToggle" onchange="toggleCoverageMap(this.checked)">
+        <span>🗺️ Show network coverage map</span>
+      </label>
       <a id="nightLegend" class="night-legend" href="about.html#signal-strength" style="display: none;"
          title="AM stations must follow FCC daytime/nighttime power rules — tap to learn more"></a>
     </div>
@@ -345,8 +357,13 @@
   </details>
 
   <details>
+    <summary>How far away can you hear Husker games on the radio?</summary>
+    <p>Husker football is within radio reach of nearly all of Nebraska plus neighboring parts of South Dakota, Kansas, Iowa, Colorado, and Wyoming. The big AM signals carry farthest — WOW 590 in Omaha and KRVN 880 in Lexington are listenable well over 100 miles from their towers in daylight. Volleyball and basketball air on fewer stations, so coverage is thinner in the Sandhills and Panhandle. Check "Show network coverage map" above to see the estimated reach shaded by sport, or right-click (press and hold on a phone) anywhere on the map to see what you'd hear at that spot.</p>
+  </details>
+
+  <details>
     <summary>How does the Husker Radio Finder work?</summary>
-    <p>It uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by what should sound best — signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, account for AM stations' mandatory nighttime power cuts, and favor FM over AM at similar strength for its clearer audio (<a href="about.html#signal-strength">how it works</a>). Your location stays on your device and is never sent to a server.</p>
+    <p>It uses your device's GPS to determine your location, then calculates the distance to actual FCC radio tower locations for each station in the network. Sort by distance or by what should sound best — signal estimates use the FCC's own propagation curves with each station's licensed power and antenna height, account for AM stations' mandatory nighttime power cuts, and favor FM over AM at similar strength for its clearer audio (<a href="about.html#signal-strength">how it works</a>). Not where you'll be listening? Right-click or press and hold on the map to rank stations for that spot instead. Your location stays on your device and is never sent to a server.</p>
   </details>
 
   <details>
@@ -361,7 +378,8 @@
   crossorigin=""></script>
 
 <script src="js/stations.js?v=2026-09-05d" lang="js"></script>
-<script src="js/lib.js?v=2026-10-01c" lang="js"></script>
-<script src="js/map.js?v=2026-10-01e" lang="js"></script>
+<script src="js/lib.js?v=2026-10-04" lang="js"></script>
+<script src="js/coverage.js?v=2026-10-04" lang="js"></script>
+<script src="js/map.js?v=2026-10-04" lang="js"></script>
 </body>
 </html>

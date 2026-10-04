@@ -29,7 +29,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11" data-domains="huskerfinder.sheetsj.com"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-10-01c">
+  <link rel="stylesheet" href="styles.css?v=2026-10-04">
 </head>
 <body class="about-page">
 
@@ -56,6 +56,8 @@
   <h3>How It Works</h3>
   <p>Uses your device's geolocation, then searches through a list of stations that carry Husker sports. Results are sorted by the estimated signal strength at your location — or by straight-line distance to the tower if you switch the "Sort by" option — with signal bars to help you find the best reception.</p>
 
+  <p><strong>Not where you'll be listening?</strong> Right-click (or press and hold on a phone) anywhere on the map, or tap the 📌 button under the zoom controls and then tap the map, to rank stations for that spot instead — the tailgate, the cabin, the wedding reception you're sneaking the game into. Drag the pin to fine-tune it. Tap a station to see its estimated Good and Fair range drawn on the map, or check "Show network coverage map" to shade the whole region by how clearly the Husker Radio Network comes in.</p>
+
   <div class="highlight">
     <p><strong>Accuracy Note:</strong> We use actual FCC tower locations and licensed power data, and estimate signal strength using the FCC's own FM coverage curves and an AM groundwave model built on the same physics as the FCC's charts. Real reception still depends on terrain, buildings, weather, and your radio. Try a couple of the top stations!</p>
   </div>
@@ -80,6 +82,7 @@
   <p>Since radio coverage can vary greatly based on terrain, weather, tower power, and other factors:</p>
   <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
     <li>Try the first few stations in your list - don't stop at just the closest one</li>
+    <li>Heading somewhere for the game? Pin that spot on the map (right-click, press and hold, or the 📌 button) to see what you'll hear when you get there</li>
     <li>Signal strength bars (▰▰▰▱) are estimates - always try the nearest towers first</li>
     <li>AM stations often have better long-distance coverage, especially at night</li>
     <li>FM stations typically provide clearer audio when in range</li>
@@ -145,8 +148,18 @@
     </details>
 
     <details>
+      <summary>Can I check stations for a place I'm not at yet?</summary>
+      <p>Yes. Right-click the map (or press and hold on a touchscreen), or tap the 📌 button under the zoom controls and then tap the map, to drop a pin. The list re-ranks for that spot, and you can drag the pin to adjust it. The header gets a "Use my location instead" link to switch back.</p>
+    </details>
+
+    <details>
+      <summary>Is there a map of where Husker games can be heard on the radio?</summary>
+      <p>Check "Show network coverage map" under the sort options. The map shades the region by the best estimated reception from any station in the network — dark green for Excellent, light green for Good, orange for Fair — and follows the sport filter, so you can see how much thinner volleyball or basketball coverage is than football. AM stations are drawn at the power they're licensed for right now (daytime or nighttime), so the picture shrinks after sunset. Like the signal bars, it's an estimate from FCC license data; terrain and buildings will shift the real edges.</p>
+    </details>
+
+    <details>
       <summary>Is my location data private?</summary>
-      <p>Yes! Your location data stays entirely on your device and is never sent to any server. The distance calculations happen in your browser. We don't track or store your location.</p>
+      <p>Yes! Your location data stays entirely on your device and is never sent to any server. The distance calculations happen in your browser. We don't track or store your location, and the same goes for any spot you pin on the map — it's never put in the link, saved, or reported.</p>
     </details>
   </div>
 </div>
