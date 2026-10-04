@@ -45,6 +45,10 @@ function initMap() {
   // marker click, list click, and the auto-opened nearest station all route
   // through popupopen, so this one hook covers every entry point
   coverageLayer = L.layerGroup().addTo(map);
+
+  // The pinned-spot marker draws above popups (popupPane is 700) so a station
+  // card opening over the pin never hides where the user tapped
+  map.createPane('pinPane').style.zIndex = 750;
   map.on('popupopen', e => {
     const stationList = e.popup._source && e.popup._source.stationData;
     showCoverage(stationList || []);
@@ -612,6 +616,7 @@ function sortByLocation(point, isFallback = false, opts = {}) {
   if (opts.pinned) {
     // Draggable pin for a chosen spot; dragging re-ranks without moving the map
     userMarker = L.marker([point.latitude, point.longitude], {
+      pane: 'pinPane',
       draggable: true,
       autoPan: true,
       title: 'Pinned spot — drag to move',

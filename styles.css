@@ -1128,6 +1128,12 @@ a:hover {
     max-height: none;
   }
 
+  /* The rings already show the estimated range; drop the popup footer on
+     phones so the card is shorter and covers less of the map */
+  .station-popup .coverage-legend {
+    display: none;
+  }
+
   /* Coverage legend collapses to one row of swatches on phones so it doesn't
      cover a third of the map; the AM note keeps only its icon (tap for text) */
   .coverage-map-legend {
