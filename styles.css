@@ -1094,6 +1094,15 @@ a:hover {
     font-size: 0.8rem;
   }
 
+  /* On phones the panel + list + map can exceed one screen. Let the shell
+     grow so the footer is pushed below the map rather than painted over by
+     it (Leaflet's panes are z-indexed above later siblings). */
+  .app-shell {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
   .container {
     flex-direction: column;
   }
