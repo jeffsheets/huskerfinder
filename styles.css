@@ -158,20 +158,19 @@ body {
   outline-offset: 2px;
 }
 
-/* Sport filter: single-select segmented control (radios styled as pills).
-   Kept to one row; text labels drop out on narrow screens leaving emoji. */
-.sport-filter {
+/* Segmented control: single-select radios styled as pills in one bordered
+   strip. Used for the sport filter, the sort row and the coverage band row. */
+.segmented {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width: 100%;
   border: 1px solid #d00000;
   border-radius: 6px;
   overflow: hidden;
   background: #fff;
 }
 
-.sport-filter label {
+.segmented label {
   flex: 1 1 0;
   display: flex;
   align-items: center;
@@ -190,15 +189,15 @@ body {
   user-select: none;
 }
 
-.sport-filter label:first-child {
+.segmented label:first-child {
   border-left: none;
 }
 
-.sport-filter label:hover {
+.segmented label:hover {
   background: #fff3f3;
 }
 
-.sport-filter input[type="radio"] {
+.segmented input[type="radio"] {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -206,14 +205,20 @@ body {
   margin: 0;
 }
 
-.sport-filter label:has(input:checked) {
+.segmented label:has(input:checked) {
   background: #d00000;
   color: #fff;
 }
 
-.sport-filter label:has(input:focus-visible) {
+.segmented label:has(input:focus-visible) {
   outline: 2px solid #333;
   outline-offset: -2px;
+}
+
+/* Sport filter: full-width strip. Text labels drop out on narrow screens
+   leaving emoji so it stays on one row. */
+.sport-filter {
+  width: 100%;
 }
 
 .sport-filter sup {
@@ -222,34 +227,31 @@ body {
   margin-left: -0.1em;
 }
 
-.sort-group {
+/* Labelled option rows (Sort by / Band): caption on the left, a smaller
+   segmented control filling the rest of the row */
+.option-row {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
-  padding-left: 0.25rem;
   margin-top: 0.5rem;
+  padding-left: 0.25rem;
 }
 
-.sort-group .sort-label {
+.option-row .option-label {
   color: #666;
   font-size: 0.85rem;
-}
-
-.sort-group label {
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  cursor: pointer;
-  font-size: 0.85rem;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.sort-group input[type="radio"] {
-  cursor: pointer;
-  flex-shrink: 0;
+.option-row .segmented {
+  flex: 1 1 auto;
+}
+
+.option-row .segmented label {
+  min-height: 1.7rem;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.8rem;
 }
 
 /* Network coverage map toggle (below the sort row) */
@@ -269,6 +271,16 @@ body {
   cursor: pointer;
   flex-shrink: 0;
   margin: 0;
+}
+
+/* Band row under the coverage toggle; only shown while the overlay is on */
+.coverage-band {
+  margin-top: 0.35rem;
+  padding-left: 1.6rem;
+}
+
+.coverage-band[hidden] {
+  display: none;
 }
 
 /* Pick-a-spot: 📌 control under the zoom buttons, crosshair while armed */
@@ -1172,6 +1184,11 @@ a:hover {
   .sport-filter label {
     font-size: 0.95rem;
     padding: 0.45rem 0.1rem;
+  }
+
+  .option-row .segmented label {
+    font-size: 0.9rem;
+    min-height: 1.9rem;
   }
 
   /* Emoji-only pills on phones so the row never wraps */

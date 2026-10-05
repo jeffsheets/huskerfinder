@@ -12,7 +12,8 @@
 
 let coverageMapOverlay = null; // L.imageOverlay while the map is shown
 let coverageMapLegend = null;  // L.control legend while the map is shown
-const coverageRasterCache = {}; // key: sport + day/night → { url, bounds }
+let coverageBand = 'all';      // 'all' | 'FM' | 'AM' — which band(s) to paint
+const coverageRasterCache = {}; // key: sport + band + day/night → { url, bounds }
 
 // Cell size in degrees of longitude (rows are spaced to match in Web
 // Mercator so the overlay lines up with the tiles). ~0.9 km at 41°N.
@@ -123,13 +124,16 @@ function renderCoverageRaster(stationList) {
   return { url: canvas.toDataURL('image/png'), bounds: [[south, west], [north, east]] };
 }
 
-// Stations to include for the current sport filter (same predicate as the markers)
+// Stations to include for the current sport filter (same predicate as the
+// markers), narrowed to one band when the FM/AM option is set
 function coverageStations() {
   return stations.filter(s =>
-    (s.Sport === 'Football' && currentFilters.football) ||
-    (s.Sport === 'Volleyball' && currentFilters.volleyball) ||
-    (s.Sport === "Men's Basketball" && currentFilters.mensBasketball) ||
-    (s.Sport === "Women's Basketball" && currentFilters.womensBasketball)
+    (coverageBand === 'all' || s.Format === coverageBand) && (
+      (s.Sport === 'Football' && currentFilters.football) ||
+      (s.Sport === 'Volleyball' && currentFilters.volleyball) ||
+      (s.Sport === "Men's Basketball" && currentFilters.mensBasketball) ||
+      (s.Sport === "Women's Basketball" && currentFilters.womensBasketball)
+    )
   );
 }
 
@@ -143,17 +147,19 @@ function coverageLegendHtml() {
   const rows = [...COVERAGE_TIERS].reverse().map(t =>
     `<div><span class="coverage-swatch" style="background: rgba(${t.rgba[0]}, ${t.rgba[1]}, ${t.rgba[2]}, ${(t.rgba[3] / 255).toFixed(2)})"></span>${t.label}</div>`
   ).join('');
+  const title = coverageBand === 'all' ? 'Estimated reception' : `Estimated ${coverageBand} reception`;
+  if (coverageBand === 'FM') return `<strong>${title}</strong>${rows}`; // day/night only matters for AM
   const night = coverageIsNight();
   const noteText = night ? 'AM stations at nighttime power' : 'AM stations at daytime power';
-  return `<strong>Estimated reception</strong>${rows}`
+  return `<strong>${title}</strong>${rows}`
     + `<div class="coverage-note" title="${noteText}">${night ? '🌙' : '☀️'}<span class="coverage-note-text"> ${noteText}</span></div>`;
 }
 
-// Draw (or redraw) the overlay for the current sport filter
+// Draw (or redraw) the overlay for the current sport filter and band
 function showCoverageMap() {
   if (!map) return;
   const night = coverageIsNight();
-  const key = `${currentSport}|${night ? 'night' : 'day'}`;
+  const key = `${currentSport}|${coverageBand}|${night ? 'night' : 'day'}`;
   if (!coverageRasterCache[key]) {
     coverageRasterCache[key] = renderCoverageRaster(coverageStations());
   }
@@ -195,11 +201,21 @@ function coverageMapVisible() {
   return coverageMapOverlay !== null;
 }
 
+// Band radio handler (All / FM / AM). The raster for each band is cached
+// separately, so flipping between them is instant after the first paint.
+function setCoverageBand(band) {
+  coverageBand = band;
+  track('coverage-band', { band: band.toLowerCase() });
+  if (coverageMapVisible()) showCoverageMap();
+}
+
 // Checkbox handler. Turning it on zooms out to the whole network the first
 // time so the user sees the full picture; the coordinates link in the header
 // still returns to their located view.
 function toggleCoverageMap(on) {
   track('coverage-map', { on: on ? 'on' : 'off' });
+  const bandRow = document.getElementById('coverageBand');
+  if (bandRow) bandRow.hidden = !on;
   if (!on) {
     hideCoverageMap();
     return;
