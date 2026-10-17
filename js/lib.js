@@ -398,18 +398,33 @@ const SIGNAL_TIER_FLOORS = {
 
 /**
  * After sunset, AM reception is limited by skywave interference from distant
- * stations on the same channel, not by the groundwave fading into noise. The
- * FCC protects a Class B station's night service only to its 2.0 mV/m
- * groundwave contour (47 CFR 73.182(a)(2), 73.182(q)) versus 0.5 mV/m by day,
- * and prescribes no night protection at all for Class C and D — so at night
- * every AM tier floor moves up by the same 12 dB (Fair = 2.0 mV/m). That's
- * generous for C and D, which in practice are interference-limited further
- * in; Class A night service is protected by skywave, so its floors stay put.
+ * stations on the same and adjacent channels, not by the groundwave fading
+ * into noise. scripts/build-am-night-limits.js computes each station's night
+ * limit per 5° radial (amNightLimit, mV/m) with the FCC's NIF method — RSS of
+ * every interferer's skywave times the protection ratio, 47 CFR 73.182/73.190
+ * — using typical (50%) skywave; at night the Fair floor sits on that limit
+ * and the other tiers keep their usual spacing above and below it.
+ * Without computed limits, the fallback is the FCC's Class B night protection
+ * level, 2.0 mV/m (73.182(a)(2)) versus 0.5 mV/m by day. Class A night
+ * service is protected by skywave, so its floors stay put.
  */
 const AM_NIGHT_FLOOR_SHIFT_DB = 20 * Math.log10(2.0 / 0.5);
+const AM_DAY_FAIR_MVM = 0.5;
 
-function amFloorShiftDb(station, night) {
-  return night && station.amClass !== 'A' ? AM_NIGHT_FLOOR_SHIFT_DB : 0;
+function amFloorShiftDb(station, night, bearing = null) {
+  if (!night || station.amClass === 'A') return 0;
+  const limits = station.amNightLimit;
+  if (Array.isArray(limits) && limits.length) {
+    let limit;
+    if (bearing == null) limit = Math.max(...limits);
+    else {
+      const pos = ((bearing % 360) + 360) % 360 / (360 / limits.length);
+      const i = Math.floor(pos) % limits.length, t = pos - Math.floor(pos);
+      limit = limits[i] * (1 - t) + limits[(i + 1) % limits.length] * t;
+    }
+    return Math.max(0, 20 * Math.log10(limit / AM_DAY_FAIR_MVM));
+  }
+  return AM_NIGHT_FLOOR_SHIFT_DB;
 }
 
 /**
@@ -561,7 +576,7 @@ function signalScoreAt(station, distanceKm, bearing = null) {
     if (!now) return null;
     const e1km = amFieldAt1Km(station, now, bearing);
     const field = amPathFieldMvm(e1km, station.Frequency, station.latitude, station.longitude, bearing, distanceKm);
-    return { score: levelToScore('AM', 20 * Math.log10(field), amFloorShiftDb(station, now.night)), nightNote: now.nightNote };
+    return { score: levelToScore('AM', 20 * Math.log10(field), amFloorShiftDb(station, now.night, bearing)), nightNote: now.nightNote };
   }
   const { haat, offsetDb } = fmRadialAt(station, bearing);
   return { score: levelToScore('FM', fmFieldStrengthDbu(station.power, haat, distanceKm) + offsetDb), nightNote: '' };
@@ -611,12 +626,12 @@ function coverageReach(station, targetScores) {
   if (station.Format === 'AM' && getM3Grid()) {
     const now = amPowerNow(station);
     if (!now) return null;
-    const shift = amFloorShiftDb(station, now.night);
-    const levels = targetScores.map(s => SIGNAL_TIER_FLOORS.AM[s - 1] + shift);
     const near = conductivityAt(station.latitude, station.longitude) || DEFAULT_CONDUCTIVITY;
     const bearings = [], km = [];
     for (let i = 0; i < AM_RADIALS; i++) {
       const bearing = i * 360 / AM_RADIALS;
+      const shift = amFloorShiftDb(station, now.night, bearing);
+      const levels = targetScores.map(s => SIGNAL_TIER_FLOORS.AM[s - 1] + shift);
       const e1km = amFieldAt1Km(station, now, bearing);
       const startDb = 20 * Math.log10(amFieldStrengthMvm(e1km, station.Frequency, 0.5, near));
       const reach = levels.map(level => startDb < level ? 0 : null);
