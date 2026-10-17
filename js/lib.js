@@ -210,25 +210,142 @@ function fmFieldStrengthDbu(erpKw, haatM, distanceKm) {
   return nearRow * (1 - td) + farRow * td + 10 * Math.log10(erpKw);
 }
 
+// Soil conductivity (mS/m) when no M3 grid is loaded or a point falls
+// outside it: the Great Plains value from the FCC M3 map
+const DEFAULT_CONDUCTIVITY = 15;
+
 /**
- * AM daytime groundwave field strength in mV/m (Norton/van der Pol flat-earth
- * model — the physics behind the FCC 73.184 graphs). Uses 15 mS/m soil
- * conductivity, the Great Plains value from the FCC M3 map (much of central
- * NE/KS is even better at 30).
+ * AM daytime groundwave field strength in mV/m over uniform ground
+ * (Norton/van der Pol flat-earth model — the physics behind the FCC 73.184
+ * graphs). amPathFieldMvm handles paths that cross different soils.
  *
  * @param {number} powerKw - Transmitter power in kW
  * @param {number} freqKhz - Frequency in kHz
  * @param {number} distanceKm - Distance from tower in km
+ * @param {number} sigmaMSm - Ground conductivity in mS/m
  * @returns {number} Field strength in mV/m
  */
-function amFieldStrengthMvm(powerKw, freqKhz, distanceKm) {
-  const sigmaMSm = 15;
+function amFieldStrengthMvm(powerKw, freqKhz, distanceKm, sigmaMSm = DEFAULT_CONDUCTIVITY) {
   const d = Math.max(distanceKm, 0.5);
   const inverseDistance = 300 * Math.sqrt(powerKw) / d; // mV/m
   const fMhz = freqKhz / 1000;
   const p = 0.582 * fMhz * fMhz * d / sigmaMSm; // Norton "numerical distance"
   const groundLoss = (2 + 0.3 * p) / (2 + p + 0.6 * p * p);
   return inverseDistance * groundLoss;
+}
+
+// Decoded FCC M3 grid (js/conductivity.js, built by scripts/build-conductivity.js),
+// or null when the page doesn't load one
+let m3Grid;
+function getM3Grid() {
+  if (m3Grid !== undefined) return m3Grid;
+  if (typeof M3_CONDUCTIVITY === 'undefined') return (m3Grid = null);
+  const g = M3_CONDUCTIVITY;
+  const cells = new Uint8Array(g.rows * g.cols);
+  g.rowData.forEach((row, r) => {
+    let c = r * g.cols;
+    for (const [, letter, run] of row.matchAll(/([A-Z])([0-9a-z]+)/g)) {
+      cells.fill(letter.charCodeAt(0) - 65, c, c + parseInt(run, 36));
+      c += parseInt(run, 36);
+    }
+  });
+  return (m3Grid = { ...g, cells });
+}
+
+/**
+ * Ground conductivity (mS/m) at a point from the FCC M3 map, or null where
+ * the map has no value (outside the grid, or a non-conductivity code).
+ */
+function conductivityAt(lat, lon) {
+  const g = getM3Grid();
+  if (!g) return null;
+  const r = Math.floor((lat - g.south) / g.step);
+  const c = Math.floor((lon - g.west) / g.step);
+  if (r < 0 || r >= g.rows || c < 0 || c >= g.cols) return null;
+  return g.values[g.cells[r * g.cols + c]] || null;
+}
+
+/** Initial great-circle bearing in degrees (0 = north) from point 1 to point 2. */
+function bearingDegrees(lat1, lon1, lat2, lon2) {
+  const rad = Math.PI / 180;
+  const y = Math.sin((lon2 - lon1) * rad) * Math.cos(lat2 * rad);
+  const x = Math.cos(lat1 * rad) * Math.sin(lat2 * rad)
+    - Math.sin(lat1 * rad) * Math.cos(lat2 * rad) * Math.cos((lon2 - lon1) * rad);
+  return (Math.atan2(y, x) / rad + 360) % 360;
+}
+
+/** Point reached going `km` along a great circle from (lat, lon) at `bearing` degrees. */
+function destinationPoint(lat, lon, bearing, km) {
+  const rad = Math.PI / 180;
+  const d = km / 6371;
+  const lat1 = lat * rad, b = bearing * rad;
+  const lat2 = Math.asin(Math.sin(lat1) * Math.cos(d) + Math.cos(lat1) * Math.sin(d) * Math.cos(b));
+  const lon2 = lon * rad + Math.atan2(Math.sin(b) * Math.sin(d) * Math.cos(lat1),
+    Math.cos(d) - Math.sin(lat1) * Math.sin(lat2));
+  return { latitude: lat2 / rad, longitude: lon2 / rad };
+}
+
+// Kirke equivalent-distance method for groundwave over mixed ground, the
+// FCC's prescribed method for nonuniform paths (47 CFR 73.183(c)): walk out
+// from the tower; on entering ground of a new conductivity, jump to the
+// distance on that ground's curve that gives the field already reached, and
+// continue from there. Conductivity is sampled every AM_PATH_STEP_KM.
+const AM_PATH_STEP_KM = 2;
+
+// Distance (km) over uniform ground `sigma` at which the field equals `fieldMvm`
+function amEquivalentDistanceKm(powerKw, freqKhz, fieldMvm, sigma) {
+  let lo = 0.5, hi = 20000;
+  if (amFieldStrengthMvm(powerKw, freqKhz, lo, sigma) <= fieldMvm) return lo;
+  for (let i = 0; i < 50 && hi - lo > 0.01; i++) {
+    const mid = (lo + hi) / 2;
+    if (amFieldStrengthMvm(powerKw, freqKhz, mid, sigma) > fieldMvm) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+/**
+ * Walk an AM groundwave path out from a tower along one bearing, calling
+ * visit(distanceKm, fieldMvm) after each step until it returns false or
+ * maxKm is reached. Where the M3 map has no value the previous ground
+ * carries on (and uniform DEFAULT_CONDUCTIVITY is used if there is none at all).
+ */
+function walkAmPath(powerKw, freqKhz, lat, lon, bearing, maxKm, visit) {
+  let sigma = conductivityAt(lat, lon) || DEFAULT_CONDUCTIVITY;
+  let equivalentKm = 0; // distance along the current ground's uniform curve
+  for (let km = AM_PATH_STEP_KM; km <= maxKm + 1e-9; km += AM_PATH_STEP_KM) {
+    // Ground under the middle of this step
+    const mid = destinationPoint(lat, lon, bearing, km - AM_PATH_STEP_KM / 2);
+    const next = conductivityAt(mid.latitude, mid.longitude) || sigma;
+    if (next !== sigma) {
+      if (equivalentKm > 0) {
+        const field = amFieldStrengthMvm(powerKw, freqKhz, equivalentKm, sigma);
+        equivalentKm = amEquivalentDistanceKm(powerKw, freqKhz, field, next);
+      }
+      sigma = next;
+    }
+    equivalentKm += AM_PATH_STEP_KM;
+    if (visit(km, amFieldStrengthMvm(powerKw, freqKhz, equivalentKm, sigma)) === false) return;
+  }
+}
+
+/**
+ * AM groundwave field (mV/m) at a distance along a bearing from the tower,
+ * over the actual mix of soils on the FCC M3 map. Without a grid this is
+ * the uniform-ground amFieldStrengthMvm.
+ */
+function amPathFieldMvm(powerKw, freqKhz, lat, lon, bearing, distanceKm) {
+  if (!getM3Grid() || bearing == null) return amFieldStrengthMvm(powerKw, freqKhz, distanceKm);
+  const whole = Math.floor(distanceKm / AM_PATH_STEP_KM) * AM_PATH_STEP_KM;
+  if (whole < AM_PATH_STEP_KM) {
+    return amFieldStrengthMvm(powerKw, freqKhz, distanceKm, conductivityAt(lat, lon) || DEFAULT_CONDUCTIVITY);
+  }
+  let field = null, fieldNext = null;
+  walkAmPath(powerKw, freqKhz, lat, lon, bearing, whole + AM_PATH_STEP_KM, (km, f) => {
+    if (km <= whole + 1e-9) field = f; else { fieldNext = f; return false; }
+  });
+  // Interpolate (in dB) between the two steps around distanceKm
+  const t = (distanceKm - whole) / AM_PATH_STEP_KM;
+  return Math.pow(10, (Math.log10(field) * (1 - t) + Math.log10(fieldNext) * t));
 }
 
 /**
@@ -327,12 +444,16 @@ function nightBehavior(station) {
  *   listeningRank (adds the FM fidelity preference), category holds the
  *   display info (bars, color, description)
  */
-function estimateSignal(station, distanceMeters) {
+function estimateSignal(station, distanceMeters, point = null) {
   if (!station.power || !distanceMeters || distanceMeters <= 0) {
     return { strength: -99, rank: -99, category: getSignalCategory(-99) };
   }
 
-  const at = signalScoreAt(station, metersToKm(distanceMeters));
+  // AM depends on the ground along the path, so it needs the direction too
+  const bearing = point
+    ? bearingDegrees(station.latitude, station.longitude, point.latitude, point.longitude)
+    : null;
+  const at = signalScoreAt(station, metersToKm(distanceMeters), bearing);
   if (!at) {
     // Daytime-only license: the station signs off at sunset
     return {
@@ -348,79 +469,146 @@ function estimateSignal(station, distanceMeters) {
 }
 
 /**
- * Tier score for one station at a distance, right now (AM uses night power
- * after local sunset). Shared by estimateSignal (score at the listener) and
- * coverageRadii (distance at which the score crosses a tier floor).
- *
- * @param {object} station - Station record
- * @param {number} distanceKm - Distance from tower in km
- * @returns {object|null} { score, nightNote }, or null when the station is off air
+ * An AM station's power right now: licensed nighttime power after local
+ * sunset at the tower, else daytime power. Null for a daytimer at night.
  */
-function signalScoreAt(station, distanceKm) {
-  let level; // dBu for FM, dB(mV/m) for AM
-  let nightNote = '';
-
-  if (station.Format === 'AM') {
-    let power = station.power;
-    if (station.powerNight != null && station.powerNight < station.power
-        && isNightAt(station.latitude, station.longitude)) {
-      power = station.powerNight;
-      if (power <= 0) return null;
-      nightNote = ` (reduced nighttime power: ${power >= 1 ? power + ' kW' : (power * 1000) + ' watts'})`;
-    }
-    level = 20 * Math.log10(amFieldStrengthMvm(power, station.Frequency, distanceKm));
-  } else {
-    level = fmFieldStrengthDbu(station.power, station.haat, distanceKm);
+function amPowerNow(station) {
+  if (station.powerNight != null && station.powerNight < station.power
+      && isNightAt(station.latitude, station.longitude)) {
+    const power = station.powerNight;
+    if (power <= 0) return null;
+    return { power, nightNote: ` (reduced nighttime power: ${power >= 1 ? power + ' kW' : (power * 1000) + ' watts'})` };
   }
-
-  // Convert field strength to a tier score: 1.0 at the Weak floor, one unit
-  // per tier, linear in dB between floors (comparable across AM and FM).
-  const floors = SIGNAL_TIER_FLOORS[station.Format] || SIGNAL_TIER_FLOORS.FM;
-  let score;
-  if (level <= floors[0]) {
-    score = 1 + (level - floors[0]) / (floors[1] - floors[0]);
-  } else if (level >= floors[floors.length - 1]) {
-    score = 4 + (level - floors[3]) / (floors[3] - floors[2]);
-  } else {
-    let k = 0;
-    while (k < floors.length - 2 && floors[k + 1] < level) k++;
-    score = 1 + k + (level - floors[k]) / (floors[k + 1] - floors[k]);
-  }
-
-  return { score: score, nightNote: nightNote };
+  return { power: station.power, nightNote: '' };
 }
 
 /**
- * Estimated coverage rings for a station: how far out the signal stays at
- * least Good (score 3) and at least Fair (score 2). Field strength falls
- * monotonically with distance in both models, so a bisection on
- * signalScoreAt finds each crossing. Reflects the current time of day for
- * AM, so night rings shrink after sunset.
+ * Convert field strength to a tier score: 1.0 at the Weak floor, one unit
+ * per tier, linear in dB between floors (comparable across AM and FM).
+ * An integer score n sits exactly on floors[n - 1].
+ */
+function levelToScore(format, level) {
+  const floors = SIGNAL_TIER_FLOORS[format] || SIGNAL_TIER_FLOORS.FM;
+  if (level <= floors[0]) return 1 + (level - floors[0]) / (floors[1] - floors[0]);
+  if (level >= floors[floors.length - 1]) return 4 + (level - floors[3]) / (floors[3] - floors[2]);
+  let k = 0;
+  while (k < floors.length - 2 && floors[k + 1] < level) k++;
+  return 1 + k + (level - floors[k]) / (floors[k + 1] - floors[k]);
+}
+
+/**
+ * Tier score for one station at a distance, right now (AM uses night power
+ * after local sunset). Used by estimateSignal for the score at the listener.
  *
  * @param {object} station - Station record
- * @returns {object|null} { goodMeters, fairMeters }, or null when off air / no license data
+ * @param {number} distanceKm - Distance from tower in km
+ * @param {number|null} bearing - Degrees from the tower toward the listener
+ *   (AM follows the M3 ground along it; FM ignores it)
+ * @returns {object|null} { score, nightNote }, or null when the station is off air
  */
-function coverageRadii(station) {
-  if (!station.power) return null;
-  const MIN_KM = 0.5;
-  const MAX_KM = 400; // past the end of the F(50,50) table; nothing listenable this far
+function signalScoreAt(station, distanceKm, bearing = null) {
+  if (station.Format === 'AM') {
+    const now = amPowerNow(station);
+    if (!now) return null;
+    const field = amPathFieldMvm(now.power, station.Frequency, station.latitude, station.longitude, bearing, distanceKm);
+    return { score: levelToScore('AM', 20 * Math.log10(field)), nightNote: now.nightNote };
+  }
+  return { score: levelToScore('FM', fmFieldStrengthDbu(station.power, station.haat, distanceKm)), nightNote: '' };
+}
 
+// How far out to look for a tier edge. FM stops where the F(50,50) table
+// ends (nothing is listenable on FM that far). AM has no real limit — a big
+// low-frequency signal on good ground holds 0.5 mV/m past 400 km (WNAX's FCC
+// contour reaches 388 km) — so this is only a guard against a runaway walk.
+const FM_MAX_KM = 321.9;
+const AM_MAX_KM = 2000;
+const AM_RADIALS = 72;       // every 5 degrees
+
+/**
+ * How far out a station holds each target tier score, right now. FM (and AM
+ * without an M3 grid) reaches the same distance in every direction; AM with
+ * the grid gets one distance per radial, since the ground differs by direction.
+ * Field strength falls monotonically with distance along any path, so each
+ * tier is crossed once.
+ *
+ * @param {object} station - Station record
+ * @param {number[]} targetScores - Integer tier scores (2 = Fair, 3 = Good, 4 = Excellent)
+ * @returns {object|null} { bearings, km } where bearings is null (uniform) or
+ *   the radial bearings, and km[i][j] is radial i's reach for targetScores[j];
+ *   null when off air or no license data
+ */
+function coverageReach(station, targetScores) {
+  if (!station.power) return null;
+
+  if (station.Format === 'AM' && getM3Grid()) {
+    const now = amPowerNow(station);
+    if (!now) return null;
+    const floors = SIGNAL_TIER_FLOORS.AM;
+    const levels = targetScores.map(s => floors[s - 1]);
+    const near = conductivityAt(station.latitude, station.longitude) || DEFAULT_CONDUCTIVITY;
+    const startDb = 20 * Math.log10(amFieldStrengthMvm(now.power, station.Frequency, 0.5, near));
+    const bearings = [], km = [];
+    for (let i = 0; i < AM_RADIALS; i++) {
+      const bearing = i * 360 / AM_RADIALS;
+      const reach = levels.map(level => startDb < level ? 0 : null);
+      let prevKm = 0.5, prevDb = startDb;
+      walkAmPath(now.power, station.Frequency, station.latitude, station.longitude, bearing, AM_MAX_KM, (d, field) => {
+        const db = 20 * Math.log10(field);
+        levels.forEach((level, j) => {
+          if (reach[j] === null && db < level) reach[j] = prevKm + (d - prevKm) * (prevDb - level) / (prevDb - db);
+        });
+        prevKm = d; prevDb = db;
+        return reach.some(r => r === null);
+      });
+      bearings.push(bearing);
+      km.push(reach.map(r => r === null ? AM_MAX_KM : r));
+    }
+    return { bearings, km };
+  }
+
+  const MIN_KM = 0.5;
+  const maxKm = station.Format === 'AM' ? AM_MAX_KM : FM_MAX_KM;
   const radiusKm = targetScore => {
-    const atMax = signalScoreAt(station, MAX_KM);
+    const atMax = signalScoreAt(station, maxKm);
     if (!atMax) return null;
-    if (atMax.score >= targetScore) return MAX_KM;
+    if (atMax.score >= targetScore) return maxKm;
     if (signalScoreAt(station, MIN_KM).score < targetScore) return 0;
-    let lo = MIN_KM, hi = MAX_KM;
+    let lo = MIN_KM, hi = maxKm;
     for (let i = 0; i < 40 && hi - lo > 0.1; i++) {
       const mid = (lo + hi) / 2;
       if (signalScoreAt(station, mid).score >= targetScore) lo = mid; else hi = mid;
     }
     return lo;
   };
+  const radii = targetScores.map(radiusKm);
+  if (radii.some(r => r == null)) return null;
+  return { bearings: null, km: [radii] };
+}
 
-  const goodKm = radiusKm(3);
-  if (goodKm == null) return null;
-  return { goodMeters: goodKm * 1000, fairMeters: radiusKm(2) * 1000 };
+/**
+ * Estimated coverage rings for a station: how far out the signal stays at
+ * least Good (score 3) and at least Fair (score 2). Reflects the current
+ * time of day for AM, so night rings shrink after sunset.
+ *
+ * @param {object} station - Station record
+ * @returns {object|null} { goodMeters, fairMeters, goodMinMeters, fairMinMeters,
+ *   goodShape, fairShape } — the max/min reach over all directions, and for
+ *   AM over mixed ground the ring outlines as [lat, lng] lists (null for a
+ *   plain circle); null when off air / no license data
+ */
+function coverageRadii(station) {
+  const reach = coverageReach(station, [3, 2]);
+  if (!reach) return null;
+  const meters = j => reach.km.map(r => r[j] * 1000);
+  const shape = j => reach.bearings && reach.bearings.map((b, i) => {
+    const p = destinationPoint(station.latitude, station.longitude, b, reach.km[i][j]);
+    return [p.latitude, p.longitude];
+  });
+  return {
+    goodMeters: Math.max(...meters(0)), fairMeters: Math.max(...meters(1)),
+    goodMinMeters: Math.min(...meters(0)), fairMinMeters: Math.min(...meters(1)),
+    goodShape: shape(0), fairShape: shape(1)
+  };
 }
 
 /**
@@ -466,7 +654,7 @@ function sortByLocation(point, sortBy = 'signal') {
     const distanceMeters = getDistance(point, station);
     const distanceMiles = metersToMiles(distanceMeters);
 
-    const signal = estimateSignal(station, distanceMeters);
+    const signal = estimateSignal(station, distanceMeters, point);
 
     return {
       ...station,

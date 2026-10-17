@@ -132,7 +132,7 @@ A: The Husker Radio Network feed is available on 87.7 FM inside Memorial Stadium
 - Static web application (HTML, CSS, vanilla JavaScript)
 - Uses Leaflet.js for interactive mapping
 - Station coordinates from FCC tower database
-- FM signal strength from FCC F(50,50) propagation curves (licensed ERP + antenna HAAT); AM from a Norton groundwave model with Great Plains soil conductivity, using licensed day or night power depending on local sunset/sunrise
+- FM signal strength from FCC F(50,50) propagation curves (licensed ERP + antenna HAAT); AM from a Norton groundwave model over FCC M3 ground conductivity along the tower-to-listener path, using licensed day or night power depending on local sunset/sunrise
 
 ## URL
 

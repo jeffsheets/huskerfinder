@@ -41,7 +41,7 @@ The site is automatically deployed to GitHub Pages from the master branch. Simpl
 
 **Distance Calculation**: Uses haversine formula (modeled after geolib) in `js/lib.js`. Calculates great-circle distance between user location and **actual FCC tower coordinates**. Returns distance in meters, converted to miles for display.
 
-**Signal Strength Estimation**: `estimateSignal` in `js/lib.js` predicts field strength from FCC license data — FM via the FCC F(50,50) curves (ERP + HAAT), AM via a Norton groundwave model (day or night power by local sunset). Field strength maps to a cross-band tier score (Weak/Fair/Good/Excellent) using floors calibrated for a car radio (FM floors are 10 dB below the FCC planning contours). `listeningRank` turns that into the default "Sounds best" sort key: the score saturates at Excellent and FM gets a one-tier fidelity bonus once it is at least Fair, so a Good FM outranks a strong AM but a fuzzy FM does not. The bars show the raw signal tier; only the ordering applies the FM preference.
+**Signal Strength Estimation**: `estimateSignal` in `js/lib.js` predicts field strength from FCC license data — FM via the FCC F(50,50) curves (ERP + HAAT), AM via a Norton groundwave model (day or night power by local sunset) over the FCC M3 ground-conductivity map: `walkAmPath`/`amPathFieldMvm` follow the tower-to-listener bearing across the `js/conductivity.js` grid and combine soils with Kirke's equivalent-distance method (47 CFR 73.183), so `estimateSignal` takes the listener point. `coverageReach` gives AM reach per 5° radial, so AM rings are polygons (`goodShape`/`fairShape`), the popup footer shows a min–max range, and `js/coverage.js` paints each AM outline. The grid is built by `scripts/build-conductivity.js` from `scripts/m3.seq` (FCC download; value columns are east-side/west-side conductivity, codes 102/199 treated as unknown); the grid covers every tower + 800 km; re-run it if the station footprint grows. Field strength maps to a cross-band tier score (Weak/Fair/Good/Excellent) using floors calibrated for a car radio (FM floors are 10 dB below the FCC planning contours). `listeningRank` turns that into the default "Sounds best" sort key: the score saturates at Excellent and FM gets a one-tier fidelity bonus once it is at least Fair, so a Good FM outranks a strong AM but a fuzzy FM does not. The bars show the raw signal tier; only the ordering applies the FM preference.
 
 **Data Structure**: Each station object in `stations.js` contains:
 - `City`, `State` - Location information
@@ -103,7 +103,7 @@ To update the station list for a new season:
 6. Run `node scripts/update-signal-data.js` to set corrected power (FM ERP kW / AM day kW), `powerNight` (AM), and `haat` (FM antenna height, meters) from the FCC cache — these feed the signal-strength estimates
 7. Run `node scripts/generate-station-table.js` to re-render the static station table in stations.html (SEO/AI crawlers don't execute JS, so the table is pre-rendered into the HTML)
 8. Update the station counts in visible copy if they changed (index.html FAQ + JSON-LD, stations.html intro, about.html FAQ, llms.txt)
-9. **Bump the `?v=` cache-busting query params** on every changed JS/CSS reference (`js/stations.js`, `js/lib.js`, `js/coverage.js`, `js/map.js` in index.html; `js/stations.js` in stations.html; `styles.css` in all three pages). Use the current date, e.g. `?v=2026-08-26`. GitHub Pages serves JS/CSS with `max-age=14400` (4 hours), so browsers keep the old file until the URL changes.
+9. **Bump the `?v=` cache-busting query params** on every changed JS/CSS reference (`js/stations.js`, `js/conductivity.js`, `js/lib.js`, `js/coverage.js`, `js/map.js` in index.html; `js/stations.js` in stations.html; `styles.css` in all three pages). Use the current date, e.g. `?v=2026-08-26`. GitHub Pages serves JS/CSS with `max-age=14400` (4 hours), so browsers keep the old file until the URL changes.
 10. Review changes and test the app
 11. After the changes are deployed, ping IndexNow so Bing re-crawls (key file is committed in the site root):
    ```bash
@@ -149,7 +149,7 @@ To refresh tower coordinates and power data annually:
 
 - This is a **static site** - no build process, no backend, no bundler
 - All JavaScript is vanilla ES6 - no framework dependencies
-- Scripts load in order: stations.js → lib.js → coverage.js → map.js (see index.html)
+- Scripts load in order: stations.js → conductivity.js → lib.js → coverage.js → map.js (see index.html)
 - Distance calculations use **actual FCC tower coordinates** for accuracy
 - Signal strength indicators are estimates - real reception depends on terrain, buildings, weather
 - Station data includes NE, SD, and KS stations broadcasting Husker games

@@ -4,11 +4,11 @@
 // that reaches it, so the picture answers "where can Husker Nation hear the
 // game, and how clearly" rather than "which station".
 //
-// Field strength falls monotonically with distance in both propagation
-// models, so a station's tier regions are concentric discs whose radii
-// coverageRadii already finds by bisection. Painting discs is a few million
-// cell writes for the whole network — well under 100 ms — versus evaluating
-// signalScoreAt at every cell for every station.
+// Field strength falls monotonically with distance along any path, so each
+// station's tier regions are nested shapes: discs for FM, and for AM an
+// outline per tier from coverageReach (reach along each radial over the M3
+// ground). Painting those is a few million cell writes for the whole
+// network, versus evaluating the signal model at every cell for every station.
 
 let coverageMapOverlay = null; // L.imageOverlay while the map is shown
 let coverageMapLegend = null;  // L.control legend while the map is shown
@@ -33,37 +33,24 @@ const COVERAGE_TIERS = [
 const mercatorY = latDeg => Math.log(Math.tan(Math.PI / 4 + latDeg * Math.PI / 360));
 const mercatorLat = y => (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI;
 
-// Distance from tower (km) at which the tier score drops below `target`.
-// Same bisection as coverageRadii, exposed per tier.
-function tierRadiusKm(station, target) {
-  const MIN_KM = 0.5;
-  const MAX_KM = 400;
-  const atMax = signalScoreAt(station, MAX_KM);
-  if (!atMax) return null; // off air (daytimer after sunset)
-  if (atMax.score >= target) return MAX_KM;
-  if (signalScoreAt(station, MIN_KM).score < target) return 0;
-  let lo = MIN_KM, hi = MAX_KM;
-  for (let i = 0; i < 40 && hi - lo > 0.1; i++) {
-    const mid = (lo + hi) / 2;
-    if (signalScoreAt(station, mid).score >= target) lo = mid; else hi = mid;
-  }
-  return lo;
-}
-
 // Render the raster for a list of stations. Returns { url, bounds } where
 // bounds is [[south, west], [north, east]].
 function renderCoverageRaster(stationList) {
   // Distinct towers/frequencies only: the same frequency listed under two
   // sports paints the same disc twice
   const seen = new Set();
-  const discs = []; // { station, km, value }
+  const discs = []; // { station, km, value, radial } — radial: per-bearing reach for AM over mixed ground
+  const tierScores = COVERAGE_TIERS.map(t => t.score);
   stationList.forEach(station => {
     const key = `${station.Frequency}${station.Format}@${station.latitude},${station.longitude}`;
     if (seen.has(key) || !station.power) return;
     seen.add(key);
+    const reach = coverageReach(station, tierScores);
+    if (!reach) return;
     COVERAGE_TIERS.forEach((tier, i) => {
-      const km = tierRadiusKm(station, tier.score);
-      if (km) discs.push({ station, km, value: i + 1 });
+      const radial = reach.bearings ? reach.km.map(r => r[i]) : null;
+      const km = radial ? Math.max(...radial) : reach.km[0][i];
+      if (km) discs.push({ station, km, value: i + 1, radial });
     });
   });
 
@@ -101,27 +88,40 @@ function renderCoverageRaster(stationList) {
   const grid = new Uint8Array(width * height); // 0 none, 1 Fair, 2 Good, 3 Excellent
 
   // Paint one disc: for each row the disc touches, fill the span of columns
-  // within the great-circle radius (small-angle approximation per row).
-  const paintDisc = (station, radiusKm, value) => {
+  // within the great-circle radius (small-angle approximation per row). With
+  // `radial` (AM reach per bearing, AM_RADIALS evenly spaced), a cell inside
+  // the widest reach is kept only if it is within the reach interpolated at
+  // its own bearing from the tower.
+  const paintDisc = (station, radiusKm, value, radial) => {
     if (!radiusKm) return;
     const dLat = radiusKm / KM_PER_DEG_LAT;
     const r0 = Math.max(0, Math.floor((yTop - mercatorY(station.latitude + dLat)) / yStep));
     const r1 = Math.min(height - 1, Math.ceil((yTop - mercatorY(station.latitude - dLat)) / yStep));
+    const sector = radial ? 360 / radial.length : 0;
     for (let r = r0; r <= r1; r++) {
       const dLatKm = (rowLat[r] - station.latitude) * KM_PER_DEG_LAT;
       const rem = radiusKm * radiusKm - dLatKm * dLatKm;
       if (rem <= 0) continue;
-      const halfLng = Math.sqrt(rem) / (KM_PER_DEG_LAT * Math.cos(rowLat[r] * Math.PI / 180));
+      const kmPerDegLng = KM_PER_DEG_LAT * Math.cos(rowLat[r] * Math.PI / 180);
+      const halfLng = Math.sqrt(rem) / kmPerDegLng;
       const c0 = Math.max(0, Math.floor((station.longitude - halfLng - west) / COVERAGE_CELL_DEG));
       const c1 = Math.min(width - 1, Math.ceil((station.longitude + halfLng - west) / COVERAGE_CELL_DEG));
       const base = r * width;
       for (let c = c0; c <= c1; c++) {
-        if (grid[base + c] < value) grid[base + c] = value;
+        if (grid[base + c] >= value) continue;
+        if (radial) {
+          const dLngKm = (west + (c + 0.5) * COVERAGE_CELL_DEG - station.longitude) * kmPerDegLng;
+          const pos = ((Math.atan2(dLngKm, dLatKm) * 180 / Math.PI + 360) % 360) / sector;
+          const i = Math.floor(pos) % radial.length, t = pos - Math.floor(pos);
+          const reach = radial[i] * (1 - t) + radial[(i + 1) % radial.length] * t;
+          if (dLatKm * dLatKm + dLngKm * dLngKm > reach * reach) continue;
+        }
+        grid[base + c] = value;
       }
     }
   };
 
-  discs.forEach(({ station, km, value }) => paintDisc(station, km, value));
+  discs.forEach(({ station, km, value, radial }) => paintDisc(station, km, value, radial));
 
   const canvas = document.createElement('canvas');
   canvas.width = width;

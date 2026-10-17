@@ -203,8 +203,11 @@ function coverageFooter(stationList) {
     const radii = coverageRadii(station);
     if (!radii) return;
     const mi = m => Math.round(metersToMiles(m));
-    lines.push({ key, text: `<span class="coverage-good">good</span> ~${mi(radii.goodMeters)} mi · `
-      + `<span class="coverage-fair">fair</span> ~${mi(radii.fairMeters)} mi` });
+    // AM over mixed ground reaches different distances by direction: show the span
+    const span = (min, max) => mi(max) - mi(min) >= Math.max(3, 0.15 * mi(max))
+      ? `${mi(min)}–${mi(max)} mi` : `~${mi(max)} mi`;
+    lines.push({ key, text: `<span class="coverage-good">good</span> ${span(radii.goodMinMeters, radii.goodMeters)} · `
+      + `<span class="coverage-fair">fair</span> ${span(radii.fairMinMeters, radii.fairMeters)}` });
   });
   if (lines.length === 0) return '';
   // Single frequency: one line. Several: label line, then one per frequency.
@@ -227,10 +230,13 @@ function showCoverage(stationList) {
     if (!radii) return; // off air or no license data
     const center = [station.latitude, station.longitude];
     const dash = station.Format === 'AM' ? '6 6' : null;
-    L.circle(center, { radius: radii.fairMeters, color: '#FFA500', weight: 1.5, dashArray: dash,
-      fillColor: '#FFA500', fillOpacity: 0.08, interactive: false }).addTo(coverageLayer);
-    L.circle(center, { radius: radii.goodMeters, color: '#4CAF50', weight: 1.5, dashArray: dash,
-      fillColor: '#4CAF50', fillOpacity: 0.12, interactive: false }).addTo(coverageLayer);
+    // AM over mixed ground draws its true outline; otherwise a circle
+    const ring = (shape, radius, style) => (shape
+      ? L.polygon(shape, style) : L.circle(center, { radius, ...style })).addTo(coverageLayer);
+    ring(radii.fairShape, radii.fairMeters, { color: '#FFA500', weight: 1.5, dashArray: dash,
+      fillColor: '#FFA500', fillOpacity: 0.08, interactive: false });
+    ring(radii.goodShape, radii.goodMeters, { color: '#4CAF50', weight: 1.5, dashArray: dash,
+      fillColor: '#4CAF50', fillOpacity: 0.12, interactive: false });
   });
 }
 
@@ -437,7 +443,7 @@ function sortByLocation(point, isFallback = false, opts = {}) {
     const distanceMeters = getDistance(point, station);
     const distanceMiles = metersToMiles(distanceMeters);
 
-    const signal = estimateSignal(station, distanceMeters);
+    const signal = estimateSignal(station, distanceMeters, point);
 
     return {
       ...station,
