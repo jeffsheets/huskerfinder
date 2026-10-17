@@ -141,7 +141,7 @@ function coverageStations() {
 // Whether AM stations are on night power right now (judged at the center of
 // the network; sunset sweeps across the state in ~20 minutes)
 function coverageIsNight() {
-  return isNightAt(41.5, -99.8);
+  return isNightForAm(41.5, -99.8);
 }
 
 function coverageLegendHtml() {

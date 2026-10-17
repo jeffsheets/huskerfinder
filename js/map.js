@@ -442,6 +442,20 @@ function updateSportFilter(sport, updateUrl = true) {
 }
 
 // Switch between sorting by distance and by predicted listening quality
+// Time control (Now / Day / Night): re-rank and redraw AM for that time of
+// day without moving the map, and refresh an open station's rings and ranges
+function setTimeOfDay(mode) {
+  timeOfDayOverride = mode === 'now' ? null : mode;
+  track('time-of-day', { mode: mode });
+  if (userLocation) sortByLocation(userLocation, false, { pinned: !!pinnedLocation, keepView: true });
+  const popup = map && map._popup;
+  if (popup && map.hasLayer(popup) && popup._source && popup._source.stationData) {
+    popup.update(); // re-runs the content function, so the range footer follows
+    showCoverage(stationsForSelection(popup._source.stationData));
+  }
+  if (coverageMapVisible()) showCoverageMap();
+}
+
 function updateSortBy(mode) {
   currentSortBy = mode;
   track('sort-by', { mode: mode });

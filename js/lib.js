@@ -509,13 +509,22 @@ function estimateSignal(station, distanceMeters, point = null) {
   return { strength: at.score, rank: listeningRank(station, at.score), category: category };
 }
 
+// The Time control: 'day' or 'night' previews AM reception for that time of
+// day (checking a night game in the afternoon); null follows the real sun.
+let timeOfDayOverride = null;
+
+/** Whether AM stations at this spot are on night operation, honoring the Time control. */
+function isNightForAm(latitude, longitude) {
+  return timeOfDayOverride ? timeOfDayOverride === 'night' : isNightAt(latitude, longitude);
+}
+
 /**
  * An AM station's operation right now: after local sunset at the tower its
  * licensed nighttime power and antenna pattern, else daytime. Null for a
  * daytimer at night.
  */
 function amPowerNow(station) {
-  if (!isNightAt(station.latitude, station.longitude)) {
+  if (!isNightForAm(station.latitude, station.longitude)) {
     return { night: false, power: station.power, nightNote: '' };
   }
   const reduced = station.powerNight != null && station.powerNight < station.power;
