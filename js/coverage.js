@@ -18,8 +18,8 @@ const coverageRasterCache = {}; // key: sport + band + day/night → { url, boun
 // Cell size in degrees of longitude (rows are spaced to match in Web
 // Mercator so the overlay lines up with the tiles). ~0.9 km at 41°N.
 const COVERAGE_CELL_DEG = 0.01;
-// Draw this far past the outermost tower so big AM rings are not clipped.
-const COVERAGE_PAD_DEG = 3;
+// Margin past the outermost ring, so its edge isn't flush with the image edge.
+const COVERAGE_PAD_DEG = 0.1;
 const KM_PER_DEG_LAT = 111.2;
 
 // Tier fills, matching the signal bars and the per-station rings. Alpha is
@@ -53,12 +53,40 @@ function tierRadiusKm(station, target) {
 // Render the raster for a list of stations. Returns { url, bounds } where
 // bounds is [[south, west], [north, east]].
 function renderCoverageRaster(stationList) {
-  const lats = stationList.map(s => s.latitude);
-  const lngs = stationList.map(s => s.longitude);
-  const west = Math.min(...lngs) - COVERAGE_PAD_DEG;
-  const east = Math.max(...lngs) + COVERAGE_PAD_DEG;
-  const south = Math.min(...lats) - COVERAGE_PAD_DEG;
-  const north = Math.max(...lats) + COVERAGE_PAD_DEG;
+  // Distinct towers/frequencies only: the same frequency listed under two
+  // sports paints the same disc twice
+  const seen = new Set();
+  const discs = []; // { station, km, value }
+  stationList.forEach(station => {
+    const key = `${station.Frequency}${station.Format}@${station.latitude},${station.longitude}`;
+    if (seen.has(key) || !station.power) return;
+    seen.add(key);
+    COVERAGE_TIERS.forEach((tier, i) => {
+      const km = tierRadiusKm(station, tier.score);
+      if (km) discs.push({ station, km, value: i + 1 });
+    });
+  });
+
+  // Bounds from the discs themselves, so the widest Fair ring is never cut off
+  // (a fixed degree pad clips big AM rings, worst at northern latitudes where
+  // a degree of longitude is short)
+  let west = Infinity, east = -Infinity, south = Infinity, north = -Infinity;
+  discs.forEach(({ station, km }) => {
+    const dLat = km / KM_PER_DEG_LAT;
+    const dLng = km / (KM_PER_DEG_LAT * Math.cos((Math.abs(station.latitude) + dLat) * Math.PI / 180));
+    west = Math.min(west, station.longitude - dLng);
+    east = Math.max(east, station.longitude + dLng);
+    south = Math.min(south, station.latitude - dLat);
+    north = Math.max(north, station.latitude + dLat);
+  });
+  if (!discs.length) {
+    const lats = stationList.map(s => s.latitude);
+    const lngs = stationList.map(s => s.longitude);
+    west = Math.min(...lngs); east = Math.max(...lngs);
+    south = Math.min(...lats); north = Math.max(...lats);
+  }
+  west -= COVERAGE_PAD_DEG; east += COVERAGE_PAD_DEG;
+  south -= COVERAGE_PAD_DEG; north += COVERAGE_PAD_DEG;
 
   const width = Math.ceil((east - west) / COVERAGE_CELL_DEG);
   const yTop = mercatorY(north);
@@ -93,18 +121,7 @@ function renderCoverageRaster(stationList) {
     }
   };
 
-  // Distinct towers/frequencies only: the same frequency listed under two
-  // sports paints the same disc twice
-  const seen = new Set();
-  stationList.forEach(station => {
-    const key = `${station.Frequency}${station.Format}@${station.latitude},${station.longitude}`;
-    if (seen.has(key) || !station.power) return;
-    seen.add(key);
-    COVERAGE_TIERS.forEach((tier, i) => {
-      const km = tierRadiusKm(station, tier.score);
-      if (km) paintDisc(station, km, i + 1);
-    });
-  });
+  discs.forEach(({ station, km, value }) => paintDisc(station, km, value));
 
   const canvas = document.createElement('canvas');
   canvas.width = width;
