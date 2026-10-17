@@ -563,7 +563,25 @@ function signalScoreAt(station, distanceKm, bearing = null) {
     const field = amPathFieldMvm(e1km, station.Frequency, station.latitude, station.longitude, bearing, distanceKm);
     return { score: levelToScore('AM', 20 * Math.log10(field), amFloorShiftDb(station, now.night)), nightNote: now.nightNote };
   }
-  return { score: levelToScore('FM', fmFieldStrengthDbu(station.power, station.haat, distanceKm)), nightNote: '' };
+  const { haat, offsetDb } = fmRadialAt(station, bearing);
+  return { score: levelToScore('FM', fmFieldStrengthDbu(station.power, haat, distanceKm) + offsetDb), nightNote: '' };
+}
+
+/**
+ * FM antenna height (and leftover dB) toward a bearing. scripts/build-fm-radials.js
+ * derives a height per 5° radial from the FCC's own service contour, which
+ * folds in that direction's terrain and any directional antenna; without
+ * that data (or a bearing) it's the single licensed HAAT.
+ */
+function fmRadialAt(station, bearing) {
+  const heights = station.fmHaatRadials;
+  if (bearing == null || !Array.isArray(heights) || !heights.length) return { haat: station.haat, offsetDb: 0 };
+  const interp = arr => {
+    const pos = ((bearing % 360) + 360) % 360 / (360 / arr.length);
+    const i = Math.floor(pos) % arr.length, t = pos - Math.floor(pos);
+    return arr[i] * (1 - t) + arr[(i + 1) % arr.length] * t;
+  };
+  return { haat: interp(heights), offsetDb: station.fmOffsetRadials ? interp(station.fmOffsetRadials) : 0 };
 }
 
 // How far out to look for a tier edge. FM stops where the F(50,50) table
@@ -619,19 +637,24 @@ function coverageReach(station, targetScores) {
 
   const MIN_KM = 0.5;
   const maxKm = station.Format === 'AM' ? AM_MAX_KM : FM_MAX_KM;
-  const radiusKm = targetScore => {
-    const atMax = signalScoreAt(station, maxKm);
+  const radiusKm = (targetScore, bearing) => {
+    const atMax = signalScoreAt(station, maxKm, bearing);
     if (!atMax) return null;
     if (atMax.score >= targetScore) return maxKm;
-    if (signalScoreAt(station, MIN_KM).score < targetScore) return 0;
+    if (signalScoreAt(station, MIN_KM, bearing).score < targetScore) return 0;
     let lo = MIN_KM, hi = maxKm;
     for (let i = 0; i < 40 && hi - lo > 0.1; i++) {
       const mid = (lo + hi) / 2;
-      if (signalScoreAt(station, mid).score >= targetScore) lo = mid; else hi = mid;
+      if (signalScoreAt(station, mid, bearing).score >= targetScore) lo = mid; else hi = mid;
     }
     return lo;
   };
-  const radii = targetScores.map(radiusKm);
+  // FM with FCC per-radial heights: one reach per radial, like AM
+  if (station.Format === 'FM' && Array.isArray(station.fmHaatRadials) && station.fmHaatRadials.length) {
+    const bearings = station.fmHaatRadials.map((_, i) => i * 360 / station.fmHaatRadials.length);
+    return { bearings, km: bearings.map(b => targetScores.map(t => radiusKm(t, b))) };
+  }
+  const radii = targetScores.map(t => radiusKm(t, null));
   if (radii.some(r => r == null)) return null;
   return { bearings: null, km: [radii] };
 }

@@ -29,7 +29,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11" data-domains="huskerfinder.sheetsj.com"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-10-17b">
+  <link rel="stylesheet" href="styles.css?v=2026-10-17c">
 </head>
 <body class="about-page">
 
@@ -65,7 +65,7 @@
   <h3 id="signal-strength">How Signal Strength Is Estimated</h3>
   <p>Each station's signal bars (▰▰▰▱) and the "Sounds best" sort start from the station's FCC license data and your distance from its tower:</p>
   <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-    <li><strong>FM stations</strong> are rated using the FCC's own F(50,50) propagation curves — the same curves the FCC uses to draw official coverage maps — based on the station's licensed effective radiated power (ERP) and antenna height above average terrain (HAAT). A 100,000-watt antenna on a 1,000-foot tower reaches much farther than the same power on a short one.</li>
+    <li><strong>FM stations</strong> are rated using the FCC's own F(50,50) propagation curves — the same curves the FCC uses to draw official coverage maps — based on the station's licensed effective radiated power (ERP) and antenna height above average terrain (HAAT). A 100,000-watt antenna on a 1,000-foot tower reaches much farther than the same power on a short one. The app uses the antenna height the FCC computes for each direction — the tower's height above the average terrain along that radial, from the FCC's own service contour for the station — so FM reach follows hills, valleys and directional antennas instead of being a perfect circle. KNEB 94.1 in Scottsbluff, for example, reaches noticeably farther across the North Platte valley than toward the Wildcat Hills.</li>
     <li><strong>AM stations</strong> are rated with a groundwave propagation model using the station's licensed transmitter power and frequency. AM signals hug the ground, so how far they carry depends on the soil they travel over: the app follows the path from each tower to you across the FCC's <a href="https://www.fcc.gov/media/radio/m3-ground-conductivity-map" target="_blank">M3 ground conductivity map</a>, using the FCC's equivalent-distance method for paths that cross different soils. Much of central and eastern Nebraska is among the best AM ground in the country (30 on the FCC's scale) — that's why a 50,000-watt station like KRVN 880 is listenable across most of the state in the daytime — while the Sandhills are far poorer (4), so a station's rings on the map aren't circles. Lower AM frequencies (590, 660, 880) also carry much farther than higher ones (1400+).</li>
     <li><strong>FM translators</strong> (low-power FM repeaters of AM stations, like KLIN 99.3 FM) are capped by the FCC at 250 watts, so they're only rated strong within roughly 5–15 miles of their town — that's real, not a bug.</li>
   </ul>
@@ -105,6 +105,7 @@
     <li>Distance calculations using actual tower positions</li>
     <li>Interactive mapping powered by Leaflet and OpenStreetMap</li>
     <li>FM signal estimates interpolated from the FCC F(50,50) propagation curve tables (47 CFR 73.333)</li>
+    <li>Per-direction FM antenna heights derived from the FCC's daily FM service contour data, so FM ranges reflect terrain and directional antennas</li>
     <li>AM signal estimates from a Norton groundwave model over FCC M3 ground conductivity along each path, combined by the equivalent-distance method (47 CFR 73.183)</li>
     <li>A sunrise/sunset calculation at each tower to apply AM nighttime power restrictions</li>
     <li>Each AM station's licensed antenna efficiency and directional-array tower layout (FCC CDBS antenna records), turned into its day and night radiation pattern with the FCC standard-pattern formula (47 CFR 73.150)</li>

@@ -4,6 +4,7 @@ let userMarker;
 let coverageLayer; // estimated Good/Fair rings for the station whose popup is open
 let popupSource = 'marker'; // how the next popup was opened, for analytics: 'marker' | 'list' | 'auto'
 let selectedTower = null; // L.LatLng of the station whose popup is open — its list cards are highlighted
+let selectedFreq = null;  // '960AM' when one frequency at that tower was picked from the list; null = the whole tower
 let popupCloseTimer = null; // pending single-click popup close (cancelled by a double-click)
 let homeView = null; // { center, zoom, popupStation } — the auto-zoomed view after a location lookup
 // Sport filter is single-select: 'all' or one Sport name. currentFilters is
@@ -55,7 +56,9 @@ function initMap() {
   map.createPane('pinPane').style.zIndex = 750;
   map.on('popupopen', e => {
     const stationList = e.popup._source && e.popup._source.stationData;
-    showCoverage(stationList || []);
+    // A list click picks one frequency; a marker (or the auto popup) picks the whole tower
+    if (popupSource !== 'list') selectedFreq = null;
+    showCoverage(stationsForSelection(stationList || []));
     selectedTower = stationList ? e.popup._source.getLatLng() : null;
     markSelectedStation(popupSource === 'marker');
     if (stationList) {
@@ -67,6 +70,7 @@ function initMap() {
   map.on('popupclose', () => {
     coverageLayer.clearLayers();
     selectedTower = null;
+    selectedFreq = null;
     markSelectedStation(false);
   });
 
@@ -340,12 +344,18 @@ function addStationMarkers() {
         : '';
       const night = nightBehavior(s);
       const nightTag = night ? ` <span class="night-flag" role="img" title="${night.title}" aria-label="${night.title}">${night.symbol}</span>` : '';
-      popupContent += `<div class="popup-station"><strong>${key}</strong> ${s.CallSign} ${emojis}${roleTag}${nightTag}</div>`;
+      popupContent += `<div class="popup-station" data-freq="${key}"><strong>${key}</strong> ${s.CallSign} ${emojis}${roleTag}${nightTag}</div>`;
     });
 
     // Range footer is built at open time so AM night-power rings and text
     // reflect the current hour, not the hour the page loaded
-    marker.bindPopup(() => popupContent + coverageFooter(stationList) + `</div>`);
+    // (the picked frequency, if one was picked from the list, is marked)
+    marker.bindPopup(() => {
+      const html = selectedFreq
+        ? popupContent.replace(`class="popup-station" data-freq="${selectedFreq}"`, `class="popup-station selected" data-freq="${selectedFreq}"`)
+        : popupContent;
+      return html + coverageFooter(stationsForSelection(stationList)) + `</div>`;
+    });
     marker.stationData = stationList;
     marker.addTo(map);
     markers.push(marker);
@@ -577,7 +587,8 @@ function sortByLocation(point, isFallback = false, opts = {}) {
     html += `<div class="station-item ${isNearest ? 'nearest' : ''}" role="button" tabindex="0"
                   data-lat="${station.latitude}" data-lng="${station.longitude}"
                   aria-label="${ariaParts.join(', ')}. Show on map"
-                  onclick="focusStation(${station.latitude}, ${station.longitude})"
+                  data-freq="${station.Frequency}${station.Format}"
+                  onclick="focusStation(${station.latitude}, ${station.longitude}, '${station.Frequency}${station.Format}')"
                   onkeydown="activateOnKey(event)">`;
     html += `<div class="station-info">`;
     html += `<span class="station-location">${station.City}</span>`;
@@ -779,7 +790,8 @@ function markSelectedStation(scroll) {
   let first = null;
   document.querySelectorAll('#station-list .station-item').forEach(card => {
     const on = !!selectedTower && Math.abs(+card.dataset.lat - selectedTower.lat) < 0.001
-      && Math.abs(+card.dataset.lng - selectedTower.lng) < 0.001;
+      && Math.abs(+card.dataset.lng - selectedTower.lng) < 0.001
+      && (!selectedFreq || card.dataset.freq === selectedFreq);
     card.classList.toggle('selected', on);
     if (on) card.setAttribute('aria-current', 'true'); else card.removeAttribute('aria-current');
     if (on && !first) first = card;
@@ -787,18 +799,31 @@ function markSelectedStation(scroll) {
   if (scroll && first) first.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
-// Focus on a specific station when clicked in the list
-function focusStation(lat, lng) {
+// The stations at a tower that the current selection covers: just the
+// picked frequency after a list click, else all of them
+function stationsForSelection(stationList) {
+  if (!selectedFreq) return stationList;
+  const picked = stationList.filter(s => `${s.Frequency}${s.Format}` === selectedFreq);
+  return picked.length ? picked : stationList;
+}
+
+// Focus on a specific station when clicked in the list. freq ('960AM')
+// picks that one frequency when several share the tower.
+function focusStation(lat, lng, freq = null) {
   const marker = markers.find(m => {
     const p = m.getLatLng();
     return Math.abs(p.lat - lat) < 0.001 && Math.abs(p.lng - lng) < 0.001;
   });
+  // Close whatever popup is open first (its popupclose resets the pick), so
+  // the popup, rings and highlight all switch to the new one
+  map.closePopup();
+  selectedFreq = freq;
 
   // Zoom to fit the station's Fair ring (and the user, if located) so the
   // estimated reach is visible; fixed zoom if there is nothing to draw. Never
   // zoom out past the state-wide view (7) — a 50 kW AM's Fair ring spans four
   // states and fitting it would lose all local context
-  const fairMeters = marker ? Math.max(0, ...marker.stationData
+  const fairMeters = marker ? Math.max(0, ...stationsForSelection(marker.stationData)
     .map(s => coverageRadii(s)).filter(Boolean).map(r => r.fairMeters)) : 0;
   if (fairMeters > 0) {
     const bounds = L.latLng(lat, lng).toBounds(fairMeters * 2);

@@ -523,6 +523,15 @@ p.night-legend {
   border-width: 2px;
 }
 
+/* The frequency picked from the list, when its popup lists several */
+.popup-station.selected {
+  background: #ffe1e1;
+  box-shadow: inset 3px 0 0 #d00000;
+  border-radius: 2px;
+  margin: 0 -0.35rem;
+  padding: 0 0.35rem;
+}
+
 /* The station whose popup is open on the map */
 .station-item.selected {
   background: #ffe1e1;
