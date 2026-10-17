@@ -95,6 +95,8 @@ function initMap() {
   });
   map.on('dblclick', () => clearTimeout(popupCloseTimer));
   addPickControl();
+  syncOptionsDisclosure();
+  updateOptionsSummary();
   addFullscreenControl();
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
@@ -442,11 +444,44 @@ function updateSportFilter(sport, updateUrl = true) {
 }
 
 // Switch between sorting by distance and by predicted listening quality
+// Phones fold Sort / Time / coverage map into one "Options" row (a
+// <details>) whose summary shows the current choices, so the station list
+// starts higher; wider screens always show the controls.
+const phoneQuery = window.matchMedia ? window.matchMedia('(max-width: 768px)') : null;
+
+function syncOptionsDisclosure() {
+  const details = document.getElementById('moreOptions');
+  if (details) details.open = !(phoneQuery && phoneQuery.matches);
+}
+
+// The map flexes to fill what the panel above leaves, so tell Leaflet when
+// that panel changes height (options folded/unfolded, Find button swapped out)
+function refreshMapSize() {
+  if (map) setTimeout(() => map.invalidateSize(), 0);
+}
+document.addEventListener('toggle', e => { if (e.target.id === 'moreOptions') refreshMapSize(); }, true);
+if (phoneQuery) {
+  if (phoneQuery.addEventListener) phoneQuery.addEventListener('change', syncOptionsDisclosure);
+  else if (phoneQuery.addListener) phoneQuery.addListener(syncOptionsDisclosure);
+}
+
+function updateOptionsSummary() {
+  const el = document.getElementById('optionsSummary');
+  if (!el) return;
+  const time = { day: '☀️ Day', night: '🌙 Night' }[timeOfDayOverride] || '🕒 Now';
+  const parts = [currentSortBy === 'distance' ? '📏 Nearest' : '📶 Sounds best', time];
+  if (typeof coverageMapVisible === 'function' && coverageMapVisible()) parts.push('🗺️ Coverage');
+  el.textContent = parts.join(' · ');
+  // A forced Day/Night is easy to forget once folded away: make it stand out
+  el.classList.toggle('changed', !!timeOfDayOverride);
+}
+
 // Time control (Now / Day / Night): re-rank and redraw AM for that time of
 // day without moving the map, and refresh an open station's rings and ranges
 function setTimeOfDay(mode) {
   timeOfDayOverride = mode === 'now' ? null : mode;
   track('time-of-day', { mode: mode });
+  updateOptionsSummary();
   if (userLocation) sortByLocation(userLocation, false, { pinned: !!pinnedLocation, keepView: true });
   const popup = map && map._popup;
   if (popup && map.hasLayer(popup) && popup._source && popup._source.stationData) {
@@ -459,6 +494,7 @@ function setTimeOfDay(mode) {
 function updateSortBy(mode) {
   currentSortBy = mode;
   track('sort-by', { mode: mode });
+  updateOptionsSummary();
   if (userLocation) {
     sortByLocation(userLocation);
   }

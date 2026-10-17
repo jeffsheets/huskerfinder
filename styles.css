@@ -1074,7 +1074,76 @@ a:hover {
 }
 
 /* Mobile Responsive Styles */
+/* Options disclosure: just a wrapper on wide screens (summary hidden, always open) */
+.more-options > summary {
+  display: none;
+}
+
+.refresh-link {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .more-options > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    list-style: none;
+    padding: 0.15rem 0;
+    margin-bottom: 0.4rem;
+  }
+
+  .more-options > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .more-options-state {
+    flex: 1;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #444;
+  }
+
+  .more-options-state::after {
+    content: ' ▾';
+    color: #999;
+  }
+
+  .more-options[open] .more-options-state::after {
+    content: ' ▴';
+  }
+
+  .more-options-state.changed {
+    color: #d00000;
+    font-weight: 600;
+  }
+
+  /* The ☀️/🌙 legend shows with the expanded options; folded, the cards
+     keep their symbols */
+  .more-options:not([open]) + .night-legend {
+    display: none !important;
+  }
+
+  .more-options:not([open]) > summary {
+    margin-bottom: 0;
+  }
+
+  /* Breathing room between the sport buttons and the Options row */
+  .sport-filter + .more-options {
+    margin-top: 0.6rem;
+  }
+
+  /* Once located, the header's Refresh link replaces the big Find button */
+  body.located .find-button {
+    display: none;
+  }
+
+  .refresh-link {
+    display: inline;
+    margin-left: 0.5rem;
+  }
+
   /* Header Navigation */
   .header {
     flex-direction: row;
@@ -1140,9 +1209,10 @@ a:hover {
     flex-shrink: 0;
   }
 
-  /* Enough for the top three one-line cards; the rest scroll */
+  /* Two and a half one-line cards — the cut-off card shows the list scrolls —
+     so the map keeps the room the folded controls free up */
   #station-list {
-    max-height: 150px;
+    max-height: 112px;
     overflow-y: auto;
     padding: 0.5rem 0.6rem;
   }

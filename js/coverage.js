@@ -218,9 +218,11 @@ function toggleCoverageMap(on) {
   if (bandRow) bandRow.hidden = !on;
   if (!on) {
     hideCoverageMap();
+    updateOptionsSummary();
     return;
   }
   showCoverageMap();
+  updateOptionsSummary();
   map.closePopup();
   map.fitBounds(L.latLngBounds(stations.map(s => [s.latitude, s.longitude])).pad(0.1));
 }

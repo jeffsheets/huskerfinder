@@ -46,7 +46,12 @@ let geoCoords = null; // last GPS fix, so "Use my location" after a pin needs no
 function showLocationHeader(coords) {
   const coordsText = `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`;
   setDisplay(`📍 Your location: <a href="#" class="location-link" title="Center the map on your location"
-    onclick="focusUserLocation(); return false;">${coordsText}</a>`);
+    onclick="focusUserLocation(); return false;">${coordsText}</a>
+    <a href="#" class="location-link refresh-link" title="Find my location again"
+    onclick="track('find-click'); lookupByLocation(); return false;">↻ Refresh</a>`);
+  // Phones swap the big Find button for the Refresh link once located
+  document.body.classList.add('located');
+  if (typeof refreshMapSize === 'function') refreshMapSize();
 }
 
 function lookupByLocation() {
