@@ -219,20 +219,30 @@ const DEFAULT_CONDUCTIVITY = 15;
  * (Norton/van der Pol flat-earth model — the physics behind the FCC 73.184
  * graphs). amPathFieldMvm handles paths that cross different soils.
  *
- * @param {number} powerKw - Transmitter power in kW
+ * @param {number} e1km - Unattenuated field at 1 km in mV/m (from amFieldAt1Km)
  * @param {number} freqKhz - Frequency in kHz
  * @param {number} distanceKm - Distance from tower in km
  * @param {number} sigmaMSm - Ground conductivity in mS/m
  * @returns {number} Field strength in mV/m
  */
-function amFieldStrengthMvm(powerKw, freqKhz, distanceKm, sigmaMSm = DEFAULT_CONDUCTIVITY) {
+function amFieldStrengthMvm(e1km, freqKhz, distanceKm, sigmaMSm = DEFAULT_CONDUCTIVITY) {
   const d = Math.max(distanceKm, 0.5);
-  const inverseDistance = 300 * Math.sqrt(powerKw) / d; // mV/m
+  const inverseDistance = e1km / d; // mV/m
   const fMhz = freqKhz / 1000;
   const p = 0.582 * fMhz * fMhz * d / sigmaMSm; // Norton "numerical distance"
   const groundLoss = (2 + 0.3 * p) / (2 + p + 0.6 * p * p);
-  return inverseDistance * groundLoss;
+  const curvatureLoss = Math.exp(-AM_CURVATURE.alpha * Math.pow(fMhz, AM_CURVATURE.beta) * d);
+  return inverseDistance * groundLoss * curvatureLoss;
 }
+
+// Extra attenuation from the earth's curvature, which the flat-earth Norton
+// formula leaves out (the FCC's 73.184 curves include it): exp(-alpha·f^beta·d),
+// f in MHz, d in km. Fitted to the FCC's daytime 0.5 and 2 mV/m groundwave
+// contours (12 bearings each, M3 ground, licensed antenna data) for WEBC 560,
+// KTLK 1130, WJON 1240, KFYR 550, KFGO 790 and WNAX 570, then checked on
+// KRVN 880, KLIN 1400 and WOW 590, which the fit never saw: median contour
+// error 3.3%, 90th percentile 7% (was 6% / 22% without this term).
+const AM_CURVATURE = { alpha: 0.0021, beta: 1.5 };
 
 // Decoded FCC M3 grid (js/conductivity.js, built by scripts/build-conductivity.js),
 // or null when the page doesn't load one
@@ -293,12 +303,12 @@ function destinationPoint(lat, lon, bearing, km) {
 const AM_PATH_STEP_KM = 2;
 
 // Distance (km) over uniform ground `sigma` at which the field equals `fieldMvm`
-function amEquivalentDistanceKm(powerKw, freqKhz, fieldMvm, sigma) {
+function amEquivalentDistanceKm(e1km, freqKhz, fieldMvm, sigma) {
   let lo = 0.5, hi = 20000;
-  if (amFieldStrengthMvm(powerKw, freqKhz, lo, sigma) <= fieldMvm) return lo;
+  if (amFieldStrengthMvm(e1km, freqKhz, lo, sigma) <= fieldMvm) return lo;
   for (let i = 0; i < 50 && hi - lo > 0.01; i++) {
     const mid = (lo + hi) / 2;
-    if (amFieldStrengthMvm(powerKw, freqKhz, mid, sigma) > fieldMvm) lo = mid; else hi = mid;
+    if (amFieldStrengthMvm(e1km, freqKhz, mid, sigma) > fieldMvm) lo = mid; else hi = mid;
   }
   return (lo + hi) / 2;
 }
@@ -309,7 +319,7 @@ function amEquivalentDistanceKm(powerKw, freqKhz, fieldMvm, sigma) {
  * maxKm is reached. Where the M3 map has no value the previous ground
  * carries on (and uniform DEFAULT_CONDUCTIVITY is used if there is none at all).
  */
-function walkAmPath(powerKw, freqKhz, lat, lon, bearing, maxKm, visit) {
+function walkAmPath(e1km, freqKhz, lat, lon, bearing, maxKm, visit) {
   let sigma = conductivityAt(lat, lon) || DEFAULT_CONDUCTIVITY;
   let equivalentKm = 0; // distance along the current ground's uniform curve
   for (let km = AM_PATH_STEP_KM; km <= maxKm + 1e-9; km += AM_PATH_STEP_KM) {
@@ -318,13 +328,13 @@ function walkAmPath(powerKw, freqKhz, lat, lon, bearing, maxKm, visit) {
     const next = conductivityAt(mid.latitude, mid.longitude) || sigma;
     if (next !== sigma) {
       if (equivalentKm > 0) {
-        const field = amFieldStrengthMvm(powerKw, freqKhz, equivalentKm, sigma);
-        equivalentKm = amEquivalentDistanceKm(powerKw, freqKhz, field, next);
+        const field = amFieldStrengthMvm(e1km, freqKhz, equivalentKm, sigma);
+        equivalentKm = amEquivalentDistanceKm(e1km, freqKhz, field, next);
       }
       sigma = next;
     }
     equivalentKm += AM_PATH_STEP_KM;
-    if (visit(km, amFieldStrengthMvm(powerKw, freqKhz, equivalentKm, sigma)) === false) return;
+    if (visit(km, amFieldStrengthMvm(e1km, freqKhz, equivalentKm, sigma)) === false) return;
   }
 }
 
@@ -333,14 +343,14 @@ function walkAmPath(powerKw, freqKhz, lat, lon, bearing, maxKm, visit) {
  * over the actual mix of soils on the FCC M3 map. Without a grid this is
  * the uniform-ground amFieldStrengthMvm.
  */
-function amPathFieldMvm(powerKw, freqKhz, lat, lon, bearing, distanceKm) {
-  if (!getM3Grid() || bearing == null) return amFieldStrengthMvm(powerKw, freqKhz, distanceKm);
+function amPathFieldMvm(e1km, freqKhz, lat, lon, bearing, distanceKm) {
+  if (!getM3Grid() || bearing == null) return amFieldStrengthMvm(e1km, freqKhz, distanceKm);
   const whole = Math.floor(distanceKm / AM_PATH_STEP_KM) * AM_PATH_STEP_KM;
   if (whole < AM_PATH_STEP_KM) {
-    return amFieldStrengthMvm(powerKw, freqKhz, distanceKm, conductivityAt(lat, lon) || DEFAULT_CONDUCTIVITY);
+    return amFieldStrengthMvm(e1km, freqKhz, distanceKm, conductivityAt(lat, lon) || DEFAULT_CONDUCTIVITY);
   }
   let field = null, fieldNext = null;
-  walkAmPath(powerKw, freqKhz, lat, lon, bearing, whole + AM_PATH_STEP_KM, (km, f) => {
+  walkAmPath(e1km, freqKhz, lat, lon, bearing, whole + AM_PATH_STEP_KM, (km, f) => {
     if (km <= whole + 1e-9) field = f; else { fieldNext = f; return false; }
   });
   // Interpolate (in dB) between the two steps around distanceKm
@@ -385,6 +395,22 @@ const SIGNAL_TIER_FLOORS = {
   FM: [30, 40, 50, 60],
   AM: [-16.5, -6, 6, 14]
 };
+
+/**
+ * After sunset, AM reception is limited by skywave interference from distant
+ * stations on the same channel, not by the groundwave fading into noise. The
+ * FCC protects a Class B station's night service only to its 2.0 mV/m
+ * groundwave contour (47 CFR 73.182(a)(2), 73.182(q)) versus 0.5 mV/m by day,
+ * and prescribes no night protection at all for Class C and D — so at night
+ * every AM tier floor moves up by the same 12 dB (Fair = 2.0 mV/m). That's
+ * generous for C and D, which in practice are interference-limited further
+ * in; Class A night service is protected by skywave, so its floors stay put.
+ */
+const AM_NIGHT_FLOOR_SHIFT_DB = 20 * Math.log10(2.0 / 0.5);
+
+function amFloorShiftDb(station, night) {
+  return night && station.amClass !== 'A' ? AM_NIGHT_FLOOR_SHIFT_DB : 0;
+}
 
 /**
  * Sort key for the "Sounds best" ranking. Signal strength alone is not
@@ -469,17 +495,40 @@ function estimateSignal(station, distanceMeters, point = null) {
 }
 
 /**
- * An AM station's power right now: licensed nighttime power after local
- * sunset at the tower, else daytime power. Null for a daytimer at night.
+ * An AM station's operation right now: after local sunset at the tower its
+ * licensed nighttime power and antenna pattern, else daytime. Null for a
+ * daytimer at night.
  */
 function amPowerNow(station) {
-  if (station.powerNight != null && station.powerNight < station.power
-      && isNightAt(station.latitude, station.longitude)) {
-    const power = station.powerNight;
-    if (power <= 0) return null;
-    return { power, nightNote: ` (reduced nighttime power: ${power >= 1 ? power + ' kW' : (power * 1000) + ' watts'})` };
+  if (!isNightAt(station.latitude, station.longitude)) {
+    return { night: false, power: station.power, nightNote: '' };
   }
-  return { power: station.power, nightNote: '' };
+  const reduced = station.powerNight != null && station.powerNight < station.power;
+  const power = reduced ? station.powerNight : station.power;
+  if (power <= 0) return null;
+  return {
+    night: true, power,
+    nightNote: (reduced ? ` (reduced nighttime power: ${power >= 1 ? power + ' kW' : (power * 1000) + ' watts'})` : '')
+      + (station.amClass !== 'A' ? ' — after sunset, interference from distant stations limits AM range' : '')
+  };
+}
+
+/**
+ * Unattenuated AM field at 1 km (mV/m) toward a bearing: the station's FCC
+ * antenna data when scripts/build-am-patterns.js found it — one value for a
+ * non-directional antenna, or 72 values every 5° for a directional array —
+ * else a typical 300 mV/m per √kW. With no bearing, a directional pattern's RMS.
+ */
+function amFieldAt1Km(station, now, bearing) {
+  const field = now.night ? station.amFieldNight : station.amFieldDay;
+  if (typeof field === 'number') return field;
+  if (Array.isArray(field) && field.length) {
+    if (bearing == null) return Math.sqrt(field.reduce((s, v) => s + v * v, 0) / field.length);
+    const pos = ((bearing % 360) + 360) % 360 / (360 / field.length);
+    const i = Math.floor(pos) % field.length, t = pos - Math.floor(pos);
+    return field[i] * (1 - t) + field[(i + 1) % field.length] * t;
+  }
+  return 300 * Math.sqrt(now.power);
 }
 
 /**
@@ -487,8 +536,8 @@ function amPowerNow(station) {
  * per tier, linear in dB between floors (comparable across AM and FM).
  * An integer score n sits exactly on floors[n - 1].
  */
-function levelToScore(format, level) {
-  const floors = SIGNAL_TIER_FLOORS[format] || SIGNAL_TIER_FLOORS.FM;
+function levelToScore(format, level, shiftDb = 0) {
+  const floors = (SIGNAL_TIER_FLOORS[format] || SIGNAL_TIER_FLOORS.FM).map(f => f + shiftDb);
   if (level <= floors[0]) return 1 + (level - floors[0]) / (floors[1] - floors[0]);
   if (level >= floors[floors.length - 1]) return 4 + (level - floors[3]) / (floors[3] - floors[2]);
   let k = 0;
@@ -510,8 +559,9 @@ function signalScoreAt(station, distanceKm, bearing = null) {
   if (station.Format === 'AM') {
     const now = amPowerNow(station);
     if (!now) return null;
-    const field = amPathFieldMvm(now.power, station.Frequency, station.latitude, station.longitude, bearing, distanceKm);
-    return { score: levelToScore('AM', 20 * Math.log10(field)), nightNote: now.nightNote };
+    const e1km = amFieldAt1Km(station, now, bearing);
+    const field = amPathFieldMvm(e1km, station.Frequency, station.latitude, station.longitude, bearing, distanceKm);
+    return { score: levelToScore('AM', 20 * Math.log10(field), amFloorShiftDb(station, now.night)), nightNote: now.nightNote };
   }
   return { score: levelToScore('FM', fmFieldStrengthDbu(station.power, station.haat, distanceKm)), nightNote: '' };
 }
@@ -543,16 +593,17 @@ function coverageReach(station, targetScores) {
   if (station.Format === 'AM' && getM3Grid()) {
     const now = amPowerNow(station);
     if (!now) return null;
-    const floors = SIGNAL_TIER_FLOORS.AM;
-    const levels = targetScores.map(s => floors[s - 1]);
+    const shift = amFloorShiftDb(station, now.night);
+    const levels = targetScores.map(s => SIGNAL_TIER_FLOORS.AM[s - 1] + shift);
     const near = conductivityAt(station.latitude, station.longitude) || DEFAULT_CONDUCTIVITY;
-    const startDb = 20 * Math.log10(amFieldStrengthMvm(now.power, station.Frequency, 0.5, near));
     const bearings = [], km = [];
     for (let i = 0; i < AM_RADIALS; i++) {
       const bearing = i * 360 / AM_RADIALS;
+      const e1km = amFieldAt1Km(station, now, bearing);
+      const startDb = 20 * Math.log10(amFieldStrengthMvm(e1km, station.Frequency, 0.5, near));
       const reach = levels.map(level => startDb < level ? 0 : null);
       let prevKm = 0.5, prevDb = startDb;
-      walkAmPath(now.power, station.Frequency, station.latitude, station.longitude, bearing, AM_MAX_KM, (d, field) => {
+      walkAmPath(e1km, station.Frequency, station.latitude, station.longitude, bearing, AM_MAX_KM, (d, field) => {
         const db = 20 * Math.log10(field);
         levels.forEach((level, j) => {
           if (reach[j] === null && db < level) reach[j] = prevKm + (d - prevKm) * (prevDb - level) / (prevDb - db);

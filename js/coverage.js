@@ -1,145 +1,129 @@
-// Network-wide coverage map: paints every station's estimated Excellent /
-// Good / Fair reach onto one canvas and shows it as a Leaflet image overlay,
-// like a carrier coverage map. Each cell takes the best tier of any station
-// that reaches it, so the picture answers "where can Husker Nation hear the
-// game, and how clearly" rather than "which station".
+// Network-wide coverage map: draws every station's estimated Excellent /
+// Good / Fair reach as one Leaflet tile layer, like a carrier coverage map.
+// Each spot takes the best tier of any station that reaches it, so the
+// picture answers "where can Husker Nation hear the game, and how clearly"
+// rather than "which station".
 //
 // Field strength falls monotonically with distance along any path, so each
-// station's tier regions are nested shapes: discs for FM, and for AM an
+// station's tier regions are nested shapes: circles for FM, and for AM an
 // outline per tier from coverageReach (reach along each radial over the M3
-// ground). Painting those is a few million cell writes for the whole
-// network, versus evaluating the signal model at every cell for every station.
+// ground). The outlines are filled as anti-aliased vector paths in every
+// tile at the current zoom, so edges stay smooth however far in you zoom.
 
-let coverageMapOverlay = null; // L.imageOverlay while the map is shown
+let coverageMapOverlay = null; // the L.GridLayer while the map is shown
 let coverageMapLegend = null;  // L.control legend while the map is shown
 let coverageBand = 'all';      // 'all' | 'FM' | 'AM' — which band(s) to paint
-const coverageRasterCache = {}; // key: sport + band + day/night → { url, bounds }
+const coverageShapeCache = {}; // key: sport + band + day/night → shapes from buildCoverageShapes
 
-// Cell size in degrees of longitude (rows are spaced to match in Web
-// Mercator so the overlay lines up with the tiles). ~0.9 km at 41°N.
-const COVERAGE_CELL_DEG = 0.01;
-// Margin past the outermost ring, so its edge isn't flush with the image edge.
-const COVERAGE_PAD_DEG = 0.1;
 const KM_PER_DEG_LAT = 111.2;
+const COVERAGE_OUTLINE_POINTS = 360; // vertices per outline (every 1°)
 
-// Tier fills, matching the signal bars and the per-station rings. Alpha is
-// baked into the pixels so stronger tiers read a touch more solid.
+// Tier fills, matching the signal bars and the per-station rings. Stronger
+// tiers are a touch more solid.
 const COVERAGE_TIERS = [
   { score: 2, rgba: [255, 165, 0, 80], label: 'Fair' },       // orange
   { score: 3, rgba: [120, 200, 110, 115], label: 'Good' },    // light green
   { score: 4, rgba: [0, 110, 0, 165], label: 'Excellent' }    // deep green
 ];
 
-const mercatorY = latDeg => Math.log(Math.tan(Math.PI / 4 + latDeg * Math.PI / 360));
-const mercatorLat = y => (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI;
-
-// Render the raster for a list of stations. Returns { url, bounds } where
-// bounds is [[south, west], [north, east]].
-function renderCoverageRaster(stationList) {
+// Outline of every station's reach for each tier, in Web Mercator world
+// pixels at zoom 0 (multiply by 2^zoom for any other zoom). Returns
+// { tiers: [[{ pts, minX, minY, maxX, maxY }]] (one list per tier), bounds }.
+function buildCoverageShapes(stationList) {
   // Distinct towers/frequencies only: the same frequency listed under two
-  // sports paints the same disc twice
+  // sports paints the same shape twice
   const seen = new Set();
-  const discs = []; // { station, km, value, radial } — radial: per-bearing reach for AM over mixed ground
   const tierScores = COVERAGE_TIERS.map(t => t.score);
+  const tiers = COVERAGE_TIERS.map(() => []);
+  let bounds = null;
   stationList.forEach(station => {
     const key = `${station.Frequency}${station.Format}@${station.latitude},${station.longitude}`;
     if (seen.has(key) || !station.power) return;
     seen.add(key);
     const reach = coverageReach(station, tierScores);
     if (!reach) return;
-    COVERAGE_TIERS.forEach((tier, i) => {
-      const radial = reach.bearings ? reach.km.map(r => r[i]) : null;
-      const km = radial ? Math.max(...radial) : reach.km[0][i];
-      if (km) discs.push({ station, km, value: i + 1, radial });
+    COVERAGE_TIERS.forEach((tier, j) => {
+      const radial = reach.km.map(r => r[j]);
+      if (!Math.max(...radial)) return;
+      const pts = [];
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (let k = 0; k < COVERAGE_OUTLINE_POINTS; k++) {
+        const bearing = k * 360 / COVERAGE_OUTLINE_POINTS;
+        // Reach at this bearing: interpolated between radials (AM), or the one radius
+        let km = radial[0];
+        if (radial.length > 1) {
+          const pos = bearing / (360 / radial.length);
+          const i = Math.floor(pos) % radial.length, t = pos - Math.floor(pos);
+          km = radial[i] * (1 - t) + radial[(i + 1) % radial.length] * t;
+        }
+        const p = destinationPoint(station.latitude, station.longitude, bearing, km);
+        const xy = L.CRS.EPSG3857.latLngToPoint(L.latLng(p.latitude, p.longitude), 0);
+        pts.push(xy.x, xy.y);
+        minX = Math.min(minX, xy.x); maxX = Math.max(maxX, xy.x);
+        minY = Math.min(minY, xy.y); maxY = Math.max(maxY, xy.y);
+        if (j === 0) bounds = bounds ? bounds.extend([p.latitude, p.longitude]) : L.latLngBounds([p.latitude, p.longitude], [p.latitude, p.longitude]);
+      }
+      tiers[j].push({ pts, minX, minY, maxX, maxY });
     });
   });
-
-  // Bounds from the discs themselves, so the widest Fair ring is never cut off
-  // (a fixed degree pad clips big AM rings, worst at northern latitudes where
-  // a degree of longitude is short)
-  let west = Infinity, east = -Infinity, south = Infinity, north = -Infinity;
-  discs.forEach(({ station, km }) => {
-    const dLat = km / KM_PER_DEG_LAT;
-    const dLng = km / (KM_PER_DEG_LAT * Math.cos((Math.abs(station.latitude) + dLat) * Math.PI / 180));
-    west = Math.min(west, station.longitude - dLng);
-    east = Math.max(east, station.longitude + dLng);
-    south = Math.min(south, station.latitude - dLat);
-    north = Math.max(north, station.latitude + dLat);
-  });
-  if (!discs.length) {
-    const lats = stationList.map(s => s.latitude);
-    const lngs = stationList.map(s => s.longitude);
-    west = Math.min(...lngs); east = Math.max(...lngs);
-    south = Math.min(...lats); north = Math.max(...lats);
-  }
-  west -= COVERAGE_PAD_DEG; east += COVERAGE_PAD_DEG;
-  south -= COVERAGE_PAD_DEG; north += COVERAGE_PAD_DEG;
-
-  const width = Math.ceil((east - west) / COVERAGE_CELL_DEG);
-  const yTop = mercatorY(north);
-  const yBottom = mercatorY(south);
-  const yStep = COVERAGE_CELL_DEG * Math.PI / 180; // Mercator units per cell, square at the equator
-  const height = Math.ceil((yTop - yBottom) / yStep);
-
-  // Latitude of each pixel row (top row = north)
-  const rowLat = new Float64Array(height);
-  for (let r = 0; r < height; r++) rowLat[r] = mercatorLat(yTop - (r + 0.5) * yStep);
-
-  const grid = new Uint8Array(width * height); // 0 none, 1 Fair, 2 Good, 3 Excellent
-
-  // Paint one disc: for each row the disc touches, fill the span of columns
-  // within the great-circle radius (small-angle approximation per row). With
-  // `radial` (AM reach per bearing, AM_RADIALS evenly spaced), a cell inside
-  // the widest reach is kept only if it is within the reach interpolated at
-  // its own bearing from the tower.
-  const paintDisc = (station, radiusKm, value, radial) => {
-    if (!radiusKm) return;
-    const dLat = radiusKm / KM_PER_DEG_LAT;
-    const r0 = Math.max(0, Math.floor((yTop - mercatorY(station.latitude + dLat)) / yStep));
-    const r1 = Math.min(height - 1, Math.ceil((yTop - mercatorY(station.latitude - dLat)) / yStep));
-    const sector = radial ? 360 / radial.length : 0;
-    for (let r = r0; r <= r1; r++) {
-      const dLatKm = (rowLat[r] - station.latitude) * KM_PER_DEG_LAT;
-      const rem = radiusKm * radiusKm - dLatKm * dLatKm;
-      if (rem <= 0) continue;
-      const kmPerDegLng = KM_PER_DEG_LAT * Math.cos(rowLat[r] * Math.PI / 180);
-      const halfLng = Math.sqrt(rem) / kmPerDegLng;
-      const c0 = Math.max(0, Math.floor((station.longitude - halfLng - west) / COVERAGE_CELL_DEG));
-      const c1 = Math.min(width - 1, Math.ceil((station.longitude + halfLng - west) / COVERAGE_CELL_DEG));
-      const base = r * width;
-      for (let c = c0; c <= c1; c++) {
-        if (grid[base + c] >= value) continue;
-        if (radial) {
-          const dLngKm = (west + (c + 0.5) * COVERAGE_CELL_DEG - station.longitude) * kmPerDegLng;
-          const pos = ((Math.atan2(dLngKm, dLatKm) * 180 / Math.PI + 360) % 360) / sector;
-          const i = Math.floor(pos) % radial.length, t = pos - Math.floor(pos);
-          const reach = radial[i] * (1 - t) + radial[(i + 1) % radial.length] * t;
-          if (dLatKm * dLatKm + dLngKm * dLngKm > reach * reach) continue;
-        }
-        grid[base + c] = value;
-      }
-    }
-  };
-
-  discs.forEach(({ station, km, value, radial }) => paintDisc(station, km, value, radial));
-
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  const image = ctx.createImageData(width, height);
-  const px = image.data;
-  for (let i = 0; i < grid.length; i++) {
-    const v = grid[i];
-    if (!v) continue;
-    const [rr, gg, bb, aa] = COVERAGE_TIERS[v - 1].rgba;
-    const o = i * 4;
-    px[o] = rr; px[o + 1] = gg; px[o + 2] = bb; px[o + 3] = aa;
-  }
-  ctx.putImageData(image, 0, 0);
-
-  return { url: canvas.toDataURL('image/png'), bounds: [[south, west], [north, east]] };
+  return { tiers, bounds };
 }
+
+// Tile layer that fills the tier outlines per tile. Each tier is drawn as a
+// union mask (so overlapping stations don't double-darken), then the masks
+// are layered so a stronger tier covers a weaker one, blending only along
+// the anti-aliased edges.
+const CoverageLayer = L.GridLayer.extend({
+  initialize(shapes, options) {
+    this.shapes = shapes;
+    L.GridLayer.prototype.initialize.call(this, options);
+  },
+
+  createTile(coords) {
+    const size = this.getTileSize();
+    const tile = document.createElement('canvas');
+    tile.width = size.x; tile.height = size.y;
+    const scale = Math.pow(2, coords.z);
+    const ox = coords.x * size.x, oy = coords.y * size.y; // tile origin in world pixels at this zoom
+    const x0 = ox / scale, y0 = oy / scale, x1 = (ox + size.x) / scale, y1 = (oy + size.y) / scale;
+
+    const mask = document.createElement('canvas');
+    mask.width = size.x; mask.height = size.y;
+    const mctx = mask.getContext('2d', { willReadFrequently: true });
+    const masks = this.shapes.tiers.map(shapes => {
+      const hits = shapes.filter(s => s.maxX >= x0 && s.minX <= x1 && s.maxY >= y0 && s.minY <= y1);
+      if (!hits.length) return null;
+      mctx.clearRect(0, 0, size.x, size.y);
+      mctx.fillStyle = '#000';
+      mctx.beginPath();
+      hits.forEach(({ pts }) => {
+        mctx.moveTo(pts[0] * scale - ox, pts[1] * scale - oy);
+        for (let i = 2; i < pts.length; i += 2) mctx.lineTo(pts[i] * scale - ox, pts[i + 1] * scale - oy);
+        mctx.closePath();
+      });
+      mctx.fill('nonzero'); // nonzero: overlapping outlines union instead of cutting holes
+      return mctx.getImageData(0, 0, size.x, size.y).data;
+    });
+    if (masks.every(m => !m)) return tile;
+
+    const ctx = tile.getContext('2d');
+    const image = ctx.createImageData(size.x, size.y);
+    const px = image.data;
+    for (let i = 0; i < px.length; i += 4) {
+      let pr = 0, pg = 0, pb = 0, pa = 0; // premultiplied
+      for (let t = 0; t < masks.length; t++) {
+        if (!masks[t]) continue;
+        const cover = masks[t][i + 3] / 255;
+        if (!cover) continue;
+        const [r, g, b, a] = COVERAGE_TIERS[t].rgba;
+        pr += (r * a - pr) * cover; pg += (g * a - pg) * cover; pb += (b * a - pb) * cover; pa += (a - pa) * cover;
+      }
+      if (pa > 0) { px[i] = pr / pa; px[i + 1] = pg / pa; px[i + 2] = pb / pa; px[i + 3] = pa; }
+    }
+    ctx.putImageData(image, 0, 0);
+    return tile;
+  }
+});
 
 // Stations to include for the current sport filter (same predicate as the
 // markers), narrowed to one band when the FM/AM option is set
@@ -177,17 +161,16 @@ function showCoverageMap() {
   if (!map) return;
   const night = coverageIsNight();
   const key = `${currentSport}|${coverageBand}|${night ? 'night' : 'day'}`;
-  if (!coverageRasterCache[key]) {
-    coverageRasterCache[key] = renderCoverageRaster(coverageStations());
+  if (!coverageShapeCache[key]) {
+    coverageShapeCache[key] = buildCoverageShapes(coverageStations());
   }
-  const raster = coverageRasterCache[key];
+  const shapes = coverageShapeCache[key];
 
   if (coverageMapOverlay) {
-    coverageMapOverlay.setUrl(raster.url);
-    coverageMapOverlay.setBounds(L.latLngBounds(raster.bounds));
+    coverageMapOverlay.shapes = shapes;
+    coverageMapOverlay.redraw();
   } else {
-    coverageMapOverlay = L.imageOverlay(raster.url, raster.bounds,
-      { interactive: false, className: 'coverage-raster' }).addTo(map);
+    coverageMapOverlay = new CoverageLayer(shapes, { pane: 'overlayPane', interactive: false }).addTo(map);
   }
 
   if (!coverageMapLegend) {
@@ -218,8 +201,8 @@ function coverageMapVisible() {
   return coverageMapOverlay !== null;
 }
 
-// Band radio handler (All / FM / AM). The raster for each band is cached
-// separately, so flipping between them is instant after the first paint.
+// Band radio handler (All / FM / AM). The outlines for each band are cached
+// separately, so flipping between them is quick after the first build.
 function setCoverageBand(band) {
   coverageBand = band;
   track('coverage-band', { band: band.toLowerCase() });

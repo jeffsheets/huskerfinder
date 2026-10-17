@@ -334,11 +334,6 @@ body.map-fullscreen #map {
   max-height: none;
 }
 
-/* Keep the raster crisp instead of blurring cell edges when zoomed in */
-.coverage-raster {
-  image-rendering: pixelated;
-}
-
 .coverage-map-legend {
   background: rgba(255, 255, 255, 0.92);
   border-radius: 4px;
@@ -526,6 +521,14 @@ p.night-legend {
   background: #fff3f3;
   border-color: #d00000;
   border-width: 2px;
+}
+
+/* The station whose popup is open on the map */
+.station-item.selected {
+  background: #ffe1e1;
+  border-color: #d00000;
+  border-width: 2px;
+  box-shadow: inset 6px 0 0 #d00000, 0 2px 6px rgba(208, 0, 0, 0.25);
 }
 
 .station-info {

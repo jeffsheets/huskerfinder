@@ -29,7 +29,7 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="aa9b0f34-0a72-4541-b401-09ae6b9b7e11" data-domains="huskerfinder.sheetsj.com"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2026-10-05">
+  <link rel="stylesheet" href="styles.css?v=2026-10-17b">
 </head>
 <body class="about-page">
 
@@ -77,6 +77,7 @@
 
   <h4>Why AM stations get weaker at night</h4>
   <p>At night, AM signals bounce off the ionosphere and can travel hundreds of miles ("skywave"). To keep thousands of stations from interfering with each other, the FCC licenses most AM stations with a <strong>mandatory lower nighttime power</strong>, in effect from local sunset to local sunrise. This isn't optional and can't be waived for a game broadcast — for example, KICS in Hastings runs 500 watts during the day but must drop to just 27 watts at night, while KRVN 880, KFAB 1110, and WOW 590 are engineered to keep full power around the clock (usually with directional antennas). A few stations (KTIC 840 in West Point, KUVR 1380 in Holdrege) hold daytime-only licenses and sign off completely at sunset. This app checks whether the sun is down at each station's tower and automatically uses the nighttime power — or marks daytimers "off air" — so for a 7pm kickoff, the rankings reflect what you'll actually be able to hear.</p>
+  <p>Even at full power, AM reception at night is limited by those distant stations: their skywave raises the background noise on the channel, so a signal that sounds clean in the afternoon gets buried in hiss and chatter after dark. The FCC protects a typical (Class B) AM station's night service only out to where its signal is 2 mV/m — four times stronger than the 0.5 mV/m it's protected to in the daytime — and doesn't protect the smaller Class C and D stations at night at all. So after sunset the app raises every AM signal-strength tier by the same factor of four, and a station's rings shrink to match. Many stations also switch to a directional antenna at night, aimed away from the stations they have to protect; the app uses each station's licensed tower layout to draw that pattern. KRVN 880, for example, aims its nighttime signal west and southwest and nearly nulls it toward the east, where it shares 880 with WCBS in New York.</p>
 
   <h3>Tips for Best Results</h3>
   <p>Since radio coverage can vary greatly based on terrain, weather, tower power, and other factors:</p>
@@ -106,6 +107,9 @@
     <li>FM signal estimates interpolated from the FCC F(50,50) propagation curve tables (47 CFR 73.333)</li>
     <li>AM signal estimates from a Norton groundwave model over FCC M3 ground conductivity along each path, combined by the equivalent-distance method (47 CFR 73.183)</li>
     <li>A sunrise/sunset calculation at each tower to apply AM nighttime power restrictions</li>
+    <li>Each AM station's licensed antenna efficiency and directional-array tower layout (FCC CDBS antenna records), turned into its day and night radiation pattern with the FCC standard-pattern formula (47 CFR 73.150)</li>
+    <li>Nighttime AM tiers raised to the FCC's 2 mV/m Class B nighttime protection level (47 CFR 73.182)</li>
+    <li>An earth-curvature correction to the AM groundwave model, fitted to the FCC's daytime 0.5 and 2 mV/m contours for nine stations (median error about 3% on stations held out of the fit)</li>
   </ul>
 
   <p>Special thanks to <a href="https://huskers.com" target="_blank">huskers.com</a> for serving as a reference for station information and providing the official streaming option.</p>

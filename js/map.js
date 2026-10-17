@@ -3,6 +3,8 @@ let markers = [];
 let userMarker;
 let coverageLayer; // estimated Good/Fair rings for the station whose popup is open
 let popupSource = 'marker'; // how the next popup was opened, for analytics: 'marker' | 'list' | 'auto'
+let selectedTower = null; // L.LatLng of the station whose popup is open — its list cards are highlighted
+let popupCloseTimer = null; // pending single-click popup close (cancelled by a double-click)
 let homeView = null; // { center, zoom, popupStation } — the auto-zoomed view after a location lookup
 // Sport filter is single-select: 'all' or one Sport name. currentFilters is
 // derived from it so the marker/list filtering can stay boolean per sport.
@@ -33,7 +35,9 @@ const SPORT_EMOJI = {
 
 // Initialize the map centered on Nebraska
 function initMap() {
-  map = L.map('map').setView([41.5, -99.8], 7);
+  // Popups close on a single map click ourselves (below), so a double-click
+  // zoom doesn't close the open station and drop its selection
+  map = L.map('map', { closePopupOnClick: false }).setView([41.5, -99.8], 7);
 
   // Add OpenStreetMap tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,13 +56,19 @@ function initMap() {
   map.on('popupopen', e => {
     const stationList = e.popup._source && e.popup._source.stationData;
     showCoverage(stationList || []);
+    selectedTower = stationList ? e.popup._source.getLatLng() : null;
+    markSelectedStation(popupSource === 'marker');
     if (stationList) {
       const s = stationList[0];
       track('station-popup', { station: `${s.Frequency}${s.Format} ${s.CallSign}`, source: popupSource });
     }
     popupSource = 'marker';
   });
-  map.on('popupclose', () => coverageLayer.clearLayers());
+  map.on('popupclose', () => {
+    coverageLayer.clearLayers();
+    selectedTower = null;
+    markSelectedStation(false);
+  });
 
   // Add all station markers
   addStationMarkers();
@@ -69,10 +79,17 @@ function initMap() {
   // because click already closes popups and stray taps while panning are common.
   map.on('contextmenu', e => pinSpot(e.latlng, 'press'));
   map.on('click', e => {
-    if (!pickingSpot) return;
-    setPickMode(false);
-    pinSpot(e.latlng, 'pick');
+    if (pickingSpot) {
+      setPickMode(false);
+      pinSpot(e.latlng, 'pick');
+      return;
+    }
+    // Close the open popup on a single click only: wait out the double-click
+    // window, and let a dblclick (zoom in) cancel it
+    clearTimeout(popupCloseTimer);
+    popupCloseTimer = setTimeout(() => map.closePopup(), 300);
   });
+  map.on('dblclick', () => clearTimeout(popupCloseTimer));
   addPickControl();
   addFullscreenControl();
   document.addEventListener('keydown', e => {
@@ -558,6 +575,7 @@ function sortByLocation(point, isFallback = false, opts = {}) {
     ].filter(Boolean);
 
     html += `<div class="station-item ${isNearest ? 'nearest' : ''}" role="button" tabindex="0"
+                  data-lat="${station.latitude}" data-lng="${station.longitude}"
                   aria-label="${ariaParts.join(', ')}. Show on map"
                   onclick="focusStation(${station.latitude}, ${station.longitude})"
                   onkeydown="activateOnKey(event)">`;
@@ -613,6 +631,7 @@ function sortByLocation(point, isFallback = false, opts = {}) {
   });
 
   setResults(html || '<div style="text-align: center; color: #999;">No stations found</div>');
+  markSelectedStation(false);
 
   // Add or update user location marker
   if (userMarker) {
@@ -751,6 +770,21 @@ function activateOnKey(event) {
     event.preventDefault();
     event.currentTarget.click();
   }
+}
+
+// Highlight the list cards for the station whose popup is open (every
+// frequency at that tower). scroll: bring the first one into view, for
+// selections made on the map.
+function markSelectedStation(scroll) {
+  let first = null;
+  document.querySelectorAll('#station-list .station-item').forEach(card => {
+    const on = !!selectedTower && Math.abs(+card.dataset.lat - selectedTower.lat) < 0.001
+      && Math.abs(+card.dataset.lng - selectedTower.lng) < 0.001;
+    card.classList.toggle('selected', on);
+    if (on) card.setAttribute('aria-current', 'true'); else card.removeAttribute('aria-current');
+    if (on && !first) first = card;
+  });
+  if (scroll && first) first.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
 // Focus on a specific station when clicked in the list
